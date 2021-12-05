@@ -1,5 +1,5 @@
-import React from "react"
-import { Link } from "react-router-dom"
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
   return (
@@ -12,8 +12,7 @@ const Navbar = () => {
           <button
             className="navbar-toggler"
             data-toggle="collapse"
-            data-target="#navbarCollapse"
-          >
+            data-target="#navbarCollapse">
             <span className="navbar-toggler-icon" />
           </button>
           <div className="collapse navbar-collapse" id="navbarCollapse">
@@ -42,10 +41,9 @@ const Navbar = () => {
             <ul className="navbar-nav ml-auto">
               <li className="nav-item dropdown mr-3">
                 <a
-                  href="#"
+                  href="/"
                   className="nav-link dropdown-toggle"
-                  data-toggle="dropdown"
-                >
+                  data-toggle="dropdown">
                   <i className="fas fa-user" /> Welcome Brad
                 </a>
                 <div className="dropdown-menu">

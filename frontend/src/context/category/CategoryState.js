@@ -1,6 +1,6 @@
-import { useState } from "react"
-import CategoryContext from "./categoryContext"
-import axios from "axios"
+import { useState } from 'react'
+import CategoryContext from './categoryContext'
+import axios from 'axios'
 
 // ------------------------------------------
 // Category State
@@ -22,7 +22,7 @@ const CategoryState = props => {
   // Add new category
   const addCategory = async (title, image) => {
     try {
-      await axios.post("api/category/add", { title, image })
+      await axios.post('api/category/add', { title, image })
       setCategories([...categories, { title, image }])
     } catch (err) {
       errorHandler(err)
@@ -32,17 +32,26 @@ const CategoryState = props => {
   // get all categories
   const getCategories = async () => {
     try {
-      const { data } = await axios.get("api/category/getAll")
-      console.log(data)
+      const { data } = await axios.get('api/category/getAll')
       setCategories(data.categories)
     } catch (err) {
       errorHandler(err)
     }
   }
 
-  const updateCategory = async (id, title) => {
+  // get one category
+  const getOneCategory = async id => {
     try {
-      await axios.patch(`api/category/${id}`, { title })
+      const { data } = await axios.get(`/api/category/${id}`)
+      return data.categories
+    } catch (err) {
+      errorHandler(err)
+    }
+  }
+
+  const updateCategory = async (id, title, image) => {
+    try {
+      await axios.patch(`api/category/${id}`, { title, image })
       getCategories()
     } catch (err) {
       errorHandler(err)
@@ -51,8 +60,13 @@ const CategoryState = props => {
 
   return (
     <CategoryContext.Provider
-      value={{ categories, getCategories, addCategory }}
-    >
+      value={{
+        categories,
+        getCategories,
+        addCategory,
+        getOneCategory,
+        updateCategory,
+      }}>
       {props.children}
     </CategoryContext.Provider>
   )

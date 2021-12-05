@@ -1,7 +1,6 @@
-import React from "react"
-import { Navigate } from "react-router"
-import Breadcrumb from "../components/Breadcrumb"
-import { useNavigate } from "react-router-dom"
+import React from 'react'
+import Breadcrumb from '../components/Breadcrumb'
+import { useNavigate } from 'react-router-dom'
 
 const Checkout = () => {
   const navigate = useNavigate()
@@ -13,7 +12,7 @@ const Checkout = () => {
           <div className="row mb-5">
             <div className="col-md-12">
               <div className="border p-4 rounded" role="alert">
-                Returning customer? <a href="#">Click here</a> to login
+                Returning customer? <a href="/">Click here</a> to login
               </div>
             </div>
           </div>
@@ -64,7 +63,7 @@ const Checkout = () => {
                 <div className="form-group row">
                   <div className="col-md-12">
                     <label htmlFor="c_companyname" className="text-black">
-                      Company Name{" "}
+                      Company Name{' '}
                     </label>
                     <input
                       type="text"
@@ -152,13 +151,12 @@ const Checkout = () => {
                     href="#create_an_account"
                     role="button"
                     aria-expanded="false"
-                    aria-controls="create_an_account"
-                  >
+                    aria-controls="create_an_account">
                     <input
                       type="checkbox"
                       defaultValue={1}
                       id="c_create_account"
-                    />{" "}
+                    />{' '}
                     Create an account?
                   </label>
                   <div className="collapse" id="create_an_account">
@@ -171,8 +169,7 @@ const Checkout = () => {
                       <div className="form-group">
                         <label
                           htmlFor="c_account_password"
-                          className="text-black"
-                        >
+                          className="text-black">
                           Account Password
                         </label>
                         <input
@@ -194,13 +191,12 @@ const Checkout = () => {
                     href="#ship_different_address"
                     role="button"
                     aria-expanded="false"
-                    aria-controls="ship_different_address"
-                  >
+                    aria-controls="ship_different_address">
                     <input
                       type="checkbox"
                       defaultValue={1}
                       id="c_ship_different_address"
-                    />{" "}
+                    />{' '}
                     Ship To A Different Address?
                   </label>
                   <div className="collapse" id="ship_different_address">
@@ -249,9 +245,8 @@ const Checkout = () => {
                         <div className="col-md-12">
                           <label
                             htmlFor="c_diff_companyname"
-                            className="text-black"
-                          >
-                            Company Name{" "}
+                            className="text-black">
+                            Company Name{' '}
                           </label>
                           <input
                             type="text"
@@ -265,8 +260,7 @@ const Checkout = () => {
                         <div className="col-md-12">
                           <label
                             htmlFor="c_diff_address"
-                            className="text-black"
-                          >
+                            className="text-black">
                             Address <span className="text-danger">*</span>
                           </label>
                           <input
@@ -289,9 +283,8 @@ const Checkout = () => {
                         <div className="col-md-6">
                           <label
                             htmlFor="c_diff_state_country"
-                            className="text-black"
-                          >
-                            State / Country{" "}
+                            className="text-black">
+                            State / Country{' '}
                             <span className="text-danger">*</span>
                           </label>
                           <input
@@ -304,8 +297,7 @@ const Checkout = () => {
                         <div className="col-md-6">
                           <label
                             htmlFor="c_diff_postal_zip"
-                            className="text-black"
-                          >
+                            className="text-black">
                             Posta / Zip <span className="text-danger">*</span>
                           </label>
                           <input
@@ -320,8 +312,7 @@ const Checkout = () => {
                         <div className="col-md-6">
                           <label
                             htmlFor="c_diff_email_address"
-                            className="text-black"
-                          >
+                            className="text-black">
                             Email Address <span className="text-danger">*</span>
                           </label>
                           <input
@@ -358,7 +349,7 @@ const Checkout = () => {
                     rows={5}
                     className="form-control"
                     placeholder="Write your notes here..."
-                    defaultValue={""}
+                    defaultValue={''}
                   />
                 </div>
               </div>
@@ -384,8 +375,7 @@ const Checkout = () => {
                         <button
                           className="btn btn-primary btn-sm"
                           type="button"
-                          id="button-addon2"
-                        >
+                          id="button-addon2">
                           Apply
                         </button>
                       </div>
@@ -441,8 +431,7 @@ const Checkout = () => {
                           href="#collapsebank"
                           role="button"
                           aria-expanded="false"
-                          aria-controls="collapsebank"
-                        >
+                          aria-controls="collapsebank">
                           Direct Bank Transfer
                         </a>
                       </h3>
@@ -465,8 +454,7 @@ const Checkout = () => {
                           href="#collapsecheque"
                           role="button"
                           aria-expanded="false"
-                          aria-controls="collapsecheque"
-                        >
+                          aria-controls="collapsecheque">
                           Cheque Payment
                         </a>
                       </h3>
@@ -489,8 +477,7 @@ const Checkout = () => {
                           href="#collapsepaypal"
                           role="button"
                           aria-expanded="false"
-                          aria-controls="collapsepaypal"
-                        >
+                          aria-controls="collapsepaypal">
                           Paypal
                         </a>
                       </h3>
@@ -508,8 +495,7 @@ const Checkout = () => {
                     <div className="form-group">
                       <button
                         className="btn btn-primary btn-lg py-3 btn-block"
-                        onClick={() => navigate("/thankyou")}
-                      >
+                        onClick={() => navigate('/thankyou')}>
                         Place Order
                       </button>
                     </div>

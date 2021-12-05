@@ -1,17 +1,20 @@
-import React from "react"
-import ReactDOM from "react-dom"
-import "./index.css"
-import App from "./App"
-import reportWebVitals from "./reportWebVitals"
-import CategoryState from "./context/category/CategoryState"
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
+import App from './App'
+import reportWebVitals from './reportWebVitals'
+import CategoryState from './context/category/CategoryState'
+import ProductState from './context/product/ProductState'
 
 ReactDOM.render(
   <React.StrictMode>
     <CategoryState>
-      <App />
+      <ProductState>
+        <App />
+      </ProductState>
     </CategoryState>
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById('root')
 )
 
 // If you want to start measuring performance in your app, pass a function

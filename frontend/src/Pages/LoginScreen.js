@@ -1,5 +1,5 @@
-import React from "react"
-import { useNavigate } from "react-router-dom"
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const LoginScreen = () => {
   const navigate = useNavigate()
@@ -7,7 +7,7 @@ const LoginScreen = () => {
     <div>
       <div>
         {/* HEADER */}
-        <header id="main-header" className="py-2 bg-primary text-white">
+        {/* <header id="main-header" className="py-2 bg-primary text-white">
           <div className="container">
             <div className="row">
               <div className="col-md-6">
@@ -17,7 +17,7 @@ const LoginScreen = () => {
               </div>
             </div>
           </div>
-        </header>
+        </header> */}
         {/* ACTIONS */}
         <section id="actions" className="py-4 mb-4 bg-light">
           <div className="container">
@@ -34,7 +34,7 @@ const LoginScreen = () => {
                     <h4>Account Login</h4>
                   </div>
                   <div className="card-body">
-                    <form onSubmit={() => navigate("/adminDashboard")}>
+                    <form onSubmit={() => navigate('/adminDashboard')}>
                       <div className="form-group">
                         <label htmlFor="email">Email</label>
                         <input type="text" className="form-control" />

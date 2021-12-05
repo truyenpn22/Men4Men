@@ -1,20 +1,20 @@
-import "./App.css"
-import Footer from "./components/Footer"
-import Header from "./components/Header"
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import Home from "./Pages/Home"
-import About from "./Pages/About"
-import Shop from "./Pages/Shop"
-import ShopSingle from "./Pages/ShopSingle"
-import Contact from "./Pages/Contact"
-import Cart from "./Pages/Cart"
-import Checkout from "./Pages/Checkout"
-import ThankYou from "./Pages/ThankYou"
-import AdminDashboard from "./AdminScreens/AdminDashboard"
-import LoginScreen from "./AdminComponents/LoginScreen"
-import Products from "./AdminScreens/Products"
-import Categories from "./AdminScreens/Categories"
-import Users from "./AdminScreens/Users"
+import './App.css'
+import Footer from './components/Footer'
+import Header from './components/Header'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Home from './Pages/Home'
+import About from './Pages/About'
+import Shop from './Pages/Shop'
+import ShopSingle from './Pages/ShopSingle'
+import Contact from './Pages/Contact'
+import Cart from './Pages/Cart'
+import Checkout from './Pages/Checkout'
+import ThankYou from './Pages/ThankYou'
+import AdminDashboard from './AdminScreens/AdminDashboard'
+import LoginScreen from './Pages/LoginScreen'
+import Products from './AdminScreens/Products'
+import Categories from './AdminScreens/Categories'
+import Users from './AdminScreens/Users'
 
 function App() {
   return (

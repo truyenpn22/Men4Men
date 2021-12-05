@@ -1,6 +1,6 @@
-import React from "react"
-import Breadcrumb from "../components/Breadcrumb"
-import { useNavigate } from "react-router-dom"
+import React from 'react'
+import Breadcrumb from '../components/Breadcrumb'
+import { useNavigate } from 'react-router-dom'
 
 const Cart = () => {
   const navigate = useNavigate()
@@ -40,13 +40,11 @@ const Cart = () => {
                       <td>
                         <div
                           className="input-group mb-3"
-                          style={{ maxWidth: "120px" }}
-                        >
+                          style={{ maxWidth: '120px' }}>
                           <div className="input-group-prepend">
                             <button
                               className="btn btn-outline-primary js-btn-minus"
-                              type="button"
-                            >
+                              type="button">
                               &minus;
                             </button>
                           </div>
@@ -61,8 +59,7 @@ const Cart = () => {
                           <div className="input-group-append">
                             <button
                               className="btn btn-outline-primary js-btn-plus"
-                              type="button"
-                            >
+                              type="button">
                               &#43;
                             </button>
                           </div>
@@ -70,7 +67,7 @@ const Cart = () => {
                       </td>
                       <td>$49.00</td>
                       <td>
-                        <a href="#" className="btn btn-primary btn-sm">
+                        <a href="/" className="btn btn-primary btn-sm">
                           X
                         </a>
                       </td>
@@ -91,13 +88,11 @@ const Cart = () => {
                       <td>
                         <div
                           className="input-group mb-3"
-                          style={{ maxWidth: "120px" }}
-                        >
+                          style={{ maxWidth: '120px' }}>
                           <div className="input-group-prepend">
                             <button
                               className="btn btn-outline-primary js-btn-minus"
-                              type="button"
-                            >
+                              type="button">
                               &minus;
                             </button>
                           </div>
@@ -112,8 +107,7 @@ const Cart = () => {
                           <div className="input-group-append">
                             <button
                               className="btn btn-outline-primary js-btn-plus"
-                              type="button"
-                            >
+                              type="button">
                               &#43;
                             </button>
                           </div>
@@ -121,7 +115,7 @@ const Cart = () => {
                       </td>
                       <td>$49.00</td>
                       <td>
-                        <a href="#" className="btn btn-primary btn-sm">
+                        <a href="/" className="btn btn-primary btn-sm">
                           X
                         </a>
                       </td>
@@ -199,8 +193,7 @@ const Cart = () => {
                     <div className="col-md-12">
                       <button
                         className="btn btn-primary btn-lg py-3 btn-block"
-                        onClick={() => navigate("/checkout")}
-                      >
+                        onClick={() => navigate('/checkout')}>
                         Proceed To Checkout
                       </button>
                     </div>

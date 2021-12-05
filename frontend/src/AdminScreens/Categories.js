@@ -1,7 +1,10 @@
-import React, { useContext, useEffect, useState } from "react"
-import Navbar from "../AdminComponents/Navbar"
-import Footer from "../AdminComponents/Footer"
-import CategoryContext from "../context/category/categoryContext"
+import React, { useContext, useEffect } from 'react'
+import { Button } from 'react-bootstrap'
+import Navbar from '../AdminComponents/Navbar'
+// import Footer from '../AdminComponents/Footer'
+import CategoryContext from '../context/category/categoryContext'
+import EditCategoryModal from '../AdminComponents/EditCategoryModal'
+import AddCategoryModal from '../AdminComponents/AddCategoryModal'
 
 const Categories = () => {
   const context = useContext(CategoryContext)
@@ -10,16 +13,15 @@ const Categories = () => {
   // const [categoryArray, setCategoryArray] = useState(categories)
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      await getCategories()
-    }
-    fetchCategories()
+    getCategories()
+
     // eslint-disable-next-line
   }, [])
 
   return (
     <div>
       <Navbar />
+
       <div>
         {/* HEADER */}
         <header id="main-header" className="py-2 bg-success text-white">
@@ -37,6 +39,16 @@ const Categories = () => {
         <section id="search" className="py-4 mb-4 bg-light">
           <div className="container">
             <div className="row">
+              <div className="col-md-6">
+                <a
+                  href="/"
+                  className="btn btn-success btn-block"
+                  data-toggle="modal"
+                  data-target="#addCategoryModal">
+                  <i className="fas fa-plus" /> Add New Category
+                </a>
+                <AddCategoryModal />
+              </div>
               <div className="col-md-6 ml-auto">
                 <div className="input-group">
                   <input
@@ -79,10 +91,14 @@ const Categories = () => {
                             {new Date(category.createdAt).toLocaleDateString()}
                           </td>
                           <td>
-                            <button className="btn btn-secondary">
+                            {/* <button className="btn btn-secondary">
                               <i className="fas fa-angle-double-right" />{" "}
                               Details
-                            </button>
+                            </button> */}
+                            <EditCategoryModal category={category} />
+                            <Button variant="danger" className="mx-2" disabled>
+                              <i className="fas fa-trash" /> Delete
+                            </Button>
                           </td>
                         </tr>
                       ))}
@@ -94,7 +110,7 @@ const Categories = () => {
           </div>
         </section>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }

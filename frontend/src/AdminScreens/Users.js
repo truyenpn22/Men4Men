@@ -1,6 +1,6 @@
-import React from "react"
-import Navbar from "../AdminComponents/Navbar"
-import Footer from "../AdminComponents/Footer"
+import React from 'react'
+import Navbar from '../AdminComponents/Navbar'
+// import Footer from '../AdminComponents/Footer'
 
 const Users = () => {
   return (
@@ -95,7 +95,7 @@ const Users = () => {
           </div>
         </section>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }
