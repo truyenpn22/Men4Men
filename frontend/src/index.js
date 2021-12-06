@@ -5,14 +5,20 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import CategoryState from './context/category/CategoryState'
 import ProductState from './context/product/ProductState'
+import UserState from './context/user/UserState'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 ReactDOM.render(
   <React.StrictMode>
-    <CategoryState>
-      <ProductState>
-        <App />
-      </ProductState>
-    </CategoryState>
+    <Router>
+      <UserState>
+        <CategoryState>
+          <ProductState>
+            <App />
+          </ProductState>
+        </CategoryState>
+      </UserState>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 )

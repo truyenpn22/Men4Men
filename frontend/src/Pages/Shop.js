@@ -1,8 +1,25 @@
-import React from "react"
-import { Link } from "react-router-dom"
-import Breadcrumb from "../components/Breadcrumb"
+import React, { useContext, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import Breadcrumb from '../components/Breadcrumb'
+import CategoryContext from '../context/category/categoryContext'
+import productContext from '../context/product/productContext'
 
 const Shop = () => {
+  // for product context
+  const pContext = useContext(productContext)
+  const { getProducts, products, getCategoryWiseProducts } = pContext
+
+  // for category context
+  const cContext = useContext(CategoryContext)
+  const { categories, getCategories } = cContext
+
+  // console.log(getCategoryWiseProducts)
+
+  useEffect(() => {
+    getProducts()
+    getCategories()
+  }, [])
+
   return (
     <>
       <Breadcrumb pageName="Shop" />
@@ -23,14 +40,12 @@ const Shop = () => {
                         id="dropdownMenuOffset"
                         data-toggle="dropdown"
                         aria-haspopup="true"
-                        aria-expanded="false"
-                      >
+                        aria-expanded="false">
                         Latest
                       </button>
                       <div
                         className="dropdown-menu"
-                        aria-labelledby="dropdownMenuOffset"
-                      >
+                        aria-labelledby="dropdownMenuOffset">
                         <a className="dropdown-item" href="/">
                           Men
                         </a>
@@ -47,14 +62,12 @@ const Shop = () => {
                         type="button"
                         className="btn btn-secondary btn-sm dropdown-toggle"
                         id="dropdownMenuReference"
-                        data-toggle="dropdown"
-                      >
+                        data-toggle="dropdown">
                         Reference
                       </button>
                       <div
                         className="dropdown-menu"
-                        aria-labelledby="dropdownMenuReference"
-                      >
+                        aria-labelledby="dropdownMenuReference">
                         <a className="dropdown-item" href="/">
                           Relevance
                         </a>
@@ -78,66 +91,35 @@ const Shop = () => {
               </div>
 
               <div className="row mb-5">
-                <div className="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                  <div className="block-4 text-center border">
-                    <figure className="block-4-image">
-                      <Link to="/shopSingle">
-                        <img
-                          src="images/cloth_1.jpg"
-                          alt="placeholder"
-                          className="img-fluid"
-                        />
-                      </Link>
-                    </figure>
-                    <div className="block-4-text p-4">
-                      <h3>
-                        <Link to="/shopSingle">Tank Top</Link>
-                      </h3>
-                      <p className="mb-0">Finding perfect t-shirt</p>
-                      <p className="text-primary font-weight-bold">$50</p>
+                {products.map(product => (
+                  <div
+                    className="col-sm-6 col-lg-4 mb-4"
+                    data-aos="fade-up"
+                    key={product._id}>
+                    <div className="block-4 text-center border">
+                      <figure className="block-4-image">
+                        <Link to={`/shopSingle/${product._id}`}>
+                          <img
+                            src="images/cloth_1.jpg"
+                            alt="placeholder"
+                            className="img-fluid"
+                          />
+                        </Link>
+                      </figure>
+                      <div className="block-4-text p-4">
+                        <h3>
+                          <Link to={`/shopSingle/${product._id}`}>
+                            {product.name}
+                          </Link>
+                        </h3>
+                        <p className="mb-0">{product.description}</p>
+                        <p className="text-primary font-weight-bold">
+                          ${product.price}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                  <div className="block-4 text-center border">
-                    <figure className="block-4-image">
-                      <Link to="/shopSingle">
-                        <img
-                          src="images/shoe_1.jpg"
-                          alt="placeholder"
-                          className="img-fluid"
-                        />
-                      </Link>
-                    </figure>
-                    <div className="block-4-text p-4">
-                      <h3>
-                        <Link to="/shopSingle">Corater</Link>
-                      </h3>
-                      <p className="mb-0">Finding perfect products</p>
-                      <p className="text-primary font-weight-bold">$50</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                  <div className="block-4 text-center border">
-                    <figure className="block-4-image">
-                      <Link to="/shopSingle">
-                        <img
-                          src="images/cloth_2.jpg"
-                          alt="placeholder"
-                          className="img-fluid"
-                        />
-                      </Link>
-                    </figure>
-                    <div className="block-4-text p-4">
-                      <h3>
-                        <Link to="/shopSingle">Polo Shirt</Link>
-                      </h3>
-                      <p className="mb-0">Finding perfect products</p>
-                      <p className="text-primary font-weight-bold">$50</p>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
 
               <div className="row" data-aos="fade-up">
@@ -177,24 +159,16 @@ const Shop = () => {
                   Categories
                 </h3>
                 <ul className="list-unstyled mb-0">
-                  <li className="mb-1">
-                    <a href="/" className="d-flex">
-                      <span>Men</span>{" "}
-                      <span className="text-black ml-auto">(2,220)</span>
-                    </a>
-                  </li>
-                  <li className="mb-1">
-                    <a href="/" className="d-flex">
-                      <span>Women</span>{" "}
-                      <span className="text-black ml-auto">(2,550)</span>
-                    </a>
-                  </li>
-                  <li className="mb-1">
-                    <a href="/" className="d-flex">
-                      <span>Children</span>{" "}
-                      <span className="text-black ml-auto">(2,124)</span>
-                    </a>
-                  </li>
+                  {categories.map(category => (
+                    <li className="mb-1" key={category._id}>
+                      <button
+                        className="d-flex"
+                        onClick={() => getCategoryWiseProducts(category._id)}>
+                        <span>{category.title}</span>
+                        <span className="text-black ml-auto">(2,220)</span>
+                      </button>
+                    </li>
+                  ))}
                 </ul>
               </div>
 
@@ -218,15 +192,15 @@ const Shop = () => {
                     Size
                   </h3>
                   <label htmlFor="s_sm" className="d-flex">
-                    <input type="checkbox" id="s_sm" className="mr-2 mt-1" />{" "}
+                    <input type="checkbox" id="s_sm" className="mr-2 mt-1" />{' '}
                     <span className="text-black">Small (2,319)</span>
                   </label>
                   <label htmlFor="s_md" className="d-flex">
-                    <input type="checkbox" id="s_md" className="mr-2 mt-1" />{" "}
+                    <input type="checkbox" id="s_md" className="mr-2 mt-1" />{' '}
                     <span className="text-black">Medium (1,282)</span>
                   </label>
                   <label htmlFor="s_lg" className="d-flex">
-                    <input type="checkbox" id="s_lg" className="mr-2 mt-1" />{" "}
+                    <input type="checkbox" id="s_lg" className="mr-2 mt-1" />{' '}
                     <span className="text-black">Large (1,392)</span>
                   </label>
                 </div>
@@ -236,19 +210,19 @@ const Shop = () => {
                     Color
                   </h3>
                   <a href="/" className="d-flex color-item align-items-center">
-                    <span className="bg-danger color d-inline-block rounded-circle mr-2"></span>{" "}
+                    <span className="bg-danger color d-inline-block rounded-circle mr-2"></span>{' '}
                     <span className="text-black">Red (2,429)</span>
                   </a>
                   <a href="/" className="d-flex color-item align-items-center">
-                    <span className="bg-success color d-inline-block rounded-circle mr-2"></span>{" "}
+                    <span className="bg-success color d-inline-block rounded-circle mr-2"></span>{' '}
                     <span className="text-black">Green (2,298)</span>
                   </a>
                   <a href="/" className="d-flex color-item align-items-center">
-                    <span className="bg-info color d-inline-block rounded-circle mr-2"></span>{" "}
+                    <span className="bg-info color d-inline-block rounded-circle mr-2"></span>{' '}
                     <span className="text-black">Blue (1,075)</span>
                   </a>
                   <a href="/" className="d-flex color-item align-items-center">
-                    <span className="bg-primary color d-inline-block rounded-circle mr-2"></span>{" "}
+                    <span className="bg-primary color d-inline-block rounded-circle mr-2"></span>{' '}
                     <span className="text-black">Purple (1,075)</span>
                   </a>
                 </div>
@@ -268,8 +242,7 @@ const Shop = () => {
                   <div
                     className="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0"
                     data-aos="fade"
-                    data-aos-delay=""
-                  >
+                    data-aos-delay="">
                     <a className="block-2-item" href="/">
                       <figure className="image">
                         <img
@@ -287,8 +260,7 @@ const Shop = () => {
                   <div
                     className="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0"
                     data-aos="fade"
-                    data-aos-delay="100"
-                  >
+                    data-aos-delay="100">
                     <a className="block-2-item" href="/">
                       <figure className="image">
                         <img
@@ -306,8 +278,7 @@ const Shop = () => {
                   <div
                     className="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0"
                     data-aos="fade"
-                    data-aos-delay="200"
-                  >
+                    data-aos-delay="200">
                     <a className="block-2-item" href="/">
                       <figure className="image">
                         <img

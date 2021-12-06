@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react'
+import AddProductModal from '../AdminComponents/AddProductModal'
 import Navbar from '../AdminComponents/Navbar'
 import productContext from '../context/product/productContext'
 // import Footer from '../AdminComponents/Footer'
@@ -32,6 +33,16 @@ const Products = () => {
       <section id="search" className="py-4 mb-4 bg-light">
         <div className="container">
           <div className="row">
+            <div className="col-md-6">
+              <a
+                href="/"
+                className="btn btn-primary btn-block"
+                data-toggle="modal"
+                data-target="#addProductModal">
+                <i className="fas fa-plus" /> Add Porduct
+              </a>
+              <AddProductModal />
+            </div>
             <div className="col-md-6 ml-auto">
               <div className="input-group">
                 <input

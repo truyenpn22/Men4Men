@@ -32,7 +32,7 @@ const EditCategoryModal = props => {
         <i className="fas fa-edit" /> Edit
       </Button>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} style={{ zIndex: '9999' }} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>

@@ -6,7 +6,6 @@ import Product from '../models/Product.js'
 export const addProduct = async (req, res) => {
   try {
     const product = new Product(req.body)
-    console.log(req.body)
     await product.save()
     res.status(201).json({ success: true, message: 'product added', product })
   } catch (err) {
@@ -19,12 +18,32 @@ export const addProduct = async (req, res) => {
 // @access Public
 export const getAllProducts = async (req, res) => {
   try {
+    if (req.query.category) {
+      const products = await Product.find({
+        category: req.query.category,
+      }).sort('-createdAt')
+      return res.json({ success: true, products })
+    }
     const products = await Product.find({}).sort('-createdAt')
     res.json({ success: true, products })
   } catch (err) {
+    console.log(err)
     res.status(400).json({ success: false, error: err.message })
   }
 }
+
+// router.get("/products", async (req, res) => {
+//   try {
+//       if(req.query.category){
+//         const studentsdata = await product.find({ category: req.query.category })
+//         return res.status(200).send(studentsdata)
+//       }
+//     const studentsdata = await product.find({});
+//     res.send(studentsdata);
+//   } catch (e) {
+//     res.send(e);
+//   }
+// });
 
 // @desc Get One product
 // @route GET '/api/products/:id'

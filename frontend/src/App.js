@@ -1,7 +1,7 @@
 import './App.css'
 import Footer from './components/Footer'
 import Header from './components/Header'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import Home from './Pages/Home'
 import About from './Pages/About'
 import Shop from './Pages/Shop'
@@ -15,42 +15,65 @@ import LoginScreen from './Pages/LoginScreen'
 import Products from './AdminScreens/Products'
 import Categories from './AdminScreens/Categories'
 import Users from './AdminScreens/Users'
+import AlertMessage from './components/AlertMessage'
+import Loader from './components/Loader'
+import productContext from './context/product/productContext'
+import { useContext } from 'react'
 
 function App() {
+  // for product context
+  const pContext = useContext(productContext)
+  const { productsLoading, productsMessage, productsError } = pContext
+
   return (
-    <Router>
-      <main className="site-wrap">
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} exact />
+    <main className="site-wrap">
+      {/* <AlertMessage variant="success">Here is the alert message</AlertMessage> */}
 
-          <Route path="/about" element={<About />} exact />
+      {productsLoading && <Loader />}
+      {/* {productsMessage} */}
 
-          <Route path="/shop" element={<Shop />} exact />
+      {productsError && (
+        <AlertMessage variant={productsError.variant}>
+          {productsError.message}
+        </AlertMessage>
+      )}
 
-          <Route path="/shopSingle" element={<ShopSingle />} exact />
+      {productsMessage && (
+        <AlertMessage variant={productsMessage.variant}>
+          {productsMessage.message}
+        </AlertMessage>
+      )}
 
-          <Route path="/contact" element={<Contact />} exact />
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
 
-          <Route path="/cart" element={<Cart />} exact />
+        <Route path="/about" element={<About />} />
 
-          <Route path="/Checkout" element={<Checkout />} exact />
+        <Route path="/shop" element={<Shop />} />
 
-          <Route path="/thankyou" element={<ThankYou />} exact />
+        <Route path="/shopSingle/:id" element={<ShopSingle />} />
 
-          <Route path="/login" element={<LoginScreen />} exact />
+        <Route path="/contact" element={<Contact />} />
 
-          <Route path="/adminDashboard" element={<AdminDashboard />} exact />
+        <Route path="/cart" element={<Cart />} />
 
-          <Route path="/products" element={<Products />} exact />
+        <Route path="/Checkout" element={<Checkout />} />
 
-          <Route path="/categories" element={<Categories />} exact />
+        <Route path="/thankyou" element={<ThankYou />} />
 
-          <Route path="/users" element={<Users />} exact />
-        </Routes>
-        <Footer />
-      </main>
-    </Router>
+        <Route path="/login" element={<LoginScreen />} />
+
+        <Route path="/adminDashboard" element={<AdminDashboard />} />
+
+        <Route path="/products" element={<Products />} />
+
+        <Route path="/categories" element={<Categories />} />
+
+        <Route path="/users" element={<Users />} />
+      </Routes>
+      <Footer />
+    </main>
   )
 }
 

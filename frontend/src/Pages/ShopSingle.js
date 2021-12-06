@@ -1,8 +1,27 @@
-import React from "react"
-import { Link } from "react-router-dom"
-import Breadcrumb from "../components/Breadcrumb"
+import React, { useContext, useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import Breadcrumb from '../components/Breadcrumb'
+import productContext from '../context/product/productContext'
 
 const ShopSingle = () => {
+  const { id } = useParams()
+  console.log(id)
+  const [product, setProduct] = useState({})
+
+  // for product context
+  const pContext = useContext(productContext)
+  const { getOneProduct } = pContext
+
+  useEffect(() => {
+    const fetctProduct = async () => {
+      const fetchedProduct = await getOneProduct(id)
+      setProduct(fetchedProduct)
+    }
+    fetctProduct()
+    // eslint-disable-next-line
+  }, [])
+
+  console.log(product)
   return (
     <>
       <Breadcrumb pageName="ProductNameHere" />
@@ -34,50 +53,45 @@ const ShopSingle = () => {
                 <label htmlFor="option-sm" className="d-flex mr-3 mb-3">
                   <span
                     className="d-inline-block mr-2"
-                    style={{ top: "-2px", position: "relative" }}
-                  >
+                    style={{ top: '-2px', position: 'relative' }}>
                     <input type="radio" id="option-sm" name="shop-sizes" />
-                  </span>{" "}
+                  </span>{' '}
                   <span className="d-inline-block text-black">Small</span>
                 </label>
                 <label htmlFor="option-md" className="d-flex mr-3 mb-3">
                   <span
                     className="d-inline-block mr-2"
-                    style={{ top: "-2px", position: "relative" }}
-                  >
+                    style={{ top: '-2px', position: 'relative' }}>
                     <input type="radio" id="option-md" name="shop-sizes" />
-                  </span>{" "}
+                  </span>{' '}
                   <span className="d-inline-block text-black">Medium</span>
                 </label>
                 <label htmlFor="option-lg" className="d-flex mr-3 mb-3">
                   <span
                     className="d-inline-block mr-2"
-                    style={{ top: "-2px", position: "relative" }}
-                  >
+                    style={{ top: '-2px', position: 'relative' }}>
                     <input type="radio" id="option-lg" name="shop-sizes" />
-                  </span>{" "}
+                  </span>{' '}
                   <span className="d-inline-block text-black">Large</span>
                 </label>
                 <label htmlFor="option-xl" className="d-flex mr-3 mb-3">
                   <span
                     className="d-inline-block mr-2"
-                    style={{ top: "-2px", position: "relative" }}
-                  >
+                    style={{ top: '-2px', position: 'relative' }}>
                     <input type="radio" id="option-xl" name="shop-sizes" />
-                  </span>{" "}
+                  </span>{' '}
                   <span className="d-inline-block text-black">
-                    {" "}
+                    {' '}
                     Extra Large
                   </span>
                 </label>
               </div>
               <div className="mb-5">
-                <div className="input-group mb-3" style={{ maxWidth: "120px" }}>
+                <div className="input-group mb-3" style={{ maxWidth: '120px' }}>
                   <div className="input-group-prepend">
                     <button
                       className="btn btn-outline-primary js-btn-minus"
-                      type="button"
-                    >
+                      type="button">
                       &minus;
                     </button>
                   </div>
@@ -92,8 +106,7 @@ const ShopSingle = () => {
                   <div className="input-group-append">
                     <button
                       className="btn btn-outline-primary js-btn-plus"
-                      type="button"
-                    >
+                      type="button">
                       &#43;
                     </button>
                   </div>
