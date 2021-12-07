@@ -2,10 +2,14 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Breadcrumb from '../components/Breadcrumb'
 import productContext from '../context/product/productContext'
+import { useCart } from 'react-use-cart'
 
 const ShopSingle = () => {
+  const { addItem } = useCart()
+
+  const [quantity, setQuantity] = useState(1)
+
   const { id } = useParams()
-  console.log(id)
   const [product, setProduct] = useState({})
 
   // for product context
@@ -21,7 +25,6 @@ const ShopSingle = () => {
     // eslint-disable-next-line
   }, [])
 
-  console.log(product)
   return (
     <>
       <Breadcrumb pageName={product.name} />
@@ -78,7 +81,9 @@ const ShopSingle = () => {
                 <div className="input-group mb-3" style={{ maxWidth: '120px' }}>
                   <div className="input-group-prepend">
                     <button
+                      disabled={quantity < 2}
                       className="btn btn-outline-primary js-btn-minus"
+                      onClick={() => setQuantity(quantity - 1)}
                       type="button">
                       &minus;
                     </button>
@@ -86,7 +91,8 @@ const ShopSingle = () => {
                   <input
                     type="text"
                     className="form-control text-center"
-                    // value="1"
+                    value={quantity}
+                    onChange={e => setQuantity(e.target.value)}
                     placeholder=""
                     aria-label="Example text with button addon"
                     aria-describedby="button-addon1"
@@ -94,6 +100,7 @@ const ShopSingle = () => {
                   <div className="input-group-append">
                     <button
                       className="btn btn-outline-primary js-btn-plus"
+                      onClick={() => setQuantity(quantity + 1)}
                       type="button">
                       &#43;
                     </button>
@@ -101,7 +108,16 @@ const ShopSingle = () => {
                 </div>
               </div>
               <p>
-                <Link to="/cart" className="buy-now btn btn-sm btn-primary">
+                <Link
+                  to="/Cart"
+                  className="buy-now btn btn-sm btn-primary"
+                  onClick={() => {
+                    let item = {
+                      ...product,
+                      id: product._id,
+                    }
+                    addItem(item, quantity)
+                  }}>
                   Add To Cart
                 </Link>
               </p>

@@ -1,7 +1,19 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import UserContext from '../context/user/UserContext'
 
 const Header = () => {
+  // const navigate = useNavigate()
+
+  // for user context
+  const userContext = useContext(UserContext)
+  const { logout, user } = userContext
+
+  const logoutHandler = () => {
+    logout()
+    // history.push('/login')
+  }
+
   return (
     <header className="site-navbar" role="banner">
       <div className="site-navbar-top">
@@ -42,21 +54,34 @@ const Header = () => {
             <div className="col-6 col-md-4 order-3 order-md-3 text-right">
               <div className="site-top-icons">
                 <ul>
-                  <li>
-                    <Link to="/login">
-                      Login<span className="icon icon-person"></span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/signup">
-                      Signup<span className="icon icon-user-plus"></span>
-                    </Link>
-                  </li>
-                  <li>
-                    <a href="/">
-                      <span className="icon icon-heart-o"></span>
-                    </a>
-                  </li>
+                  {user ? (
+                    <>
+                      <li>
+                        <Link to="/profile">
+                          <span className="icon icon-user"></span> {user.name}
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/" onClick={logoutHandler}>
+                          <span className="icon icon-user"></span> Logout
+                        </Link>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li>
+                        <Link to="/login">
+                          Login<span className="icon icon-person"></span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/signup">
+                          Signup<span className="icon icon-user-plus"></span>
+                        </Link>
+                      </li>
+                    </>
+                  )}
+
                   <li>
                     <Link to="/cart" className="site-cart">
                       <span className="icon icon-shopping_cart"></span>

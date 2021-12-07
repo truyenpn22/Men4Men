@@ -1,4 +1,5 @@
 import './App.css'
+import React from 'react'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import { Routes, Route } from 'react-router-dom'
@@ -16,6 +17,7 @@ import Products from './AdminScreens/Products'
 import Categories from './AdminScreens/Categories'
 import Users from './AdminScreens/Users'
 import Misc from './components/Misc'
+import SignupScreen from './Pages/SignupScreen'
 
 function App() {
   return (
@@ -40,6 +42,8 @@ function App() {
         <Route path="/thankyou" element={<ThankYou />} />
 
         <Route path="/login" element={<LoginScreen />} />
+
+        <Route path="/signup" element={<SignupScreen />} />
 
         <Route path="/adminDashboard" element={<AdminDashboard />} />
 

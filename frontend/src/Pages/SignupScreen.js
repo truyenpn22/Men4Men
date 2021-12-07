@@ -1,31 +1,37 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
+import UserContext from '../context/user/UserContext'
+// import { useNavigate } from 'react-router-dom'
 
 const SignupScreen = () => {
-  const navigate = useNavigate()
+  const [userDetails, setUserDetails] = useState({
+    name: '',
+    email: '',
+    password: '',
+  })
+
+  // for user context
+  const uContext = useContext(UserContext)
+  const { signup } = uContext
+
+  const handleChange = e => {
+    setUserDetails({ ...userDetails, [e.target.name]: e.target.value })
+  }
+
+  const handleSignup = e => {
+    e.preventDefault()
+    signup(userDetails.name, userDetails.email, userDetails.password)
+  }
+
   return (
     <div>
       <div>
-        {/* HEADER */}
-        {/* <header id="main-header" className="py-2 bg-primary text-white">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-6">
-                <h1>
-                  <i className="fas fa-user" /> Blogen Admin
-                </h1>
-              </div>
-            </div>
-          </div>
-        </header> */}
-        {/* ACTIONS */}
         <section id="actions" className="py-4 mb-4 bg-light">
           <div className="container">
             <div className="row"></div>
           </div>
         </section>
-        {/* LOGIN */}
-        <section id="login">
+        {/* Signup */}
+        <section id="Signup">
           <div className="container">
             <div className="row">
               <div className="col-md-6 mx-auto">
@@ -34,14 +40,36 @@ const SignupScreen = () => {
                     <h4>Account Register</h4>
                   </div>
                   <div className="card-body">
-                    <form onSubmit={() => navigate('/adminDashboard')}>
+                    <form onSubmit={handleSignup}>
+                      <div className="form-group">
+                        <label htmlFor="name">Name</label>
+                        <input
+                          onChange={handleChange}
+                          type="text"
+                          className="form-control"
+                          name="name"
+                          value={userDetails.name}
+                        />
+                      </div>
                       <div className="form-group">
                         <label htmlFor="email">Email</label>
-                        <input type="text" className="form-control" />
+                        <input
+                          onChange={handleChange}
+                          type="text"
+                          className="form-control"
+                          name="email"
+                          value={userDetails.email}
+                        />
                       </div>
                       <div className="form-group">
                         <label htmlFor="password">Password</label>
-                        <input type="password" className="form-control" />
+                        <input
+                          onChange={handleChange}
+                          type="password"
+                          className="form-control"
+                          name="password"
+                          value={userDetails.password}
+                        />
                       </div>
                       <input
                         type="submit"

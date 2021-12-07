@@ -7,18 +7,21 @@ import CategoryState from './context/category/CategoryState'
 import ProductState from './context/product/ProductState'
 import UserState from './context/user/UserState'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { CartProvider } from 'react-use-cart'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <UserState>
-        <CategoryState>
-          <ProductState>
-            <App />
-          </ProductState>
-        </CategoryState>
-      </UserState>
-    </Router>
+    <CartProvider>
+      <Router>
+        <UserState>
+          <CategoryState>
+            <ProductState>
+              <App />
+            </ProductState>
+          </CategoryState>
+        </UserState>
+      </Router>
+    </CartProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )

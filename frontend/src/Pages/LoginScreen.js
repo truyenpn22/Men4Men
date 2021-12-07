@@ -1,24 +1,26 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
+// import { useNavigate } from 'react-router-dom'
+import UserContext from '../context/user/UserContext'
 
 const LoginScreen = () => {
-  const navigate = useNavigate()
+  const [credentials, setCredentials] = useState({ email: '', password: '' })
+
+  // for user context
+  const uContext = useContext(UserContext)
+  const { login } = uContext
+
+  const handleChange = e => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value })
+  }
+
+  const handleLogin = e => {
+    e.preventDefault()
+    login(credentials.email, credentials.password)
+  }
+
   return (
     <div>
       <div>
-        {/* HEADER */}
-        {/* <header id="main-header" className="py-2 bg-primary text-white">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-6">
-                <h1>
-                  <i className="fas fa-user" /> Blogen Admin
-                </h1>
-              </div>
-            </div>
-          </div>
-        </header> */}
-        {/* ACTIONS */}
         <section id="actions" className="py-4 mb-4 bg-light">
           <div className="container">
             <div className="row"></div>
@@ -34,14 +36,26 @@ const LoginScreen = () => {
                     <h4>Account Login</h4>
                   </div>
                   <div className="card-body">
-                    <form onSubmit={() => navigate('/adminDashboard')}>
+                    <form onSubmit={handleLogin}>
                       <div className="form-group">
                         <label htmlFor="email">Email</label>
-                        <input type="text" className="form-control" />
+                        <input
+                          onChange={handleChange}
+                          type="text"
+                          className="form-control"
+                          name="email"
+                          value={credentials.email}
+                        />
                       </div>
                       <div className="form-group">
                         <label htmlFor="password">Password</label>
-                        <input type="password" className="form-control" />
+                        <input
+                          onChange={handleChange}
+                          type="password"
+                          className="form-control"
+                          name="password"
+                          value={credentials.password}
+                        />
                       </div>
                       <input
                         type="submit"

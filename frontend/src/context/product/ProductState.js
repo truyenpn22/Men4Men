@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ProductContext from './productContext'
 import axios from 'axios'
 

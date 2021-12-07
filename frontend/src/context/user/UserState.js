@@ -1,5 +1,5 @@
 import UserContext from './UserContext'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
@@ -48,12 +48,6 @@ const UserState = props => {
       info = ''
     }
     if (err.response) {
-      if (
-        err.response.status === 401 &&
-        err.response.statusText === 'Unauthorized'
-      ) {
-        localStorage.removeItem('userInfo')
-      }
       setUserError({
         variant: 'danger',
         message: `${info} ${err.response.data.error}`,
@@ -95,9 +89,9 @@ const UserState = props => {
   // -----------------------------------------------------------------
   // Signup a new user
   // -----------------------------------------------------------------
-  const signup = async (name, email, password, age) => {
+  const signup = async (name, email, password) => {
     try {
-      const body = clean({ name, email, password, age })
+      const body = clean({ name, email, password })
       setUserLoading(true)
       const { data } = await axios.post(`api/users/register`, body)
       localStorage.setItem('userInfo', JSON.stringify(data.user))
@@ -115,23 +109,23 @@ const UserState = props => {
   // -----------------------------------------------------------------
   // Logout a user
   // -----------------------------------------------------------------
-  //   const logout = async () => {
-  //     try {
-  //       setUserLoading(true)
-  //       await axios.post(`api/users/logout`, null, {
-  //         headers,
-  //       })
-  //       localStorage.removeItem('userInfo')
-  //       localStorage.removeItem('userToken')
-  //       setUser(null)
-  //       setUserError(null)
-  //       setUserLoading(false)
-  //       setUserMessage({ variant: 'dark', message: 'You have logged out!' })
-  //       navigate('/login')
-  //     } catch (err) {
-  //       errorHandler(err)
-  //     }
-  //   }
+  const logout = async () => {
+    try {
+      setUserLoading(true)
+      // await axios.post(`api/users/logout`, null, {
+      //   headers,
+      // })
+      localStorage.removeItem('userInfo')
+      localStorage.removeItem('userToken')
+      setUser(null)
+      setUserError(null)
+      setUserLoading(false)
+      setUserMessage({ variant: 'dark', message: 'You have logged out!' })
+      navigate('/login')
+    } catch (err) {
+      errorHandler(err)
+    }
+  }
 
   // -----------------------------------------------------------------
   // Read user profile
@@ -197,7 +191,7 @@ const UserState = props => {
         userMessage,
         login,
         signup,
-        // logout,
+        logout,
         readProfile,
         // editProfile,
         // deleteProfile,

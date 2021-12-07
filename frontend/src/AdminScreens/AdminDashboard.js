@@ -3,7 +3,7 @@ import Navbar from '../AdminComponents/Navbar'
 // import Footer from '../AdminComponents/Footer'
 import AddProductModal from '../AdminComponents/AddProductModal'
 import AddCategoryModal from '../AdminComponents/AddCategoryModal'
-import AddUserModal from '../AdminComponents/AddUserModal'
+// import AddUserModal from '../AdminComponents/AddUserModal'
 import { Link } from 'react-router-dom'
 import productContext from '../context/product/productContext'
 
@@ -59,13 +59,9 @@ const AdminDashboard = () => {
               </div>
 
               <div className="col-md-4">
-                <a
-                  href="/"
-                  className="btn btn-warning btn-block"
-                  data-toggle="modal"
-                  data-target="#addUserModal">
+                <Link to="/users" className="btn btn-warning btn-block">
                   <i className="fas fa-plus" /> Manage Users
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -160,8 +156,6 @@ const AdminDashboard = () => {
         <AddProductModal />
 
         <AddCategoryModal />
-
-        <AddUserModal />
       </div>
     </div>
   )
