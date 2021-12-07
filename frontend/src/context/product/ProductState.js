@@ -37,12 +37,12 @@ const ProductState = props => {
     if (err.response) {
       setProductsError({
         variant: 'danger',
-        message: `${info} ${err.response.data.error}`,
+        message: `${info}, ${err.response.data.error}`,
       })
     } else if (err.request) {
       setProductsError({
         variant: 'danger',
-        message: `${info} No response from server!`,
+        message: `${info},  No response from server!`,
       })
     } else {
       setProductsError({ variant: 'danger', message: err.message })
@@ -63,15 +63,15 @@ const ProductState = props => {
     try {
       setProductsLoading(true)
       await axios.post('api/products/add', productBody)
-      setProductsLoading(false)
       setProducts([...products, productBody])
       setProductsMessage({
         variant: 'success',
         message: 'Product added successfully!',
       })
+      setProductsLoading(false)
       setProductsError(null)
     } catch (err) {
-      errorHandler(err)
+      errorHandler(err, 'Could not add product')
     }
   }
 
@@ -79,7 +79,7 @@ const ProductState = props => {
   const getProducts = async () => {
     try {
       setProductsLoading(true)
-      const { data } = await axios.get(`api/products/getAll`)
+      const { data } = await axios.get(`/api/products/getAll`)
       setProducts(data.products)
       setProductsLoading(false)
       setProductsError(null)
@@ -105,7 +105,7 @@ const ProductState = props => {
   const getOneProduct = async id => {
     try {
       setProductsLoading(true)
-      const { data } = await axios.get(`api/products/${id}`)
+      const { data } = await axios.get(`/api/products/${id}`)
       setProductsLoading(false)
       setProductsError(null)
       return data.product

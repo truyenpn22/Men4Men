@@ -24,7 +24,7 @@ const ShopSingle = () => {
   console.log(product)
   return (
     <>
-      <Breadcrumb pageName="ProductNameHere" />
+      <Breadcrumb pageName={product.name} />
       <div className="site-section">
         <div className="container">
           <div className="row">
@@ -32,22 +32,10 @@ const ShopSingle = () => {
               <img src="images/cloth_1.jpg" alt="img" className="img-fluid" />
             </div>
             <div className="col-md-6">
-              <h2 className="text-black">Tank Top T-Shirt</h2>
+              <h2 className="text-black">{product.name}</h2>
+              <p>{product.description}</p>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Pariatur, vitae, explicabo? Incidunt facere, natus soluta
-                dolores iusto! Molestiae expedita veritatis nesciunt doloremque
-                sint asperiores fuga voluptas, distinctio, aperiam, ratione
-                dolore.
-              </p>
-              <p className="mb-4">
-                Ex numquam veritatis debitis minima quo error quam eos dolorum
-                quidem perferendis. Quos repellat dignissimos minus, eveniet nam
-                voluptatibus molestias omnis reiciendis perspiciatis illum hic
-                magni iste, velit aperiam quis.
-              </p>
-              <p>
-                <strong className="text-primary h4">$50.00</strong>
+                <strong className="text-primary h4">${product.price}</strong>
               </p>
               <div className="mb-1 d-flex">
                 <label htmlFor="option-sm" className="d-flex mr-3 mb-3">

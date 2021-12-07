@@ -1,5 +1,5 @@
-import React from "react"
-import { Link } from "react-router-dom"
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Header = () => {
   return (
@@ -13,8 +13,7 @@ const Header = () => {
                   order-2 order-md-1
                   site-search-icon
                   text-left
-                "
-            >
+                ">
               <form action="" className="site-block-top-search">
                 <span className="icon icon-search2"></span>
                 <input
@@ -32,8 +31,7 @@ const Header = () => {
                   col-md-4
                   order-1 order-md-2
                   text-center
-                "
-            >
+                ">
               <div className="site-logo">
                 <Link to="/" className="js-logo-clone">
                   Shoppers
@@ -47,6 +45,11 @@ const Header = () => {
                   <li>
                     <Link to="/login">
                       Login<span className="icon icon-person"></span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/signup">
+                      Signup<span className="icon icon-user-plus"></span>
                     </Link>
                   </li>
                   <li>
@@ -73,8 +76,7 @@ const Header = () => {
       </div>
       <nav
         className="site-navigation text-right text-md-center"
-        role="navigation"
-      >
+        role="navigation">
         <div className="container">
           <ul className="site-menu js-clone-nav d-none d-md-block">
             <li className="active">

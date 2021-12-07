@@ -18,6 +18,7 @@ const Shop = () => {
   useEffect(() => {
     getProducts()
     getCategories()
+    // eslint-disable-next-line
   }, [])
 
   return (
@@ -159,6 +160,12 @@ const Shop = () => {
                   Categories
                 </h3>
                 <ul className="list-unstyled mb-0">
+                  <li className="mb-1">
+                    <button className="d-flex" onClick={() => getProducts()}>
+                      <span>All Categories</span>
+                      <span className="text-black ml-auto">(2,220)</span>
+                    </button>
+                  </li>
                   {categories.map(category => (
                     <li className="mb-1" key={category._id}>
                       <button

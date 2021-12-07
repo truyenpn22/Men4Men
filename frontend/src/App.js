@@ -15,35 +15,12 @@ import LoginScreen from './Pages/LoginScreen'
 import Products from './AdminScreens/Products'
 import Categories from './AdminScreens/Categories'
 import Users from './AdminScreens/Users'
-import AlertMessage from './components/AlertMessage'
-import Loader from './components/Loader'
-import productContext from './context/product/productContext'
-import { useContext } from 'react'
+import Misc from './components/Misc'
 
 function App() {
-  // for product context
-  const pContext = useContext(productContext)
-  const { productsLoading, productsMessage, productsError } = pContext
-
   return (
     <main className="site-wrap">
-      {/* <AlertMessage variant="success">Here is the alert message</AlertMessage> */}
-
-      {productsLoading && <Loader />}
-      {/* {productsMessage} */}
-
-      {productsError && (
-        <AlertMessage variant={productsError.variant}>
-          {productsError.message}
-        </AlertMessage>
-      )}
-
-      {productsMessage && (
-        <AlertMessage variant={productsMessage.variant}>
-          {productsMessage.message}
-        </AlertMessage>
-      )}
-
+      <Misc />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
