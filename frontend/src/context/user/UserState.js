@@ -133,7 +133,7 @@ const UserState = props => {
   const readProfile = async () => {
     try {
       setUserLoading(true)
-      const { data } = await axios.get('api/users/me', { headers })
+      const { data } = await axios.get('api/users/profile', { headers })
       setUserError(null)
       setUserLoading(false)
       return data

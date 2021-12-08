@@ -18,6 +18,7 @@ import Categories from './AdminScreens/Categories'
 import Users from './AdminScreens/Users'
 import Misc from './components/Misc'
 import SignupScreen from './Pages/SignupScreen'
+import ProfileScreen from './Pages/ProfileScreen'
 
 function App() {
   return (
@@ -44,6 +45,8 @@ function App() {
         <Route path="/login" element={<LoginScreen />} />
 
         <Route path="/signup" element={<SignupScreen />} />
+
+        <Route path="/profile" element={<ProfileScreen />} />
 
         <Route path="/adminDashboard" element={<AdminDashboard />} />
 

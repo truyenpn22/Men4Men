@@ -1,9 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Breadcrumb from '../components/Breadcrumb'
 
 const Navbar = () => {
   return (
-    <div>
+    <>
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark p-0">
         <div className="container">
           <Link to="/adminDashboard" className="navbar-brand">
@@ -38,33 +39,11 @@ const Navbar = () => {
                 </Link>
               </li>
             </ul>
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-item dropdown mr-3">
-                <a
-                  href="/"
-                  className="nav-link dropdown-toggle"
-                  data-toggle="dropdown">
-                  <i className="fas fa-user" /> Welcome Brad
-                </a>
-                <div className="dropdown-menu">
-                  <a href="profile.html" className="dropdown-item">
-                    <i className="fas fa-user-circle" /> Profile
-                  </a>
-                  <a href="settings.html" className="dropdown-item">
-                    <i className="fas fa-cog" /> Settings
-                  </a>
-                </div>
-              </li>
-              <li className="nav-item">
-                <a href="login.html" className="nav-link">
-                  <i className="fas fa-user-times" /> Logout
-                </a>
-              </li>
-            </ul>
           </div>
         </div>
       </nav>
-    </div>
+      <Breadcrumb pageName="Admin Panel" />
+    </>
   )
 }
 
