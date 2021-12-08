@@ -1,9 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Breadcrumb from '../components/Breadcrumb'
 import { useNavigate } from 'react-router-dom'
+import { useCart } from 'react-use-cart'
 
 const Checkout = () => {
   const navigate = useNavigate()
+
+  const {
+    isEmpty,
+    // totalItems,
+    // totalUniqueItems,
+    cartTotal,
+    // updateItemQuantity,
+    // removeItem,
+    // emptyCart,
+    items,
+  } = useCart()
+
+  useEffect(() => {
+    if (isEmpty) {
+      navigate('/shop')
+    }
+  }, [])
+
   return (
     <>
       <Breadcrumb pageName="Checkout" />
@@ -143,46 +162,7 @@ const Checkout = () => {
                     />
                   </div>
                 </div>
-                <div className="form-group">
-                  <label
-                    htmlFor="c_create_account"
-                    className="text-black"
-                    data-toggle="collapse"
-                    href="#create_an_account"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="create_an_account">
-                    <input
-                      type="checkbox"
-                      defaultValue={1}
-                      id="c_create_account"
-                    />{' '}
-                    Create an account?
-                  </label>
-                  <div className="collapse" id="create_an_account">
-                    <div className="py-2">
-                      <p className="mb-3">
-                        Create an account by entering the information below. If
-                        you are a returning customer please login at the top of
-                        the page.
-                      </p>
-                      <div className="form-group">
-                        <label
-                          htmlFor="c_account_password"
-                          className="text-black">
-                          Account Password
-                        </label>
-                        <input
-                          type="email"
-                          className="form-control"
-                          id="c_account_password"
-                          name="c_account_password"
-                          placeholder
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+
                 <div className="form-group">
                   <label
                     htmlFor="c_ship_different_address"
@@ -395,30 +375,27 @@ const Checkout = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>
-                            Top Up T-Shirt <strong className="mx-2">x</strong> 1
-                          </td>
-                          <td>$250.00</td>
-                        </tr>
-                        <tr>
-                          <td>
-                            Polo Shirt <strong className="mx-2">x</strong> 1
-                          </td>
-                          <td>$100.00</td>
-                        </tr>
+                        {items.map(item => (
+                          <tr>
+                            <td>
+                              {item.name} <strong className="mx-2">x</strong>{' '}
+                              {item.quantity}
+                            </td>
+                            <td>${item.itemTotal}.00</td>
+                          </tr>
+                        ))}
                         <tr>
                           <td className="text-black font-weight-bold">
                             <strong>Cart Subtotal</strong>
                           </td>
-                          <td className="text-black">$350.00</td>
+                          <td className="text-black">${cartTotal}.00</td>
                         </tr>
                         <tr>
                           <td className="text-black font-weight-bold">
                             <strong>Order Total</strong>
                           </td>
                           <td className="text-black font-weight-bold">
-                            <strong>$350.00</strong>
+                            <strong>${cartTotal}.00</strong>
                           </td>
                         </tr>
                       </tbody>

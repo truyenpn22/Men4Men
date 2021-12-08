@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 
 const Footer = () => {
   return (
@@ -111,17 +111,15 @@ const Footer = () => {
               Copyright &copy;
               <script
                 data-cfasync="false"
-                src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
-              ></script>
+                src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
               <script>document.write(new Date().getFullYear())</script>
               All rights reserved | This template is made with
               <i className="icon-heart" aria-hidden="true"></i> by
               <a
                 href="https://colorlib.com"
                 target="_blank"
-                rel="noreferrer"
-                className="text-primary"
-              >
+                rel="noopener noreferrer"
+                className="text-primary">
                 Colorlib
               </a>
               {/* <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --> */}

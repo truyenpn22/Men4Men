@@ -16,6 +16,7 @@ const ProfileScreen = () => {
       setUser(userInfo)
     }
     fetchProfile()
+    // eslint-disable-next-line
   }, [])
 
   return (
@@ -30,14 +31,14 @@ const ProfileScreen = () => {
               </Link>
             </div>
             <div className="col-md-4">
-              <a href="#" className="btn btn-success btn-block">
+              <button disabled className="btn btn-success btn-block">
                 <i className="fas fa-lock" /> Change Password
-              </a>
+              </button>
             </div>
             <div className="col-md-4">
-              <a href="#" className="btn btn-danger btn-block">
+              <button disabled className="btn btn-danger btn-block">
                 <i className="fas fa-trash" /> Delete Account
-              </a>
+              </button>
             </div>
           </div>
         </div>

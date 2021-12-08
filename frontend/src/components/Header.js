@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import UserContext from '../context/user/UserContext'
 
 const Header = () => {
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
 
   // for user context
   const userContext = useContext(UserContext)
@@ -11,7 +11,7 @@ const Header = () => {
 
   const logoutHandler = () => {
     logout()
-    // history.push('/login')
+    navigate('/login')
   }
 
   return (
