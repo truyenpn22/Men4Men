@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals'
 import CategoryState from './context/category/CategoryState'
 import ProductState from './context/product/ProductState'
 import UserState from './context/user/UserState'
+import OrderState from './context/orders/OrderState'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { CartProvider } from 'react-use-cart'
 
@@ -14,11 +15,13 @@ ReactDOM.render(
     <CartProvider>
       <Router>
         <UserState>
-          <CategoryState>
-            <ProductState>
-              <App />
-            </ProductState>
-          </CategoryState>
+          <OrderState>
+            <CategoryState>
+              <ProductState>
+                <App />
+              </ProductState>
+            </CategoryState>
+          </OrderState>
         </UserState>
       </Router>
     </CartProvider>

@@ -1,10 +1,40 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Breadcrumb from '../components/Breadcrumb'
 import { useNavigate } from 'react-router-dom'
 import { useCart } from 'react-use-cart'
+import UserContext from '../context/user/UserContext'
+import OrderContext from '../context/orders/orderContext'
 
 const Checkout = () => {
   const navigate = useNavigate()
+
+  const [shippingAddress, setShippingAddress] = useState({
+    name: '',
+    phone: '',
+    address: '',
+    city: '',
+    postalCode: '',
+    country: '',
+  })
+
+  const [orderItems, setOrderItems] = useState([])
+
+  const [paymentMethod, setPaymentMethod] = useState('')
+
+  // for user context
+  const uContext = useContext(UserContext)
+  const { user } = uContext
+  // for order context
+  const oContext = useContext(OrderContext)
+  const { placeOrder } = oContext
+
+  const handleChange = e => {
+    setShippingAddress({ ...shippingAddress, [e.target.name]: e.target.value })
+  }
+
+  console.log(shippingAddress)
+  console.log(paymentMethod, 'dfjkdh')
+  console.log(orderItems, 'orderitemes')
 
   const {
     isEmpty,
@@ -22,6 +52,18 @@ const Checkout = () => {
       navigate('/shop')
     }
   }, [])
+
+  useEffect(() => {
+    const newArr = items.map(
+      ({ category, createdAt, id, updatedAt, __v, _id, ...keep }) => keep
+    )
+
+    setOrderItems(newArr)
+  }, [])
+
+  const handlePlaceOrder = () => {
+    placeOrder(user._id, orderItems, shippingAddress, paymentMethod, cartTotal)
+  }
 
   return (
     <>
@@ -41,328 +83,88 @@ const Checkout = () => {
               <div className="p-3 p-lg-5 border">
                 <div className="form-group">
                   <label htmlFor="c_country" className="text-black">
-                    Country <span className="text-danger">*</span>
+                    Name <span className="text-danger">*</span>
                   </label>
-                  <select id="c_country" className="form-control">
-                    <option value={1}>Select a country</option>
-                    <option value={2}>bangladesh</option>
-                    <option value={3}>Algeria</option>
-                    <option value={4}>Afghanistan</option>
-                    <option value={5}>Ghana</option>
-                    <option value={6}>Albania</option>
-                    <option value={7}>Bahrain</option>
-                    <option value={8}>Colombia</option>
-                    <option value={9}>Dominican Republic</option>
-                  </select>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="name"
+                    value={shippingAddress.name}
+                    onChange={handleChange}
+                  />
                 </div>
-                <div className="form-group row">
-                  <div className="col-md-6">
-                    <label htmlFor="c_fname" className="text-black">
-                      First Name <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="c_fname"
-                      name="c_fname"
-                    />
-                  </div>
-                  <div className="col-md-6">
-                    <label htmlFor="c_lname" className="text-black">
-                      Last Name <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="c_lname"
-                      name="c_lname"
-                    />
-                  </div>
+
+                <div className="form-group">
+                  <label htmlFor="c_country" className="text-black">
+                    Phone <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    name="phone"
+                    value={shippingAddress.phone}
+                    onChange={handleChange}
+                  />
                 </div>
-                <div className="form-group row">
-                  <div className="col-md-12">
-                    <label htmlFor="c_companyname" className="text-black">
-                      Company Name{' '}
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="c_companyname"
-                      name="c_companyname"
-                    />
-                  </div>
-                </div>
+
                 <div className="form-group row">
                   <div className="col-md-12">
                     <label htmlFor="c_address" className="text-black">
                       Address <span className="text-danger">*</span>
                     </label>
-                    <input
-                      type="text"
+                    <textarea
                       className="form-control"
                       id="c_address"
-                      name="c_address"
-                      placeholder="Street address"
-                    />
-                  </div>
-                </div>
-                <div className="form-group">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Apartment, suite, unit etc. (optional)"
-                  />
-                </div>
-                <div className="form-group row">
-                  <div className="col-md-6">
-                    <label htmlFor="c_state_country" className="text-black">
-                      State / Country <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="c_state_country"
-                      name="c_state_country"
-                    />
-                  </div>
-                  <div className="col-md-6">
-                    <label htmlFor="c_postal_zip" className="text-black">
-                      Posta / Zip <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="c_postal_zip"
-                      name="c_postal_zip"
-                    />
-                  </div>
-                </div>
-                <div className="form-group row mb-5">
-                  <div className="col-md-6">
-                    <label htmlFor="c_email_address" className="text-black">
-                      Email Address <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="c_email_address"
-                      name="c_email_address"
-                    />
-                  </div>
-                  <div className="col-md-6">
-                    <label htmlFor="c_phone" className="text-black">
-                      Phone <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="c_phone"
-                      name="c_phone"
-                      placeholder="Phone Number"
-                    />
+                      name="address"
+                      cols={30}
+                      rows={5}
+                      value={shippingAddress.address}
+                      onChange={handleChange}
+                      placeholder="Street address"></textarea>
                   </div>
                 </div>
 
                 <div className="form-group">
-                  <label
-                    htmlFor="c_ship_different_address"
-                    className="text-black"
-                    data-toggle="collapse"
-                    href="#ship_different_address"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="ship_different_address">
-                    <input
-                      type="checkbox"
-                      defaultValue={1}
-                      id="c_ship_different_address"
-                    />{' '}
-                    Ship To A Different Address?
+                  <label htmlFor="c_country" className="text-black">
+                    City <span className="text-danger">*</span>
                   </label>
-                  <div className="collapse" id="ship_different_address">
-                    <div className="py-2">
-                      <div className="form-group">
-                        <label htmlFor="c_diff_country" className="text-black">
-                          Country <span className="text-danger">*</span>
-                        </label>
-                        <select id="c_diff_country" className="form-control">
-                          <option value={1}>Select a country</option>
-                          <option value={2}>bangladesh</option>
-                          <option value={3}>Algeria</option>
-                          <option value={4}>Afghanistan</option>
-                          <option value={5}>Ghana</option>
-                          <option value={6}>Albania</option>
-                          <option value={7}>Bahrain</option>
-                          <option value={8}>Colombia</option>
-                          <option value={9}>Dominican Republic</option>
-                        </select>
-                      </div>
-                      <div className="form-group row">
-                        <div className="col-md-6">
-                          <label htmlFor="c_diff_fname" className="text-black">
-                            First Name <span className="text-danger">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="c_diff_fname"
-                            name="c_diff_fname"
-                          />
-                        </div>
-                        <div className="col-md-6">
-                          <label htmlFor="c_diff_lname" className="text-black">
-                            Last Name <span className="text-danger">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="c_diff_lname"
-                            name="c_diff_lname"
-                          />
-                        </div>
-                      </div>
-                      <div className="form-group row">
-                        <div className="col-md-12">
-                          <label
-                            htmlFor="c_diff_companyname"
-                            className="text-black">
-                            Company Name{' '}
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="c_diff_companyname"
-                            name="c_diff_companyname"
-                          />
-                        </div>
-                      </div>
-                      <div className="form-group row">
-                        <div className="col-md-12">
-                          <label
-                            htmlFor="c_diff_address"
-                            className="text-black">
-                            Address <span className="text-danger">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="c_diff_address"
-                            name="c_diff_address"
-                            placeholder="Street address"
-                          />
-                        </div>
-                      </div>
-                      <div className="form-group">
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Apartment, suite, unit etc. (optional)"
-                        />
-                      </div>
-                      <div className="form-group row">
-                        <div className="col-md-6">
-                          <label
-                            htmlFor="c_diff_state_country"
-                            className="text-black">
-                            State / Country{' '}
-                            <span className="text-danger">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="c_diff_state_country"
-                            name="c_diff_state_country"
-                          />
-                        </div>
-                        <div className="col-md-6">
-                          <label
-                            htmlFor="c_diff_postal_zip"
-                            className="text-black">
-                            Posta / Zip <span className="text-danger">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="c_diff_postal_zip"
-                            name="c_diff_postal_zip"
-                          />
-                        </div>
-                      </div>
-                      <div className="form-group row mb-5">
-                        <div className="col-md-6">
-                          <label
-                            htmlFor="c_diff_email_address"
-                            className="text-black">
-                            Email Address <span className="text-danger">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="c_diff_email_address"
-                            name="c_diff_email_address"
-                          />
-                        </div>
-                        <div className="col-md-6">
-                          <label htmlFor="c_diff_phone" className="text-black">
-                            Phone <span className="text-danger">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="c_diff_phone"
-                            name="c_diff_phone"
-                            placeholder="Phone Number"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="c_order_notes" className="text-black">
-                    Order Notes
-                  </label>
-                  <textarea
-                    name="c_order_notes"
-                    id="c_order_notes"
-                    cols={30}
-                    rows={5}
+                  <input
+                    type="text"
                     className="form-control"
-                    placeholder="Write your notes here..."
-                    defaultValue={''}
+                    name="city"
+                    value={shippingAddress.city}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="c_country" className="text-black">
+                    Country <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="country"
+                    value={shippingAddress.country}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="c_country" className="text-black">
+                    Postal Code <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    name="postalCode"
+                    value={shippingAddress.postalCode}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
             </div>
             <div className="col-md-6">
-              <div className="row mb-5">
-                <div className="col-md-12">
-                  <h2 className="h3 mb-3 text-black">Coupon Code</h2>
-                  <div className="p-3 p-lg-5 border">
-                    <label htmlFor="c_code" className="text-black mb-3">
-                      Enter your coupon code if you have one
-                    </label>
-                    <div className="input-group w-75">
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="c_code"
-                        placeholder="Coupon Code"
-                        aria-label="Coupon Code"
-                        aria-describedby="button-addon2"
-                      />
-                      <div className="input-group-append">
-                        <button
-                          className="btn btn-primary btn-sm"
-                          type="button"
-                          id="button-addon2">
-                          Apply
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
               <div className="row mb-5">
                 <div className="col-md-12">
                   <h2 className="h3 mb-3 text-black">Your Order</h2>
@@ -376,7 +178,7 @@ const Checkout = () => {
                       </thead>
                       <tbody>
                         {items.map(item => (
-                          <tr>
+                          <tr key={item._id}>
                             <td>
                               {item.name} <strong className="mx-2">x</strong>{' '}
                               {item.quantity}
@@ -400,79 +202,24 @@ const Checkout = () => {
                         </tr>
                       </tbody>
                     </table>
-                    <div className="border p-3 mb-3">
-                      <h3 className="h6 mb-0">
-                        <a
-                          className="d-block"
-                          data-toggle="collapse"
-                          href="#collapsebank"
-                          role="button"
-                          aria-expanded="false"
-                          aria-controls="collapsebank">
-                          Direct Bank Transfer
-                        </a>
-                      </h3>
-                      <div className="collapse" id="collapsebank">
-                        <div className="py-2">
-                          <p className="mb-0">
-                            Make your payment directly into our bank account.
-                            Please use your Order ID as the payment reference.
-                            Your order won’t be shipped until the funds have
-                            cleared in our account.
-                          </p>
-                        </div>
-                      </div>
+
+                    <div className="form-group my-5">
+                      <label className="text-black">
+                        Payment Method <span className="text-danger">*</span>
+                      </label>
+                      <select
+                        className="form-control"
+                        name="paymentMethod"
+                        onChange={e => setPaymentMethod(e.target.value)}>
+                        <option value="">Select</option>
+                        <option value="cod">Cash On delivery</option>
+                      </select>
                     </div>
-                    <div className="border p-3 mb-3">
-                      <h3 className="h6 mb-0">
-                        <a
-                          className="d-block"
-                          data-toggle="collapse"
-                          href="#collapsecheque"
-                          role="button"
-                          aria-expanded="false"
-                          aria-controls="collapsecheque">
-                          Cheque Payment
-                        </a>
-                      </h3>
-                      <div className="collapse" id="collapsecheque">
-                        <div className="py-2">
-                          <p className="mb-0">
-                            Make your payment directly into our bank account.
-                            Please use your Order ID as the payment reference.
-                            Your order won’t be shipped until the funds have
-                            cleared in our account.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="border p-3 mb-5">
-                      <h3 className="h6 mb-0">
-                        <a
-                          className="d-block"
-                          data-toggle="collapse"
-                          href="#collapsepaypal"
-                          role="button"
-                          aria-expanded="false"
-                          aria-controls="collapsepaypal">
-                          Paypal
-                        </a>
-                      </h3>
-                      <div className="collapse" id="collapsepaypal">
-                        <div className="py-2">
-                          <p className="mb-0">
-                            Make your payment directly into our bank account.
-                            Please use your Order ID as the payment reference.
-                            Your order won’t be shipped until the funds have
-                            cleared in our account.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+
                     <div className="form-group">
                       <button
                         className="btn btn-primary btn-lg py-3 btn-block"
-                        onClick={() => navigate('/thankyou')}>
+                        onClick={handlePlaceOrder}>
                         Place Order
                       </button>
                     </div>

@@ -1,4 +1,4 @@
-import Category from "../models/Category.js"
+import Category from '../models/Category.js'
 
 // @desc Add new category
 // @route POST '/api/category/add'
@@ -7,7 +7,7 @@ export const addCategory = async (req, res) => {
   try {
     const category = new Category(req.body)
     await category.save()
-    res.status(201).json({ success: true, message: "Category Added", category })
+    res.status(201).json({ success: true, message: 'Category Added', category })
   } catch (err) {
     res.status(400).json({ success: false, error: err.message })
   }
@@ -34,7 +34,7 @@ export const getCategory = async (req, res) => {
     if (!category) {
       return res
         .status(404)
-        .json({ success: false, error: "Category not found" })
+        .json({ success: false, error: 'Category not found' })
     }
     res.json({ success: true, category })
   } catch (err) {
@@ -47,23 +47,23 @@ export const getCategory = async (req, res) => {
 // @access Public
 export const updateCategory = async (req, res) => {
   const updates = Object.keys(req.body)
-  const allowedUpdates = ["title", "image"]
+  const allowedUpdates = ['title', 'image']
   const isValidOperation = updates.every(update =>
     allowedUpdates.includes(update)
   )
   if (!isValidOperation) {
-    return res.status(400).json({ success: false, error: "Invalid updates" })
+    return res.status(400).json({ success: false, error: 'Invalid updates' })
   }
 
   const category = await Category.findById(req.params.id)
   if (!category) {
-    return res.status(404).json({ success: false, error: "Category not found" })
+    return res.status(404).json({ success: false, error: 'Category not found' })
   }
 
   updates.forEach(update => (category[update] = req.body[update]))
   try {
     await category.save()
-    res.json({ success: true, message: "Category Updated!", category })
+    res.json({ success: true, message: 'Category Updated!', category })
   } catch (err) {
     res.status(400).json({ success: false, error: err.message })
   }
@@ -78,11 +78,11 @@ export const deleteCategory = async (req, res) => {
     if (!category) {
       return res
         .status(404)
-        .json({ success: false, error: "Category not found" })
+        .json({ success: false, error: 'Category not found' })
     }
 
     await category.remove()
-    res.json({ success: true, message: "Category deleted" })
+    res.json({ success: true, message: 'Category deleted' })
   } catch (err) {
     res.status(400).json({ success: false, error: err.message })
   }
