@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import OrderContext from './orderContext'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { useCart } from 'react-use-cart'
 
 // Function for cleaning null, undefined and empty strings values in objects
 function clean(obj) {
@@ -23,10 +24,13 @@ function clean(obj) {
 const OdersState = props => {
   const navigate = useNavigate()
 
+  const { emptyCart } = useCart()
+
   const [orders, setOrders] = useState([])
   const [ordersError, setOrdersError] = useState(null)
   const [ordersLoading, setOrdersLoading] = useState(false)
   const [ordersMessage, setOrdersMessage] = useState(null)
+  const [myOrders, setMyOrders] = useState([])
 
   useEffect(() => {
     setTimeout(() => {
@@ -77,7 +81,8 @@ const OdersState = props => {
       }
       setOrdersLoading(true)
       await axios.post('api/orders/new', orderBody, { headers })
-      localStorage.removeItem('react-use-cart')
+      // localStorage.removeItem('react-use-cart')
+      emptyCart()
       navigate('/thankYou')
       // setProducts([...products, productBody])
       setOrdersMessage({
@@ -110,6 +115,25 @@ const OdersState = props => {
     }
   }
 
+  // -----------------------------------------
+  //  Get my orders
+  //   ---------------------------------------
+  const getMyOrders = async () => {
+    try {
+      setOrdersLoading(true)
+      const userToken = JSON.parse(localStorage.getItem('userToken'))
+      const headers = {
+        Authorization: `Bearer ${userToken && userToken}`,
+      }
+      const { data } = await axios.get('/api/orders/myOrders', { headers })
+      setMyOrders(data.myOrders)
+      setOrdersLoading(false)
+      setOrdersError(null)
+    } catch (err) {
+      errorHandler(err)
+    }
+  }
+
   return (
     <OrderContext.Provider
       value={{
@@ -118,7 +142,9 @@ const OdersState = props => {
         ordersError,
         ordersLoading,
         ordersMessage,
+        myOrders,
         getAllOrders,
+        getMyOrders,
         // addProduct,
         // getProducts,
         // getCategoryWiseProducts,

@@ -150,9 +150,9 @@ const UserState = props => {
     try {
       setUserLoading(true)
       const body = clean({ name, email })
-      const { data } = await axios.patch('api/users/me', body, { headers })
-      setUser(data)
-      localStorage.setItem('userInfo', JSON.stringify(data))
+      const { data } = await axios.patch('api/users/profile', body, { headers })
+      setUser(data.user)
+      localStorage.setItem('userInfo', JSON.stringify(data.user))
       setUserError(null)
       setUserLoading(false)
       setUserMessage({

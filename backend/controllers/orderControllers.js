@@ -19,7 +19,19 @@ export const placeOrder = async (req, res) => {
 export const getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find({}).sort('-createdAt')
-    res.status(201).json({ success: true, orders })
+    res.status(200).json({ success: true, orders })
+  } catch (err) {
+    res.status(400).json({ success: false, error: err.message })
+  }
+}
+
+// @desc GEt my orders
+// @route GET '/api/orders/myOrders'
+// @access Private : User
+export const getMyOrders = async (req, res) => {
+  try {
+    const myOrders = await Order.find({ user: req.user._id }).sort('-createdAt')
+    res.status(200).json({ success: true, myOrders })
   } catch (err) {
     res.status(400).json({ success: false, error: err.message })
   }
