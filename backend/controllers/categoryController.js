@@ -2,7 +2,7 @@ import Category from '../models/Category.js'
 
 // @desc Add new category
 // @route POST '/api/category/add'
-// @access Public
+// @access Private : Admin
 export const addCategory = async (req, res) => {
   try {
     const category = new Category(req.body)
@@ -44,7 +44,7 @@ export const getCategory = async (req, res) => {
 
 // @desc Update Category
 // @route PATCH '/api/category/:id'
-// @access Public
+// @access Private : Admin
 export const updateCategory = async (req, res) => {
   const updates = Object.keys(req.body)
   const allowedUpdates = ['title', 'image']
@@ -71,7 +71,7 @@ export const updateCategory = async (req, res) => {
 
 // @desc Delete a category
 // @route DELETE  '/api/category/:id'
-// @access Public
+// @access Private : Admin
 export const deleteCategory = async (req, res) => {
   try {
     const category = await Category.findById(req.params.id)

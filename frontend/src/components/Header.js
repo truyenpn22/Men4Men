@@ -1,9 +1,12 @@
 import React, { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import UserContext from '../context/user/UserContext'
+import { useCart } from 'react-use-cart'
 
 const Header = () => {
   const navigate = useNavigate()
+
+  const { totalUniqueItems } = useCart()
 
   // for user context
   const userContext = useContext(UserContext)
@@ -54,6 +57,11 @@ const Header = () => {
             <div className="col-6 col-md-4 order-3 order-md-3 text-right">
               <div className="site-top-icons">
                 <ul>
+                  {user && user.role === 'admin' && (
+                    <li>
+                      <Link to="/adminDashboard">Admin Dashboard</Link>
+                    </li>
+                  )}
                   {user ? (
                     <>
                       <li>
@@ -85,7 +93,11 @@ const Header = () => {
                   <li>
                     <Link to="/cart" className="site-cart">
                       <span className="icon icon-shopping_cart"></span>
-                      <span className="count">2</span>
+                      {totalUniqueItems && totalUniqueItems > 0 ? (
+                        <span className="count">{totalUniqueItems}</span>
+                      ) : (
+                        ''
+                      )}
                     </Link>
                   </li>
                   <li className="d-inline-block d-md-none ml-md-0">

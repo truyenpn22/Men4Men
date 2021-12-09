@@ -61,8 +61,12 @@ const ProductState = props => {
       image,
     })
     try {
+      const userToken = JSON.parse(localStorage.getItem('userToken'))
+      const headers = {
+        Authorization: `Bearer ${userToken && userToken}`,
+      }
       setProductsLoading(true)
-      await axios.post('api/products/add', productBody)
+      await axios.post('api/products/add', productBody, { headers })
       setProducts([...products, productBody])
       setProductsMessage({
         variant: 'success',

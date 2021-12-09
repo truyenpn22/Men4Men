@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Breadcrumb from '../components/Breadcrumb'
 import { Link, useNavigate } from 'react-router-dom'
 import { useCart } from 'react-use-cart'
+import UserContext from '../context/user/UserContext'
 
 const Cart = () => {
   const navigate = useNavigate()
+
+  // for user context
+  const uContext = useContext(UserContext)
+  const { user } = uContext
 
   const {
     isEmpty,
@@ -197,7 +202,9 @@ const Cart = () => {
                       <div className="col-md-12">
                         <button
                           className="btn btn-primary btn-lg py-3 btn-block"
-                          onClick={() => navigate('/checkout')}>
+                          onClick={() =>
+                            navigate(user ? '/checkout' : '/login')
+                          }>
                           Proceed To Checkout
                         </button>
                       </div>

@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import CategoryContext from '../context/category/categoryContext'
+import OrderContext from '../context/orders/orderContext'
 import productContext from '../context/product/productContext'
 import UserContext from '../context/user/UserContext'
 import AlertMessage from './AlertMessage'
@@ -18,8 +19,13 @@ const Misc = () => {
   const uContext = useContext(UserContext)
   const { userError, userLoading, userMessage } = uContext
 
+  // for order context
+  const oContext = useContext(OrderContext)
+  const { ordersError, ordersLoading, ordersMessage } = oContext
+
   return (
     <div>
+      {/* for products  */}
       {productsLoading && <Loader />}
       {productsError && (
         <AlertMessage variant={productsError.variant}>
@@ -32,6 +38,7 @@ const Misc = () => {
         </AlertMessage>
       )}
 
+      {/* for categories  */}
       {categoriesLoading && <Loader />}
       {categoriesError && (
         <AlertMessage variant={categoriesError.variant}>
@@ -43,6 +50,8 @@ const Misc = () => {
           {categoriesMessage.message}
         </AlertMessage>
       )}
+
+      {/* for users */}
       {userLoading && <Loader />}
       {userError && (
         <AlertMessage variant={userError.variant}>
@@ -52,6 +61,19 @@ const Misc = () => {
       {userMessage && (
         <AlertMessage variant={userMessage.variant}>
           {userMessage.message}
+        </AlertMessage>
+      )}
+
+      {/* for orders  */}
+      {ordersLoading && <Loader />}
+      {ordersError && (
+        <AlertMessage variant={ordersError.variant}>
+          {ordersError.message}
+        </AlertMessage>
+      )}
+      {ordersMessage && (
+        <AlertMessage variant={ordersMessage.variant}>
+          {ordersMessage.message}
         </AlertMessage>
       )}
     </div>

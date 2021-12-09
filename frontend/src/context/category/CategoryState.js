@@ -54,8 +54,12 @@ const CategoryState = props => {
   const addCategory = async (title, image) => {
     const categoryBody = clean({ title, image })
     try {
+      const userToken = JSON.parse(localStorage.getItem('userToken'))
+      const headers = {
+        Authorization: `Bearer ${userToken && userToken}`,
+      }
       setCategoriesLoading(true)
-      await axios.post('api/category/add', categoryBody)
+      await axios.post('api/category/add', categoryBody, { headers })
       setCategories([...categories, categoryBody])
       setCategoriesMessage({
         variant: 'success',
@@ -93,8 +97,12 @@ const CategoryState = props => {
 
   const updateCategory = async (id, title, image) => {
     try {
+      const userToken = JSON.parse(localStorage.getItem('userToken'))
+      const headers = {
+        Authorization: `Bearer ${userToken && userToken}`,
+      }
       setCategoriesLoading(true)
-      await axios.patch(`api/category/${id}`, { title, image })
+      await axios.patch(`api/category/${id}`, { title, image }, { headers })
       getCategories()
       setCategoriesMessage({
         variant: 'info',

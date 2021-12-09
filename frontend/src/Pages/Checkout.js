@@ -33,7 +33,7 @@ const Checkout = () => {
   }
 
   console.log(shippingAddress)
-  console.log(paymentMethod, 'dfjkdh')
+  console.log(paymentMethod, 'Paymnt method')
   console.log(orderItems, 'orderitemes')
 
   const {
@@ -41,9 +41,6 @@ const Checkout = () => {
     // totalItems,
     // totalUniqueItems,
     cartTotal,
-    // updateItemQuantity,
-    // removeItem,
-    // emptyCart,
     items,
   } = useCart()
 
@@ -51,6 +48,7 @@ const Checkout = () => {
     if (isEmpty) {
       navigate('/shop')
     }
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
@@ -59,6 +57,7 @@ const Checkout = () => {
     )
 
     setOrderItems(newArr)
+    // eslint-disable-next-line
   }, [])
 
   const handlePlaceOrder = () => {
@@ -70,13 +69,6 @@ const Checkout = () => {
       <Breadcrumb pageName="Checkout" />
       <div className="site-section">
         <div className="container">
-          <div className="row mb-5">
-            <div className="col-md-12">
-              <div className="border p-4 rounded" role="alert">
-                Returning customer? <a href="/">Click here</a> to login
-              </div>
-            </div>
-          </div>
           <div className="row">
             <div className="col-md-6 mb-5 mb-md-0">
               <h2 className="h3 mb-3 text-black">Billing Details</h2>

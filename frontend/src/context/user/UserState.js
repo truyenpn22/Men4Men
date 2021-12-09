@@ -117,6 +117,7 @@ const UserState = props => {
       // })
       localStorage.removeItem('userInfo')
       localStorage.removeItem('userToken')
+      localStorage.removeItem('react-use-cart')
       setUser(null)
       setUserError(null)
       setUserLoading(false)
@@ -145,24 +146,24 @@ const UserState = props => {
   // -----------------------------------------------------------------
   // Edit Profile
   // -----------------------------------------------------------------
-  // const editProfile = async (name, email, age, password) => {
-  //   try {
-  //     setUserLoading(true)
-  //     const body = clean({ name, email, age, password })
-  //     const { data } = await axios.patch('api/users/me', body, { headers })
-  //     setUser(data)
-  //     localStorage.setItem('userInfo', JSON.stringify(data))
-  //     setUserError(null)
-  //     setUserLoading(false)
-  //     setUserMessage({
-  //       variant: 'success',
-  //       message: 'Your profile was updated successfully',
-  //     })
-  //     return data
-  //   } catch (err) {
-  //     errorHandler(err, 'Could not update your profile!')
-  //   }
-  // }
+  const editProfile = async (name, email) => {
+    try {
+      setUserLoading(true)
+      const body = clean({ name, email })
+      const { data } = await axios.patch('api/users/me', body, { headers })
+      setUser(data)
+      localStorage.setItem('userInfo', JSON.stringify(data))
+      setUserError(null)
+      setUserLoading(false)
+      setUserMessage({
+        variant: 'success',
+        message: 'Your profile was updated successfully',
+      })
+      return data
+    } catch (err) {
+      errorHandler(err, 'Could not update your profile!')
+    }
+  }
 
   // -----------------------------------------------------------------
   // Delete Profile
@@ -193,7 +194,7 @@ const UserState = props => {
         signup,
         logout,
         readProfile,
-        // editProfile,
+        editProfile,
         // deleteProfile,
       }}>
       {props.children}

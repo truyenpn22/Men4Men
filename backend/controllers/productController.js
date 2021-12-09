@@ -2,7 +2,7 @@ import Product from '../models/Product.js'
 
 // @desc Add new product
 // @route POST '/api/products/add'
-// @access Public
+// @access Private : Admin
 export const addProduct = async (req, res) => {
   try {
     const product = new Product(req.body)
@@ -64,7 +64,7 @@ export const getProduct = async (req, res) => {
 
 // @desc Update product
 // @route PATCH '/api/products/:id'
-// @access Public
+// @access Private : Admin
 export const updateProduct = async (req, res) => {
   const updates = Object.keys(req.body)
   const allowedUpdates = [
@@ -98,7 +98,7 @@ export const updateProduct = async (req, res) => {
 
 // @desc Delete a product
 // @route DELETE  '/api/products/:id'
-// @access Public
+// @access Private : Admin
 export const deleteProduct = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id)

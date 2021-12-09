@@ -19,6 +19,7 @@ import Users from './AdminScreens/Users'
 import Misc from './components/Misc'
 import SignupScreen from './Pages/SignupScreen'
 import ProfileScreen from './Pages/ProfileScreen'
+import Orders from './AdminScreens/Orders'
 
 function App() {
   return (
@@ -55,6 +56,8 @@ function App() {
         <Route path="/categories" element={<Categories />} />
 
         <Route path="/users" element={<Users />} />
+
+        <Route path="/orders" element={<Orders />} />
       </Routes>
       <Footer />
     </main>

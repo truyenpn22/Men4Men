@@ -1,13 +1,20 @@
-import React, { useContext, useState } from 'react'
-// import { useNavigate } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import UserContext from '../context/user/UserContext'
 
 const LoginScreen = () => {
+  const navigate = useNavigate()
+
   const [credentials, setCredentials] = useState({ email: '', password: '' })
 
   // for user context
   const uContext = useContext(UserContext)
-  const { login } = uContext
+  const { login, user } = uContext
+
+  useEffect(() => {
+    if (user) navigate('/')
+    //   eslint-disable-next-line
+  }, [])
 
   const handleChange = e => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })
@@ -29,6 +36,9 @@ const LoginScreen = () => {
         {/* LOGIN */}
         <section id="login">
           <div className="container">
+            <p className="text-center">
+              Don't have an accout? <Link to="/signup">Signup</Link>
+            </p>
             <div className="row">
               <div className="col-md-6 mx-auto">
                 <div className="card">

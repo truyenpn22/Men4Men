@@ -1,8 +1,10 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import UserContext from '../context/user/UserContext'
-// import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const SignupScreen = () => {
+  const navigate = useNavigate()
   const [userDetails, setUserDetails] = useState({
     name: '',
     email: '',
@@ -11,7 +13,12 @@ const SignupScreen = () => {
 
   // for user context
   const uContext = useContext(UserContext)
-  const { signup } = uContext
+  const { signup, user } = uContext
+
+  useEffect(() => {
+    if (user) navigate('/')
+    //   eslint-disable-next-line
+  }, [])
 
   const handleChange = e => {
     setUserDetails({ ...userDetails, [e.target.name]: e.target.value })
@@ -33,6 +40,9 @@ const SignupScreen = () => {
         {/* Signup */}
         <section id="Signup">
           <div className="container">
+            <p className="text-center">
+              Already have an account? <Link to="/login">Signup</Link>
+            </p>
             <div className="row">
               <div className="col-md-6 mx-auto">
                 <div className="card">
