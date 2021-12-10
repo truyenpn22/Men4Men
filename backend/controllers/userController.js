@@ -29,7 +29,7 @@ export const login = async (req, res) => {
 
 // @desc Read user profile
 // @route GET '/api/users/profile'
-// @access Private: user, admin
+// @access Private: User
 export const readProfile = (req, res) => {
   res.json(req.user)
 }
@@ -64,6 +64,18 @@ export const deleteProfile = async (req, res) => {
     await req.user.remove()
     res.json({ success: true, message: 'user deleted' })
   } catch (e) {
-    res.status(500).json({ error: e.message })
+    res.status(500).json({ success: false, error: e.message })
+  }
+}
+
+// @desc Get all users
+// @route DELETE '/api/users/profile'
+// @access Private: Admin
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find({ role: 'user' }).sort('-createdAt')
+    res.json({ success: true, users })
+  } catch (err) {
+    res.status(500).json({ success: false, error: e.message })
   }
 }

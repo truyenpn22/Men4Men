@@ -5,7 +5,7 @@ import Order from '../models/Order.js'
 // @access Private : User/Admin
 export const placeOrder = async (req, res) => {
   try {
-    const order = new Order(req.body)
+    const order = new Order({ ...req.body, user: req.user._id })
     await order.save()
     res.status(201).json({ success: true, message: 'order placed', order })
   } catch (err) {
@@ -18,7 +18,9 @@ export const placeOrder = async (req, res) => {
 // @access Private : Admin
 export const getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find({}).sort('-createdAt')
+    const orders = await Order.find({})
+      .sort('-createdAt')
+      .populate('user', 'name email')
     res.status(200).json({ success: true, orders })
   } catch (err) {
     res.status(400).json({ success: false, error: err.message })

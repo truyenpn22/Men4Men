@@ -33,6 +33,7 @@ const UserState = props => {
   const [userError, setUserError] = useState(null)
   const [userLoading, setUserLoading] = useState(false)
   const [userMessage, setUserMessage] = useState(null)
+  const [allUsers, setAllUsers] = useState([])
 
   //   for disabling the alert messages after 3 seconds
   useEffect(() => {
@@ -166,6 +167,21 @@ const UserState = props => {
   }
 
   // -----------------------------------------------------------------
+  // Get all users
+  // -----------------------------------------------------------------
+  const getAllUsers = async () => {
+    try {
+      setUserLoading(true)
+      const { data } = await axios.get('/api/users/getAll', { headers })
+      setAllUsers(data.users)
+      setUserError(null)
+      setUserLoading(false)
+    } catch (err) {
+      errorHandler(err)
+    }
+  }
+
+  // -----------------------------------------------------------------
   // Delete Profile
   // -----------------------------------------------------------------
   // const deleteProfile = async () => {
@@ -190,12 +206,14 @@ const UserState = props => {
         userError,
         userLoading,
         userMessage,
+        allUsers,
         login,
         signup,
         logout,
         readProfile,
         editProfile,
-        // deleteProfile,
+        getAllUsers,
+        // deleteProfile
       }}>
       {props.children}
     </UserContext.Provider>

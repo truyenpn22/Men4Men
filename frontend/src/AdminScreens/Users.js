@@ -1,8 +1,20 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import Navbar from '../AdminComponents/Navbar'
+import UserContext from '../context/user/UserContext'
 // import Footer from '../AdminComponents/Footer'
 
 const Users = () => {
+  // for user context
+  const uContext = useContext(UserContext)
+  const { getAllUsers, allUsers } = uContext
+
+  useEffect(() => {
+    getAllUsers()
+    // eslint-disable-next-line
+  }, [])
+
+  console.log(allUsers)
+
   return (
     <>
       <Navbar />
@@ -53,6 +65,43 @@ const Users = () => {
                         <th>#</th>
                         <th>Name</th>
                         <th>Email</th>
+                        <th>Joining Date</th>
+                        <th />
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {allUsers.map((user, i) => (
+                        <tr key={user._id}>
+                          <td>{i + 1}</td>
+                          <td>{user.name}</td>
+                          <td>{user.email}</td>
+                          <td>{new Date(user.createdAt).toLocaleString()}</td>
+                          <td>
+                            <button
+                              href="details.html"
+                              className="btn btn-secondary"
+                              disabled>
+                              <i className="fas fa-angle-double-right" /> Action
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div className="col">
+                <div className="card">
+                  <div className="card-header">
+                    <h4>All Admins</h4>
+                  </div>
+                  <table className="table table-striped">
+                    <thead className="thead-dark">
+                      <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Joining Date</th>
                         <th />
                       </tr>
                     </thead>
@@ -61,26 +110,6 @@ const Users = () => {
                         <td>1</td>
                         <td>John Doe</td>
                         <td>jdoe@gmail.com</td>
-                        <td>
-                          <a href="details.html" className="btn btn-secondary">
-                            <i className="fas fa-angle-double-right" /> Details
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>Harry White</td>
-                        <td>harry@yahoo.com</td>
-                        <td>
-                          <a href="details.html" className="btn btn-secondary">
-                            <i className="fas fa-angle-double-right" /> Details
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td>Mary Johnson</td>
-                        <td>mary@gmail.com</td>
                         <td>
                           <a href="details.html" className="btn btn-secondary">
                             <i className="fas fa-angle-double-right" /> Details

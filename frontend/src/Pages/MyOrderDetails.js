@@ -230,25 +230,25 @@ const MyOrderDetails = () => {
                         <b>Payment Method</b> : {order.paymentMethod}
                       </div>
                       <div>
-                        <b>Payment Status</b> : {order.paymentResult.status}
+                        <b>Payment Status</b> : sdkfkjsdhf
+                        <div>
+                          <b>Payment Method</b> : {order.paymentMethod}
+                        </div>
                       </div>
-                      <div>
-                        <b>Payment Method</b> : {order.paymentMethod}
-                      </div>
+                      <div className="col-md-6"></div>
                     </div>
-                    <div className="col-md-6"></div>
                   </div>
-                </div>
-                <div
-                  className="card-footer border-0 px-4 py-5"
-                  style={{
-                    backgroundColor: '#a8729a',
-                    borderBottomLeftRadius: '10px',
-                    borderBottomRightRadius: '10px',
-                  }}>
-                  <h5 className="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">
-                    Total paid: <span className="h2 mb-0 ms-2">$1040</span>
-                  </h5>
+                  <div
+                    className="card-footer border-0 px-4 py-5"
+                    style={{
+                      backgroundColor: '#a8729a',
+                      borderBottomLeftRadius: '10px',
+                      borderBottomRightRadius: '10px',
+                    }}>
+                    <h5 className="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">
+                      Total paid: <span className="h2 mb-0 ms-2">$1040</span>
+                    </h5>
+                  </div>
                 </div>
               </div>
             </div>

@@ -107,50 +107,53 @@ const ProfileScreen = () => {
               <button className="btn btn-primary btn-block">Edit Image</button>
               <button className="btn btn-danger btn-block">Delete Image</button>
             </div>
-          </div>
-          <div className="col-md-12">
-            <div className="card">
-              <div className="card-header">
-                <h4>My Orders</h4>
-              </div>
-              <table className="table table-striped">
-                <thead className="thead-dark">
-                  <tr>
-                    <th>Order Id</th>
-                    <th>Order Items</th>
-                    <th>Order Price</th>
-                    <th>Order Date</th>
-                    <th />
-                  </tr>
-                </thead>
-                <tbody>
-                  {myOrders.length > 0 ? (
-                    myOrders.map(order => (
-                      <tr key={order._id}>
-                        <td>{order._id}</td>
-                        <td>{order.orderItems.length} item(s)</td>
-                        <td>{order.totalPrice}</td>
-                        <td>
-                          {new Date(order.createdAt).toLocaleDateString()}
-                        </td>
-                        <td>
-                          <Link
-                            to={`/myOrderDetails/${order._id}`}
-                            className="btn btn-secondary">
-                            <i className="fas fa-angle-double-right" /> Details
-                          </Link>
+            <div className="col-md-12">
+              <div className="card">
+                <div className="card-header">
+                  <h4>My Orders</h4>
+                </div>
+                <table className="table table-striped">
+                  <thead className="thead-dark">
+                    <tr>
+                      <th>Order Id</th>
+                      <th>Order Items</th>
+                      <th>Order Price</th>
+                      <th>Order Date</th>
+                      <th />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {myOrders.length > 0 ? (
+                      myOrders.map(order => (
+                        <tr key={order._id}>
+                          <td>{order._id}</td>
+                          <td>{order.orderItems.length} item(s)</td>
+                          <td>{order.totalPrice}</td>
+                          <td>
+                            {new Date(order.createdAt).toLocaleDateString()}
+                          </td>
+                          <td>
+                            <Link
+                              to={`/myOrderDetails/${order._id}`}
+                              className="btn btn-secondary">
+                              <i className="fas fa-angle-double-right" />{' '}
+                              Details
+                            </Link>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={4}>
+                          <h3 className="text-center">
+                            You have no orders yet{' '}
+                          </h3>
                         </td>
                       </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan={4}>
-                        <h3 className="text-center">You have no orders yet </h3>
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
