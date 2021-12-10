@@ -20,6 +20,7 @@ import Misc from './components/Misc'
 import SignupScreen from './Pages/SignupScreen'
 import ProfileScreen from './Pages/ProfileScreen'
 import Orders from './AdminScreens/Orders'
+import MyOrderDetails from './Pages/MyOrderDetails'
 
 function App() {
   return (
@@ -48,6 +49,8 @@ function App() {
         <Route path="/signup" element={<SignupScreen />} />
 
         <Route path="/profile" element={<ProfileScreen />} />
+
+        <Route path="/myOrderDetails/:id" element={<MyOrderDetails />} />
 
         <Route path="/adminDashboard" element={<AdminDashboard />} />
 

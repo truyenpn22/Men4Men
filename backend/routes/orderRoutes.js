@@ -2,6 +2,7 @@ import express from 'express'
 import {
   getAllOrders,
   getMyOrders,
+  getOneOrder,
   placeOrder,
 } from '../controllers/orderControllers.js'
 import auth from '../middleware/auth.js'
@@ -14,5 +15,7 @@ router.post('/new', auth, placeOrder)
 router.get('/getAll', auth, checkAdmin, getAllOrders)
 
 router.get('/myOrders', auth, getMyOrders)
+
+router.get('/myOrders/:id', auth, getOneOrder)
 
 export default router

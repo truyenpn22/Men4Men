@@ -25,13 +25,33 @@ export const getAllOrders = async (req, res) => {
   }
 }
 
-// @desc GEt my orders
+// @desc Get my orders
 // @route GET '/api/orders/myOrders'
 // @access Private : User
 export const getMyOrders = async (req, res) => {
   try {
     const myOrders = await Order.find({ user: req.user._id }).sort('-createdAt')
     res.status(200).json({ success: true, myOrders })
+  } catch (err) {
+    res.status(400).json({ success: false, error: err.message })
+  }
+}
+
+// @desc Get One order by id
+// @route GET '/api/orders/myOrders/:id'
+// @access Private : User
+export const getOneOrder = async (req, res) => {
+  try {
+    const order = await Order.findOne({
+      _id: req.params.id,
+      user: req.user._id,
+    })
+    if (!order) {
+      return res
+        .status(404)
+        .json({ success: false, error: 'Could not find order!' })
+    }
+    res.json({ success: true, order })
   } catch (err) {
     res.status(400).json({ success: false, error: err.message })
   }

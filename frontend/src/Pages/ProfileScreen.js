@@ -4,9 +4,9 @@ import OrderContext from '../context/orders/orderContext'
 import UserContext from '../context/user/UserContext'
 
 const ProfileScreen = () => {
-  // for product context
+  // for user context
   const uContext = useContext(UserContext)
-  const { readProfile, user, editProfile } = uContext
+  const { user, editProfile } = uContext
   // for order context
   const oContext = useContext(OrderContext)
   const { myOrders, getMyOrders } = oContext
@@ -37,7 +37,7 @@ const ProfileScreen = () => {
         <div className="container">
           <div className="row">
             <div className="col-md-4">
-              <Link to="/" className="btn btn-light btn-block">
+              <Link to="/" className="btn btn-secondary btn-block">
                 <i className="fas fa-arrow-left" /> Back to Home
               </Link>
             </div>
@@ -55,10 +55,10 @@ const ProfileScreen = () => {
         </div>
       </section>
       {/* PROFILE */}
-      <section id="profile">
+      <section id="profile" className="my-5">
         <div className="container">
           <div className="row">
-            <div className="col-md-9">
+            <div className="col-md-8">
               <div className="card">
                 <div className="card-header">
                   <h4>Edit Profile</h4>
@@ -85,16 +85,7 @@ const ProfileScreen = () => {
                         value={userInfo.email}
                       />
                     </div>
-                    {/* <div className="form-group">
-                      <label htmlFor="bio">Bio</label>
-                      <textarea
-                      className="form-control"
-                      name="editor1"
-                      defaultValue={
-                          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid '
-                        }
-                        />
-                    </div> */}
+
                     <div className="form-group">
                       <input
                         value="save changes"
@@ -106,7 +97,7 @@ const ProfileScreen = () => {
                 </div>
               </div>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-3 my-3 ml-auto">
               <h3>Your Avatar</h3>
               <img
                 src="img/avatar.png"
@@ -133,24 +124,31 @@ const ProfileScreen = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {myOrders.length > 0
-                    ? myOrders.map(order => (
-                        <tr key={order._id}>
-                          <td>{order._id}</td>
-                          <td>{order.orderItems.length} item(s)</td>
-                          <td>{order.totalPrice}</td>
-                          <td>
-                            {new Date(order.createdAt).toLocaleDateString()}
-                          </td>
-                          <td>
-                            <a href="/" className="btn btn-secondary">
-                              <i className="fas fa-angle-double-right" />{' '}
-                              Details
-                            </a>
-                          </td>
-                        </tr>
-                      ))
-                    : 'no orders'}
+                  {myOrders.length > 0 ? (
+                    myOrders.map(order => (
+                      <tr key={order._id}>
+                        <td>{order._id}</td>
+                        <td>{order.orderItems.length} item(s)</td>
+                        <td>{order.totalPrice}</td>
+                        <td>
+                          {new Date(order.createdAt).toLocaleDateString()}
+                        </td>
+                        <td>
+                          <Link
+                            to={`/myOrderDetails/${order._id}`}
+                            className="btn btn-secondary">
+                            <i className="fas fa-angle-double-right" /> Details
+                          </Link>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={4}>
+                        <h3 className="text-center">You have no orders yet </h3>
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
