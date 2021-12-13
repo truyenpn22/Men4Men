@@ -61,14 +61,12 @@ const OdersState = props => {
   // Place new order
   //   ---------------------------------------
   const placeOrder = async (
-    user,
     orderItems,
     shippingAddress,
     paymentMethod,
     totalPrice
   ) => {
     const orderBody = clean({
-      user,
       orderItems,
       shippingAddress,
       paymentMethod,

@@ -13,8 +13,12 @@ const orderSchema = mongoose.Schema(
         quantity: { type: Number, required: true },
         price: { type: Number, required: true },
         itemTotal: { type: String, required: true },
-        sku: { type: String, required: true },
         description: { type: String, required: true },
+        product: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true,
+          ref: 'Product',
+        },
       },
     ],
     shippingAddress: {
@@ -37,7 +41,7 @@ const orderSchema = mongoose.Schema(
     },
     totalPrice: {
       type: Number,
-      // required: true,
+      required: true,
       default: 0.0,
     },
   },

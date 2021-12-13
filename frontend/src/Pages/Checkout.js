@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import Breadcrumb from '../components/Breadcrumb'
 import { useNavigate } from 'react-router-dom'
 import { useCart } from 'react-use-cart'
-import UserContext from '../context/user/UserContext'
 import OrderContext from '../context/orders/orderContext'
 
 const Checkout = () => {
@@ -21,9 +20,6 @@ const Checkout = () => {
 
   const [paymentMethod, setPaymentMethod] = useState('')
 
-  // for user context
-  const uContext = useContext(UserContext)
-  const { user } = uContext
   // for order context
   const oContext = useContext(OrderContext)
   const { placeOrder } = oContext
@@ -53,7 +49,10 @@ const Checkout = () => {
 
   useEffect(() => {
     const newArr = items.map(
-      ({ category, createdAt, id, updatedAt, __v, _id, ...keep }) => keep
+      ({ category, createdAt, id, updatedAt, __v, _id, sku, ...keep }) => ({
+        ...keep,
+        product: _id,
+      })
     )
 
     setOrderItems(newArr)
@@ -61,7 +60,7 @@ const Checkout = () => {
   }, [])
 
   const handlePlaceOrder = () => {
-    placeOrder(user._id, orderItems, shippingAddress, paymentMethod, cartTotal)
+    placeOrder(orderItems, shippingAddress, paymentMethod, cartTotal)
   }
 
   return (

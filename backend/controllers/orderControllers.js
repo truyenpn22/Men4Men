@@ -32,7 +32,9 @@ export const getAllOrders = async (req, res) => {
 // @access Private : User
 export const getMyOrders = async (req, res) => {
   try {
-    const myOrders = await Order.find({ user: req.user._id }).sort('-createdAt')
+    const myOrders = await Order.find({ user: req.user._id })
+      .sort('-createdAt')
+      .populate('user', 'name email')
     res.status(200).json({ success: true, myOrders })
   } catch (err) {
     res.status(400).json({ success: false, error: err.message })
@@ -47,7 +49,7 @@ export const getOneOrder = async (req, res) => {
     const order = await Order.findOne({
       _id: req.params.id,
       user: req.user._id,
-    })
+    }).populate('user', 'name email')
     if (!order) {
       return res
         .status(404)
