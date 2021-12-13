@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Breadcrumb from '../components/Breadcrumb'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import OrderContext from '../context/orders/orderContext'
 
 const MyOrderDetails = () => {
@@ -59,11 +59,13 @@ const MyOrderDetails = () => {
                       <div className="card-body">
                         <div className="row">
                           <div className="col-md-2">
-                            <img
-                              src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/1.jpg"
-                              className="img-fluid"
-                              alt="Phone"
-                            />
+                            <Link to={`/shopSingle/${orderItem.product}`}>
+                              <img
+                                src={orderItem.image}
+                                className="img-fluid"
+                                alt="Phone"
+                              />
+                            </Link>
                           </div>
                           <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
                             <p className="text-muted mb-0">

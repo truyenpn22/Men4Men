@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import CategoryContext from '../context/category/categoryContext'
 import productContext from '../context/product/productContext'
+import Loader from '../components/Loader'
+import axios from 'axios'
 
 const AddProductModal = () => {
   // for product context
   const pContext = useContext(productContext)
-  const { addProduct } = pContext
+  const { addProduct, errorHandler } = pContext
 
   // for category context
   const cContext = useContext(CategoryContext)
@@ -22,24 +24,51 @@ const AddProductModal = () => {
     category: '',
     price: '',
     description: '',
-    image: '',
   })
+
+  const [image, setImage] = useState('')
+
+  const [uploading, setUploading] = useState(false)
 
   const handleChange = e => {
     setProduct({ ...product, [e.target.name]: e.target.value })
   }
 
-  const handleAddproduct = async () => {
-    const { name, sku, category, price, description, image } = product
-    await addProduct(name, sku, category, price, description, image)
+  const uploadFileHandler = async e => {
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append('image', file)
+    setUploading(true)
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+      const { data } = await axios.post('/api/upload', formData, config)
+      setImage(data)
+      setUploading(false)
+    } catch (err) {
+      errorHandler(err, 'Could not upload file')
+      setUploading(false)
+    }
+  }
+
+  const handleAddproduct = e => {
+    // e.preventDefault()
+    const { name, sku, category, price, description } = product
+    console.log(image, 'Add product to run')
+    addProduct(name, sku, category, price, description, image)
+    console.log('Add product ran')
     setProduct({
       name: '',
       sku: '',
       category: '',
       price: '',
       description: '',
-      image: '',
     })
+    setImage('')
   }
 
   return (
@@ -123,10 +152,11 @@ const AddProductModal = () => {
                     type="file"
                     className="custom-file-input"
                     id="image"
-                    onChange={handleChange}
+                    onChange={uploadFileHandler}
                     name="image"
-                    value={product.image}
+                    value={image}
                   />
+                  {uploading && <Loader />}
                   <label htmlFor="image" className="custom-file-label">
                     Choose File
                   </label>

@@ -32,7 +32,7 @@ const ShopSingle = () => {
         <div className="container">
           <div className="row">
             <div className="col-md-6">
-              <img src="images/cloth_1.jpg" alt="img" className="img-fluid" />
+              <img src={product.image} alt="img" className="img-fluid" />
             </div>
             <div className="col-md-6">
               <h2 className="text-black">{product.name}</h2>

@@ -13,8 +13,6 @@ const Users = () => {
     // eslint-disable-next-line
   }, [])
 
-  console.log(allUsers)
-
   return (
     <>
       <Navbar />

@@ -67,7 +67,7 @@ const ProductState = props => {
       }
       setProductsLoading(true)
       await axios.post('api/products/add', productBody, { headers })
-      setProducts([...products, productBody])
+      setProducts([productBody, ...products])
       setProductsMessage({
         variant: 'success',
         message: 'Product added successfully!',
@@ -138,6 +138,8 @@ const ProductState = props => {
         getProducts,
         getCategoryWiseProducts,
         getOneProduct,
+
+        errorHandler,
       }}>
       {props.children}
     </ProductContext.Provider>

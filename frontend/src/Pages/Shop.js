@@ -101,7 +101,7 @@ const Shop = () => {
                       <figure className="block-4-image">
                         <Link to={`/shopSingle/${product._id}`}>
                           <img
-                            src="images/cloth_1.jpg"
+                            src={product.image}
                             alt="placeholder"
                             className="img-fluid"
                           />

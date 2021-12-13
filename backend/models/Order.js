@@ -14,6 +14,7 @@ const orderSchema = mongoose.Schema(
         price: { type: Number, required: true },
         itemTotal: { type: String, required: true },
         description: { type: String, required: true },
+        image: { type: String, required: true },
         product: {
           type: mongoose.Schema.Types.ObjectId,
           required: true,

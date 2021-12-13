@@ -58,11 +58,13 @@ const Cart = () => {
                           {items.map(item => (
                             <tr key={item._id}>
                               <td className="product-thumbnail">
-                                <img
-                                  src="images/cloth_1.jpg"
-                                  alt="img"
-                                  className="img-fluid"
-                                />
+                                <Link to={`/shopSingle/${item._id}`}>
+                                  <img
+                                    src={item.image}
+                                    alt="img"
+                                    className="img-fluid"
+                                  />
+                                </Link>
                               </td>
                               <td className="product-name">
                                 <h2 className="h5 text-black">{item.name}</h2>
