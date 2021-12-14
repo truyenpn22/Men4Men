@@ -1,11 +1,24 @@
 import Product from '../models/Product.js'
+import sharp from 'sharp'
+import fs from 'fs'
+import path from 'path'
 
 // @desc Add new product
 // @route POST '/api/products/add'
 // @access Private : Admin
 export const addProduct = async (req, res) => {
   try {
-    const product = new Product(req.body)
+    const { filename: image } = req.file
+
+    await sharp(req.file.path)
+      .resize({ width: 400, height: 400 })
+      .toFile(path.resolve(req.file.destination, '', `resized-${image}`))
+    fs.unlinkSync(req.file.path)
+
+    const product = new Product({
+      ...req.body,
+      image: `${req.file.destination}resized-${req.file.filename}`,
+    })
     await product.save()
     res.status(201).json({ success: true, message: 'product added', product })
   } catch (err) {
@@ -31,19 +44,6 @@ export const getAllProducts = async (req, res) => {
     res.status(400).json({ success: false, error: err.message })
   }
 }
-
-// router.get("/products", async (req, res) => {
-//   try {
-//       if(req.query.category){
-//         const studentsdata = await product.find({ category: req.query.category })
-//         return res.status(200).send(studentsdata)
-//       }
-//     const studentsdata = await product.find({});
-//     res.send(studentsdata);
-//   } catch (e) {
-//     res.send(e);
-//   }
-// });
 
 // @desc Get One product
 // @route GET '/api/products/:id'
