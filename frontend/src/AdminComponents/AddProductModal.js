@@ -154,7 +154,8 @@ const AddProductModal = () => {
                     id="image"
                     onChange={uploadFileHandler}
                     name="image"
-                    value={image}
+                    // value={image && image}
+                    // placeholder={image}
                   />
                   {uploading && <Loader />}
                   <label htmlFor="image" className="custom-file-label">

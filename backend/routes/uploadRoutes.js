@@ -1,7 +1,7 @@
 import path from 'path'
 import express from 'express'
 import multer from 'multer'
-import sharp from 'sharp'
+// import sharp from 'sharp'
 
 const router = express.Router()
 
@@ -42,7 +42,7 @@ const upload = multer({
 
 router.post('/', upload.single('image'), async (req, res) => {
   try {
-    await sharp(req.file).resize({ width: 500, height: 400 })
+    // await sharp(req.file).resize({ width: 500, height: 400 })
     res.send(`/${req.file.path}`)
   } catch (err) {
     res.status(400).json({ success: false, error: err.message })
