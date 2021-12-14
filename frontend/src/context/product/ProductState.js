@@ -50,35 +50,6 @@ const ProductState = props => {
     setProductsLoading(false)
   }
 
-  // Add new product
-  const addProduct = async (name, sku, category, price, description, image) => {
-    const productBody = clean({
-      name,
-      sku,
-      category,
-      price,
-      description,
-      image,
-    })
-    try {
-      const userToken = JSON.parse(localStorage.getItem('userToken'))
-      const headers = {
-        Authorization: `Bearer ${userToken && userToken}`,
-      }
-      setProductsLoading(true)
-      await axios.post('api/products/add', productBody, { headers })
-      setProducts([productBody, ...products])
-      setProductsMessage({
-        variant: 'success',
-        message: 'Product added successfully!',
-      })
-      setProductsLoading(false)
-      setProductsError(null)
-    } catch (err) {
-      errorHandler(err, 'Could not add product')
-    }
-  }
-
   // get all Products
   const getProducts = async () => {
     try {
@@ -89,6 +60,31 @@ const ProductState = props => {
       setProductsError(null)
     } catch (err) {
       errorHandler(err)
+    }
+  }
+
+  // Add new product
+  const addProduct = async fromData => {
+    const productBody = clean(fromData)
+    console.log(productBody, ' productBody')
+    try {
+      const userToken = JSON.parse(localStorage.getItem('userToken'))
+      const headers = {
+        Authorization: `Bearer ${userToken && userToken}`,
+        'Content-Type': 'multipart/form-data',
+      }
+      setProductsLoading(true)
+      await axios.post('api/products/add', productBody, { headers })
+      // setProducts([productBody, ...products])
+      getProducts()
+      setProductsMessage({
+        variant: 'success',
+        message: 'Product added successfully!',
+      })
+      setProductsLoading(false)
+      setProductsError(null)
+    } catch (err) {
+      errorHandler(err, 'Could not add product')
     }
   }
 

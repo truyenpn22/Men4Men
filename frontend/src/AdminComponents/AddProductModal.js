@@ -1,13 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import CategoryContext from '../context/category/categoryContext'
 import productContext from '../context/product/productContext'
-import Loader from '../components/Loader'
-import axios from 'axios'
 
 const AddProductModal = () => {
   // for product context
   const pContext = useContext(productContext)
-  const { addProduct, errorHandler } = pContext
+  const { addProduct } = pContext
 
   // for category context
   const cContext = useContext(CategoryContext)
@@ -26,15 +24,15 @@ const AddProductModal = () => {
     description: '',
   })
 
-  const [image, setImage] = useState('')
+  const [image, setImage] = useState(null)
 
-  const [uploading, setUploading] = useState(false)
+  // console.log(product)
 
   const handleChange = e => {
     setProduct({ ...product, [e.target.name]: e.target.value })
   }
 
-  const uploadFileHandler = async e => {
+  /* const uploadFileHandler = async e => {
     const file = e.target.files[0]
     const formData = new FormData()
     formData.append('image', file)
@@ -55,11 +53,22 @@ const AddProductModal = () => {
     }
   }
 
-  const handleAddproduct = e => {
-    // e.preventDefault()
+  */
+
+  const handleAddproduct = () => {
+    // const file = e.target.files[0]
+    // console.log(file)
     const { name, sku, category, price, description } = product
-    console.log(image, 'Add product to run')
-    addProduct(name, sku, category, price, description, image)
+    const formData = new FormData()
+    formData.append('image', image)
+    formData.append('name', name)
+    formData.append('sku', sku)
+    formData.append('category', category)
+    formData.append('price', price)
+    formData.append('description', description)
+    console.log('Add product to run')
+    console.log(formData)
+    addProduct(formData)
     console.log('Add product ran')
     setProduct({
       name: '',
@@ -86,6 +95,7 @@ const AddProductModal = () => {
                 <span>×</span>
               </button>
             </div>
+            {/* <form onSubmit={handleAddproduct}> */}
             <div className="modal-body">
               <div className="form-group">
                 <label htmlFor="name">Product Name</label>
@@ -152,12 +162,11 @@ const AddProductModal = () => {
                     type="file"
                     className="custom-file-input"
                     id="image"
-                    onChange={uploadFileHandler}
+                    // onChange={uploadFileHandler}
                     name="image"
-                    // value={image && image}
-                    // placeholder={image}
+                    onChange={e => setImage(e.target.files[0])}
+                    // value={product.description}
                   />
-                  {uploading && <Loader />}
                   <label htmlFor="image" className="custom-file-label">
                     Choose File
                   </label>
@@ -168,11 +177,13 @@ const AddProductModal = () => {
             <div className="modal-footer">
               <button
                 className="btn btn-primary"
+                type="submit"
                 data-dismiss="modal"
                 onClick={handleAddproduct}>
                 Add Product
               </button>
             </div>
+            {/* </form> */}
           </div>
         </div>
       </div>

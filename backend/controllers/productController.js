@@ -8,6 +8,7 @@ import path from 'path'
 // @access Private : Admin
 export const addProduct = async (req, res) => {
   try {
+    if (!req.file) throw new Error('please upload an image')
     const { filename: image } = req.file
 
     await sharp(req.file.path)
@@ -22,6 +23,10 @@ export const addProduct = async (req, res) => {
     await product.save()
     res.status(201).json({ success: true, message: 'product added', product })
   } catch (err) {
+    if (req.file) {
+      const { filename: image } = req.file
+      fs.unlinkSync(path.resolve(req.file.destination, '', `resized-${image}`))
+    }
     res.status(400).json({ success: false, error: err.message })
   }
 }
