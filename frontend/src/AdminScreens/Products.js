@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import AddProductModal from '../AdminComponents/AddProductModal'
 import Navbar from '../AdminComponents/Navbar'
 import productContext from '../context/product/productContext'
@@ -88,9 +89,11 @@ const Products = () => {
                           {new Date(product.createdAt).toLocaleDateString()}
                         </td>
                         <td>
-                          <a href="/" className="btn btn-secondary">
+                          <Link
+                            to="/productDetailsAdmin"
+                            className="btn btn-secondary">
                             <i className="fas fa-angle-double-right" /> Details
-                          </a>
+                          </Link>
                         </td>
                       </tr>
                     ))}

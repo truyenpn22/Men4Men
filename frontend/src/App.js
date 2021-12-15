@@ -21,6 +21,7 @@ import SignupScreen from './Pages/SignupScreen'
 import ProfileScreen from './Pages/ProfileScreen'
 import Orders from './AdminScreens/Orders'
 import MyOrderDetails from './Pages/MyOrderDetails'
+import ProductDetails from './AdminComponents/ProductDetails'
 
 function App() {
   return (
@@ -61,6 +62,8 @@ function App() {
         <Route path="/users" element={<Users />} />
 
         <Route path="/orders" element={<Orders />} />
+
+        <Route path="/productDetailsAdmin" element={<ProductDetails />} />
       </Routes>
       <Footer />
     </main>

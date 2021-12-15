@@ -1,9 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import Navbar from '../AdminComponents/Navbar'
-// import Footer from '../AdminComponents/Footer'
 import AddProductModal from '../AdminComponents/AddProductModal'
 import AddCategoryModal from '../AdminComponents/AddCategoryModal'
-// import AddUserModal from '../AdminComponents/AddUserModal'
 import { Link } from 'react-router-dom'
 import productContext from '../context/product/productContext'
 
@@ -95,10 +93,12 @@ const AdminDashboard = () => {
                             {new Date(product.createdAt).toLocaleDateString()}
                           </td>
                           <td>
-                            <a href="/" className="btn btn-secondary">
+                            <Link
+                              href="/productDetailsAdmin"
+                              className="btn btn-secondary">
                               <i className="fas fa-angle-double-right" />{' '}
                               Details
-                            </a>
+                            </Link>
                           </td>
                         </tr>
                       ))}
