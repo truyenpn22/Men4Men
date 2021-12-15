@@ -39,10 +39,14 @@ export const getAllProducts = async (req, res) => {
     if (req.query.category) {
       const products = await Product.find({
         category: req.query.category,
-      }).sort('-createdAt')
+      })
+        .sort('-createdAt')
+        .populate('category', 'title')
       return res.json({ success: true, products })
     }
-    const products = await Product.find({}).sort('-createdAt')
+    const products = await Product.find({})
+      .sort('-createdAt')
+      .populate('category', 'title')
     res.json({ success: true, products })
   } catch (err) {
     console.log(err)
@@ -55,7 +59,10 @@ export const getAllProducts = async (req, res) => {
 // @access Public
 export const getProduct = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id)
+    const product = await Product.findById(req.params.id).populate(
+      'category',
+      'title'
+    )
     if (!product) {
       return res
         .status(404)

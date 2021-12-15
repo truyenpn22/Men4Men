@@ -94,7 +94,7 @@ const AdminDashboard = () => {
                           </td>
                           <td>
                             <Link
-                              href="/productDetailsAdmin"
+                              to={`/productDetailsAdmin/${product._id}`}
                               className="btn btn-secondary">
                               <i className="fas fa-angle-double-right" />{' '}
                               Details

@@ -90,7 +90,7 @@ const Products = () => {
                         </td>
                         <td>
                           <Link
-                            to="/productDetailsAdmin"
+                            to={`/productDetailsAdmin/${product._id}`}
                             className="btn btn-secondary">
                             <i className="fas fa-angle-double-right" /> Details
                           </Link>

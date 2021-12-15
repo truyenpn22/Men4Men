@@ -10,7 +10,7 @@ const ShopSingle = () => {
   const [quantity, setQuantity] = useState(1)
 
   const { id } = useParams()
-  const [product, setProduct] = useState({})
+  const [product, setProduct] = useState({ category: {} })
 
   // for product context
   const pContext = useContext(productContext)
@@ -37,6 +37,11 @@ const ShopSingle = () => {
             <div className="col-md-6">
               <h2 className="text-black">{product.name}</h2>
               <p>{product.description}</p>
+              <p>
+                <small className="text-secondary">
+                  {product.category.title}
+                </small>
+              </p>
               <p>
                 <strong className="text-primary h4">${product.price}</strong>
               </p>

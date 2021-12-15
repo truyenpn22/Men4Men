@@ -44,48 +44,6 @@ const Shop = () => {
                         aria-expanded="false">
                         Latest
                       </button>
-                      <div
-                        className="dropdown-menu"
-                        aria-labelledby="dropdownMenuOffset">
-                        <a className="dropdown-item" href="/">
-                          Men
-                        </a>
-                        <a className="dropdown-item" href="/">
-                          Women
-                        </a>
-                        <a className="dropdown-item" href="/">
-                          Children
-                        </a>
-                      </div>
-                    </div>
-                    <div className="btn-group">
-                      <button
-                        type="button"
-                        className="btn btn-secondary btn-sm dropdown-toggle"
-                        id="dropdownMenuReference"
-                        data-toggle="dropdown">
-                        Reference
-                      </button>
-                      <div
-                        className="dropdown-menu"
-                        aria-labelledby="dropdownMenuReference">
-                        <a className="dropdown-item" href="/">
-                          Relevance
-                        </a>
-                        <a className="dropdown-item" href="/">
-                          Name, A to Z
-                        </a>
-                        <a className="dropdown-item" href="/">
-                          Name, Z to A
-                        </a>
-                        <div className="dropdown-divider"></div>
-                        <a className="dropdown-item" href="/">
-                          Price, low to high
-                        </a>
-                        <a className="dropdown-item" href="/">
-                          Price, high to low
-                        </a>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -113,7 +71,9 @@ const Shop = () => {
                             {product.name}
                           </Link>
                         </h3>
-                        <p className="mb-0">{product.description}</p>
+                        <p className="mb-0 text-secondary">
+                          {product.category.title}
+                        </p>
                         <p className="text-primary font-weight-bold">
                           ${product.price}
                         </p>
@@ -161,15 +121,17 @@ const Shop = () => {
                 </h3>
                 <ul className="list-unstyled mb-0">
                   <li className="mb-1">
-                    <button className="d-flex" onClick={() => getProducts()}>
-                      <span>All Categories</span>
+                    <button
+                      className="d-flex btn btn-secondary"
+                      onClick={() => getProducts()}>
+                      <span>All</span>
                       <span className="text-black ml-auto">(2,220)</span>
                     </button>
                   </li>
                   {categories.map(category => (
                     <li className="mb-1" key={category._id}>
                       <button
-                        className="d-flex"
+                        className="d-flex btn btn-secondary"
                         onClick={() => getCategoryWiseProducts(category._id)}>
                         <span>{category.title}</span>
                         <span className="text-black ml-auto">(2,220)</span>
