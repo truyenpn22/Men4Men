@@ -158,11 +158,7 @@ const ProductDetails = () => {
             </div>
             <div className="col-md-4">
               <h3 className="text-center">Image</h3>
-              <img
-                src={product.image}
-                alt=""
-                className="d-block img-fluid mb-3"
-              />
+              <img src={image} alt="" className="d-block img-fluid mb-3" />
               {/* <button className="btn btn-primary btn-block">Edit Image</button> */}
               {/* <button className="btn btn-danger btn-block">Delete Image</button> */}
             </div>

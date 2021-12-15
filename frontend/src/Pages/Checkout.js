@@ -3,6 +3,8 @@ import Breadcrumb from '../components/Breadcrumb'
 import { useNavigate } from 'react-router-dom'
 import { useCart } from 'react-use-cart'
 import OrderContext from '../context/orders/orderContext'
+import axios from 'axios'
+import { PayPalButton } from 'react-paypal-button-v2'
 
 const Checkout = () => {
   const navigate = useNavigate()
@@ -20,6 +22,12 @@ const Checkout = () => {
 
   const [paymentMethod, setPaymentMethod] = useState('')
 
+  // const [paymentResult, setPaymentResult] = useState({})
+
+  console.log(paymentMethod)
+
+  const [sdkReady, setSdkReady] = useState(false)
+
   // for order context
   const oContext = useContext(OrderContext)
   const { placeOrder } = oContext
@@ -27,10 +35,6 @@ const Checkout = () => {
   const handleChange = e => {
     setShippingAddress({ ...shippingAddress, [e.target.name]: e.target.value })
   }
-
-  console.log(shippingAddress)
-  console.log(paymentMethod, 'Paymnt method')
-  console.log(orderItems, 'orderitemes')
 
   const {
     isEmpty,
@@ -44,20 +48,39 @@ const Checkout = () => {
     if (isEmpty) {
       navigate('/shop')
     }
-    // eslint-disable-next-line
-  }, [])
-
-  useEffect(() => {
     const newArr = items.map(
       ({ category, createdAt, id, updatedAt, __v, _id, sku, ...keep }) => ({
         ...keep,
         product: _id,
       })
     )
-
     setOrderItems(newArr)
     // eslint-disable-next-line
   }, [])
+
+  // for paypal payment method
+  useEffect(() => {
+    const addPaypalScript = async () => {
+      const { data: clientId } = await axios.get('/api/config/paypal')
+      const script = document.createElement('script')
+      script.type = 'text/javascript'
+      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
+      script.async = true
+      script.onload = () => {
+        setSdkReady(true)
+      }
+      document.body.appendChild(script)
+    }
+    if (paymentMethod === 'paypal') {
+      // addPaypalScript()
+      if (!window.paypal) {
+        addPaypalScript()
+      } else {
+        setSdkReady(true)
+      }
+    }
+    // addPaypalScript()
+  }, [paymentMethod])
 
   const handlePlaceOrder = () => {
     placeOrder(orderItems, shippingAddress, paymentMethod, cartTotal)
@@ -204,15 +227,48 @@ const Checkout = () => {
                         onChange={e => setPaymentMethod(e.target.value)}>
                         <option value="">Select</option>
                         <option value="cod">Cash On delivery</option>
+                        <option value="paypal">Paypal</option>
                       </select>
                     </div>
 
                     <div className="form-group">
-                      <button
-                        className="btn btn-primary btn-lg py-3 btn-block"
-                        onClick={handlePlaceOrder}>
-                        Place Order
-                      </button>
+                      {paymentMethod === 'paypal' ? (
+                        <PayPalButton
+                          currency="USD"
+                          amount={cartTotal}
+                          // onSuccess={handlePlaceOrder}
+                          onSuccess={async (details, data) => {
+                            // alert(
+                            //   'Transaction completed by ' +
+                            //     details.payer.name.given_name
+                            // )
+                            console.log(details, 'details')
+                            console.log(data, 'data')
+
+                            // setPaymentResult()
+                            // console.log(paymentResult, 'paymentResult')
+
+                            await placeOrder(
+                              orderItems,
+                              shippingAddress,
+                              paymentMethod,
+                              cartTotal,
+                              {
+                                id: details.id,
+                                status: details.status,
+                                update_time: details.update_time,
+                                email_address: details.payer.email_address,
+                              }
+                            )
+                          }}
+                        />
+                      ) : (
+                        <button
+                          className="btn btn-primary btn-lg py-3 btn-block"
+                          onClick={handlePlaceOrder}>
+                          Place Order
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>

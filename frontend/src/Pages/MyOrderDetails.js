@@ -26,6 +26,8 @@ const MyOrderDetails = () => {
     // eslint-disable-next-line
   }, [])
 
+  console.log(order)
+
   return (
     <>
       <Breadcrumb pageName="Order" />
@@ -156,10 +158,17 @@ const MyOrderDetails = () => {
                         </div>
                         <div>
                           <b>Payment Status</b> : {order.paymentResult.status}
-                          <div>
-                            <b>Payment Method</b> : {order.paymentMethod}
-                          </div>
                         </div>
+                        {order.paymentMethod === 'paypal' && (
+                          <div>
+                            <b>Transaction Id</b> : {order.paymentResult.id}{' '}
+                            <br />
+                            <b>Payment Time</b> :{' '}
+                            {order.paymentResult.update_time} <br />
+                            <b>Payer Email</b> :{' '}
+                            {order.paymentResult.email_address}{' '}
+                          </div>
+                        )}
                         <div className="col-md-6"></div>
                       </div>
                     </div>

@@ -64,13 +64,15 @@ const OdersState = props => {
     orderItems,
     shippingAddress,
     paymentMethod,
-    totalPrice
+    totalPrice,
+    paymentResult
   ) => {
     const orderBody = clean({
       orderItems,
       shippingAddress,
       paymentMethod,
       totalPrice,
+      paymentResult,
     })
     try {
       const userToken = JSON.parse(localStorage.getItem('userToken'))
