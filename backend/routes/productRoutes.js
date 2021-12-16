@@ -4,7 +4,7 @@ import {
   deleteProduct,
   getAllProducts,
   getProduct,
-  updateProduct,
+  updateProductDetails,
 } from '../controllers/productController.js'
 import auth from '../middleware/auth.js'
 import checkAdmin from '../middleware/checkAdmin.js'
@@ -18,7 +18,7 @@ router.get('/getAll', getAllProducts)
 
 router.get('/:id', getProduct)
 
-router.patch('/:id', auth, checkAdmin, updateProduct)
+router.patch('/:id', auth, checkAdmin, updateProductDetails)
 
 router.delete('/:id', auth, checkAdmin, deleteProduct)
 

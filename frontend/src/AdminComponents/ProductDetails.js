@@ -6,7 +6,7 @@ import productContext from '../context/product/productContext'
 const ProductDetails = () => {
   // for product context
   const pContext = useContext(productContext)
-  const { getOneProduct } = pContext
+  const { getOneProduct, updateProductDetails } = pContext
   // for category context
   const cContext = useContext(CategoryContext)
   const { categories, getCategories } = cContext
@@ -26,7 +26,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       const fetchedProduct = await getOneProduct(id)
-      console.log(fetchedProduct)
+      // console.log(fetchedProduct)
       setProduct(fetchedProduct)
       setImage(fetchedProduct.image)
     }
@@ -38,6 +38,12 @@ const ProductDetails = () => {
   const handleChange = e => {
     setProduct({ ...product, [e.target.name]: e.target.value })
   }
+
+  const handleSaveChanges = () => {
+    const { _id, name, sku, category, price, description } = product
+    updateProductDetails(_id, name, sku, category, price, description)
+  }
+  console.log(product)
 
   return (
     <>
@@ -53,7 +59,9 @@ const ProductDetails = () => {
               </Link>
             </div>
             <div className="col-md-4">
-              <button className="btn btn-success btn-block">
+              <button
+                className="btn btn-success btn-block"
+                onClick={handleSaveChanges}>
                 <i className="fas fa-check" /> Save Changes
               </button>
             </div>
@@ -135,7 +143,7 @@ const ProductDetails = () => {
                     />
                   </div>
 
-                  <div className="form-group">
+                  {/* <div className="form-group">
                     <label htmlFor="image">Upload Image</label>
                     <div className="custom-file">
                       <input
@@ -152,7 +160,7 @@ const ProductDetails = () => {
                       </label>
                     </div>
                     <small className="form-text text-muted">Max Size 3mb</small>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

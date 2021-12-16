@@ -5,13 +5,13 @@ const Loader = () => {
     <div
       className="loader"
       style={{
-        width: '15vw',
-        height: '15vw',
+        width: '10vw',
+        height: '10vw',
         margin: 'auto',
         display: 'block',
         position: 'fixed',
         top: '30%',
-        left: '40%',
+        left: '45%',
         zIndex: '10000',
       }}></div>
   )

@@ -114,14 +114,40 @@ const ProductState = props => {
     }
   }
 
-  //   const updateCategory = async (id, title, image) => {
-  //     try {
-  //       await axios.patch(`api/category/${id}`, { title, image })
-  //       getCategories()
-  //     } catch (err) {
-  //       errorHandler(err)
-  //     }
-  //   }
+  const updateProductDetails = async (
+    id,
+    name,
+    sku,
+    category,
+    price,
+    description
+  ) => {
+    const productBody = clean({
+      name,
+      sku,
+      category,
+      price,
+      description,
+    })
+    try {
+      setProductsLoading(true)
+      const userToken = JSON.parse(localStorage.getItem('userToken'))
+      const headers = {
+        Authorization: `Bearer ${userToken && userToken}`,
+        'Content-Type': 'multipart/form-data',
+      }
+      await axios.patch(`/api/products/${id}`, productBody, { headers })
+      setProductsMessage({
+        variant: 'success',
+        message: 'Product details updated!',
+      })
+      setProductsLoading(false)
+      setProductsError(null)
+      // getCategories()
+    } catch (err) {
+      errorHandler(err, 'could not update product details')
+    }
+  }
 
   return (
     <ProductContext.Provider
@@ -134,6 +160,7 @@ const ProductState = props => {
         getProducts,
         getCategoryWiseProducts,
         getOneProduct,
+        updateProductDetails,
 
         errorHandler,
       }}>

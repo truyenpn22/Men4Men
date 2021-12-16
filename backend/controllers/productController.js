@@ -74,19 +74,12 @@ export const getProduct = async (req, res) => {
   }
 }
 
-// @desc Update product
+// @desc Update product details
 // @route PATCH '/api/products/:id'
 // @access Private : Admin
-export const updateProduct = async (req, res) => {
+export const updateProductDetails = async (req, res) => {
   const updates = Object.keys(req.body)
-  const allowedUpdates = [
-    'name',
-    'sku',
-    'category',
-    'price',
-    'description',
-    'image',
-  ]
+  const allowedUpdates = ['name', 'sku', 'category', 'price', 'description']
   const isValidOperation = updates.every(update =>
     allowedUpdates.includes(update)
   )

@@ -38,10 +38,11 @@ const Shop = () => {
                       <button
                         type="button"
                         className="btn btn-secondary btn-sm dropdown-toggle"
-                        id="dropdownMenuOffset"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false">
+                        // id="dropdownMenuOffset"
+                        // data-toggle="dropdown"
+                        // aria-haspopup="true"
+                        // aria-expanded="false"
+                      >
                         Latest
                       </button>
                     </div>

@@ -26,8 +26,6 @@ const MyOrderDetails = () => {
     // eslint-disable-next-line
   }, [])
 
-  console.log(order)
-
   return (
     <>
       <Breadcrumb pageName="Order" />
@@ -146,8 +144,8 @@ const MyOrderDetails = () => {
                         <b>Postal Code:</b> {order.shippingAddress.postalCode}
                       </div>
                     </div>
-                    <div className="col-md-6">
-                      <div className="text-right">
+                    <div className="col-md-6 border-left">
+                      <div className="">
                         <h4>Order Details</h4>
                         <div>
                           <b>Order Date</b> :{' '}
@@ -164,7 +162,10 @@ const MyOrderDetails = () => {
                             <b>Transaction Id</b> : {order.paymentResult.id}{' '}
                             <br />
                             <b>Payment Time</b> :{' '}
-                            {order.paymentResult.update_time} <br />
+                            {new Date(
+                              order.paymentResult.update_time
+                            ).toLocaleString()}{' '}
+                            <br />
                             <b>Payer Email</b> :{' '}
                             {order.paymentResult.email_address}{' '}
                           </div>
