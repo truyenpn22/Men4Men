@@ -5,6 +5,7 @@ import { useCart } from 'react-use-cart'
 import OrderContext from '../context/orders/orderContext'
 import axios from 'axios'
 import { PayPalButton } from 'react-paypal-button-v2'
+import Loader from '../components/Loader'
 
 const Checkout = () => {
   const navigate = useNavigate()
@@ -23,8 +24,6 @@ const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState('')
 
   // const [paymentResult, setPaymentResult] = useState({})
-
-  console.log(paymentMethod)
 
   const [sdkReady, setSdkReady] = useState(false)
 
@@ -233,35 +232,39 @@ const Checkout = () => {
 
                     <div className="form-group">
                       {paymentMethod === 'paypal' ? (
-                        <PayPalButton
-                          currency="USD"
-                          amount={cartTotal}
-                          // onSuccess={handlePlaceOrder}
-                          onSuccess={async (details, data) => {
-                            // alert(
-                            //   'Transaction completed by ' +
-                            //     details.payer.name.given_name
-                            // )
-                            console.log(details, 'details')
-                            console.log(data, 'data')
+                        !sdkReady ? (
+                          <Loader />
+                        ) : (
+                          <PayPalButton
+                            currency="USD"
+                            amount={cartTotal}
+                            // onSuccess={handlePlaceOrder}
+                            onSuccess={async (details, data) => {
+                              // alert(
+                              //   'Transaction completed by ' +
+                              //     details.payer.name.given_name
+                              // )
+                              console.log(details, 'details')
+                              console.log(data, 'data')
 
-                            // setPaymentResult()
-                            // console.log(paymentResult, 'paymentResult')
+                              // setPaymentResult()
+                              // console.log(paymentResult, 'paymentResult')
 
-                            await placeOrder(
-                              orderItems,
-                              shippingAddress,
-                              paymentMethod,
-                              cartTotal,
-                              {
-                                id: details.id,
-                                status: details.status,
-                                update_time: details.update_time,
-                                email_address: details.payer.email_address,
-                              }
-                            )
-                          }}
-                        />
+                              await placeOrder(
+                                orderItems,
+                                shippingAddress,
+                                paymentMethod,
+                                cartTotal,
+                                {
+                                  id: details.id,
+                                  status: details.status,
+                                  update_time: details.update_time,
+                                  email_address: details.payer.email_address,
+                                }
+                              )
+                            }}
+                          />
+                        )
                       ) : (
                         <button
                           className="btn btn-primary btn-lg py-3 btn-block"

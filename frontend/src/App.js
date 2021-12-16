@@ -21,7 +21,7 @@ import SignupScreen from './Pages/SignupScreen'
 import ProfileScreen from './Pages/ProfileScreen'
 import Orders from './AdminScreens/Orders'
 import MyOrderDetails from './Pages/MyOrderDetails'
-import ProductDetails from './AdminComponents/ProductDetails'
+import ProductDetails from './AdminScreens/ProductDetails'
 
 function App() {
   return (
