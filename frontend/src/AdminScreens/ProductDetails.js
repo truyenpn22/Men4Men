@@ -39,11 +39,14 @@ const ProductDetails = () => {
     setProduct({ ...product, [e.target.name]: e.target.value })
   }
 
+  // console.log(product)
   const handleSaveChanges = () => {
-    const { _id, name, sku, category, price, description } = product
-    updateProductDetails(_id, name, sku, category, price, description)
+    // console.log(product)
+    const { name, sku, category, price, description } = product
+    console.log(name)
+
+    updateProductDetails(id, name, sku, category, price, description)
   }
-  console.log(product)
 
   return (
     <>

@@ -1,17 +1,19 @@
 import path from 'path'
 import multer from 'multer'
 
-const storage = multer.diskStorage({
-  destination(req, file, cb) {
-    cb(null, 'uploads/')
-  },
-  filename(req, file, cb) {
-    cb(
-      null,
-      `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`
-    )
-  },
-})
+// const storage = multer.diskStorage({
+//   destination(req, file, cb) {
+//     cb(null, 'uploads/')
+//   },
+//   filename(req, file, cb) {
+//     cb(
+//       null,
+//       `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`
+//     )
+//   },
+// })
+
+const storage = multer.memoryStorage()
 
 function checkFileType(file, cb) {
   const filetypes = /jpg|jpeg|png/
@@ -36,14 +38,33 @@ const upload = multer({
   },
 })
 
-// router.post('/', upload.single('image'), async (req, res) => {
-//   try {
-//     // console.log(req.file)
-//     await sharp(req.file.path).resize({ width: 500, height: 400 })
-//     res.send(`/${req.file.path}`)
-//   } catch (err) {
-//     res.status(400).json({ success: false, error: err.message })
-//   }
-// })
-
 export default upload
+
+/*
+router.post("/createproduct", uploads.single('productImage') ,async function (req, res) {
+  // const {name,sku,price,category,description} = req.body;
+  console.log("req.file",req.file)
+  console.log("req.body",req.body)
+
+  fs.access('uploads',(err)=>{
+    if(err){
+      fs.mkdirSync('/uploads')
+    }
+  })
+
+  const date= new Date();
+  await sharp(req.file.buffer)
+  .resize({width:400,height:400})
+  .toFile(`uploads/${date.toString()}${req.file.originalname}`);
+  
+  const newProduct = await product.create({...req.body, productImage:`uploads/${date.toString()}${req.file.originalname}`});
+  
+  await category.updateMany(
+    { _id: newProduct.category },
+    { $push: { products: newProduct._id } }
+  );
+  return res.send(newProduct);
+});
+const storage=multer.memoryStorage();
+const uploads = multer({storage});
+*/

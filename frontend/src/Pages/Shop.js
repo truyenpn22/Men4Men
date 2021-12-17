@@ -1,4 +1,5 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { Form, FormControl, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import Breadcrumb from '../components/Breadcrumb'
 import CategoryContext from '../context/category/categoryContext'
@@ -7,19 +8,54 @@ import productContext from '../context/product/productContext'
 const Shop = () => {
   // for product context
   const pContext = useContext(productContext)
-  const { getProducts, products, getCategoryWiseProducts } = pContext
+  const { getProducts, products } = pContext
 
   // for category context
   const cContext = useContext(CategoryContext)
   const { categories, getCategories } = cContext
 
-  // console.log(getCategoryWiseProducts)
+  const limit = 5
+  const [skip, setSkip] = useState(0)
+  const [keyWord, setKeyWord] = useState('')
+  const [category, setCategory] = useState('')
+  const [totalResults, setTotalResults] = useState(0)
 
   useEffect(() => {
-    getProducts()
+    const populateProducts = async () => {
+      setTotalResults(await getProducts(limit, skip, keyWord, category))
+    }
+    populateProducts()
+    // eslint-disable-next-line
+  }, [skip, limit, category])
+
+  useEffect(() => {
+    getProducts(limit, skip, keyWord, category)
     getCategories()
     // eslint-disable-next-line
   }, [])
+
+  const handleChange = e => {
+    setKeyWord(e.target.value)
+  }
+
+  const handleSearchSubmit = e => {
+    e.preventDefault()
+    const populateProducts = async () => {
+      setTotalResults(await getProducts(limit, skip, keyWord, category))
+    }
+    setSkip(0)
+    populateProducts()
+  }
+
+  const handlePreviousClick = async () => {
+    if (skip > 0) {
+      setSkip(skip - limit)
+    }
+  }
+
+  const handleNextClick = async () => {
+    setSkip(skip + limit)
+  }
 
   return (
     <>
@@ -29,23 +65,26 @@ const Shop = () => {
           <div className="row mb-5">
             <div className="col-md-9 order-2">
               <div className="row">
-                <div className="col-md-12 mb-5">
+                <div className="col-md-12 mb-5 d-flex justify-content-between">
                   <div className="float-md-left mb-4">
                     <h2 className="text-black h5">Shop All</h2>
                   </div>
                   <div className="d-flex">
-                    <div className="dropdown mr-1 ml-md-auto">
-                      <button
-                        type="button"
-                        className="btn btn-secondary btn-sm dropdown-toggle"
-                        // id="dropdownMenuOffset"
-                        // data-toggle="dropdown"
-                        // aria-haspopup="true"
-                        // aria-expanded="false"
-                      >
-                        Latest
+                    <Form className="d-flex" onSubmit={handleSearchSubmit}>
+                      <FormControl
+                        type="search"
+                        placeholder="Search products"
+                        className="me-2"
+                        aria-label="Search"
+                        minLength={3}
+                        size="sm"
+                        value={keyWord}
+                        onChange={handleChange}
+                      />
+                      <button type="submit" className="btn btn-secondary">
+                        Search
                       </button>
-                    </div>
+                    </Form>
                   </div>
                 </div>
               </div>
@@ -86,7 +125,33 @@ const Shop = () => {
 
               <div className="row" data-aos="fade-up">
                 <div className="col-md-12 text-center">
-                  <div className="site-block-27">
+                  <div className="d-flex justify-content-between align-items-center my-3">
+                    <Button
+                      variant="success"
+                      size="sm"
+                      onClick={handlePreviousClick}
+                      disabled={skip < 1}>
+                      &larr; Previous
+                    </Button>
+
+                    <div className="text-center mx-2">
+                      Page-{skip / limit + 1},
+                      <span className="text-muted">
+                        {' '}
+                        Showing {products.length} out of {totalResults}{' '}
+                        products.
+                      </span>
+                    </div>
+
+                    <Button
+                      variant="success"
+                      size="sm"
+                      onClick={handleNextClick}
+                      disabled={totalResults - skip <= limit}>
+                      Next &rarr;
+                    </Button>
+                  </div>
+                  {/* <div className="site-block-27">
                     <ul>
                       <li>
                         <a href="/">&lt;</a>
@@ -110,7 +175,7 @@ const Shop = () => {
                         <a href="/">&gt;</a>
                       </li>
                     </ul>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -124,17 +189,17 @@ const Shop = () => {
                   <li className="mb-1">
                     <button
                       className="d-flex btn btn-secondary"
-                      onClick={() => getProducts()}>
+                      onClick={() => setCategory('')}>
                       <span>All</span>
                       <span className="text-black ml-auto">(2,220)</span>
                     </button>
                   </li>
-                  {categories.map(category => (
-                    <li className="mb-1" key={category._id}>
+                  {categories.map(cate => (
+                    <li className="mb-1" key={cate._id}>
                       <button
                         className="d-flex btn btn-secondary"
-                        onClick={() => getCategoryWiseProducts(category._id)}>
-                        <span>{category.title}</span>
+                        onClick={() => setCategory(cate._id)}>
+                        <span>{cate.title}</span>
                         <span className="text-black ml-auto">(2,220)</span>
                       </button>
                     </li>
@@ -155,46 +220,6 @@ const Shop = () => {
                     className="form-control border-0 pl-0 bg-white"
                     disabled=""
                   />
-                </div>
-
-                <div className="mb-4">
-                  <h3 className="mb-3 h6 text-uppercase text-black d-block">
-                    Size
-                  </h3>
-                  <label htmlFor="s_sm" className="d-flex">
-                    <input type="checkbox" id="s_sm" className="mr-2 mt-1" />{' '}
-                    <span className="text-black">Small (2,319)</span>
-                  </label>
-                  <label htmlFor="s_md" className="d-flex">
-                    <input type="checkbox" id="s_md" className="mr-2 mt-1" />{' '}
-                    <span className="text-black">Medium (1,282)</span>
-                  </label>
-                  <label htmlFor="s_lg" className="d-flex">
-                    <input type="checkbox" id="s_lg" className="mr-2 mt-1" />{' '}
-                    <span className="text-black">Large (1,392)</span>
-                  </label>
-                </div>
-
-                <div className="mb-4">
-                  <h3 className="mb-3 h6 text-uppercase text-black d-block">
-                    Color
-                  </h3>
-                  <a href="/" className="d-flex color-item align-items-center">
-                    <span className="bg-danger color d-inline-block rounded-circle mr-2"></span>{' '}
-                    <span className="text-black">Red (2,429)</span>
-                  </a>
-                  <a href="/" className="d-flex color-item align-items-center">
-                    <span className="bg-success color d-inline-block rounded-circle mr-2"></span>{' '}
-                    <span className="text-black">Green (2,298)</span>
-                  </a>
-                  <a href="/" className="d-flex color-item align-items-center">
-                    <span className="bg-info color d-inline-block rounded-circle mr-2"></span>{' '}
-                    <span className="text-black">Blue (1,075)</span>
-                  </a>
-                  <a href="/" className="d-flex color-item align-items-center">
-                    <span className="bg-primary color d-inline-block rounded-circle mr-2"></span>{' '}
-                    <span className="text-black">Purple (1,075)</span>
-                  </a>
                 </div>
               </div>
             </div>

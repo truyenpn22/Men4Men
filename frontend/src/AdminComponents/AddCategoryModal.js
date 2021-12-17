@@ -1,28 +1,27 @@
-import React, { useContext, useState } from "react"
-import CategoryContext from "../context/category/categoryContext"
+import React, { useContext, useState } from 'react'
+import CategoryContext from '../context/category/categoryContext'
 
 const AddCategoryModal = () => {
   const context = useContext(CategoryContext)
   const { addCategory } = context
 
-  const [category, setCategory] = useState({ title: "", image: "" })
+  const [category, setCategory] = useState({ title: '', image: '' })
 
   const handleChange = e => {
     setCategory({ ...category, [e.target.name]: e.target.value })
   }
 
   const handleAddCategory = async () => {
-    await addCategory(category.title, category.image)
+    await addCategory(category.title)
   }
 
   return (
     <>
       {/* ADD CATEGORY MODAL */}
       <div
-        style={{ zIndex: "9999" }}
+        style={{ zIndex: '9999' }}
         className="modal fade"
-        id="addCategoryModal"
-      >
+        id="addCategoryModal">
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-header bg-success text-white">
@@ -43,24 +42,13 @@ const AddCategoryModal = () => {
                     onChange={handleChange}
                   />
                 </div>
-                <div className="form-group">
-                  <label htmlFor="title">Image</label>
-                  <input
-                    type="text"
-                    name="image"
-                    className="form-control"
-                    value={category.image}
-                    onChange={handleChange}
-                  />
-                </div>
               </form>
             </div>
             <div className="modal-footer">
               <button
                 className="btn btn-success"
                 data-dismiss="modal"
-                onClick={handleAddCategory}
-              >
+                onClick={handleAddCategory}>
                 Add Category
               </button>
             </div>

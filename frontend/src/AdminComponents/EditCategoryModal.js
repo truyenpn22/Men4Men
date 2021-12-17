@@ -10,10 +10,10 @@ const EditCategoryModal = props => {
   const context = useContext(CategoryContext)
   const { updateCategory } = context
 
-  const [category, setCategory] = useState({ title: '', image: '' })
+  const [category, setCategory] = useState({ title: '' })
 
   useEffect(() => {
-    setCategory({ title: props.category.title, image: props.category.image })
+    setCategory({ title: props.category.title })
     // eslint-disable-next-line
   }, [])
 
@@ -44,16 +44,6 @@ const EditCategoryModal = props => {
               name="title"
               className="form-control"
               value={category.title}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="title">Image</label>
-            <input
-              type="text"
-              name="image"
-              className="form-control"
-              value={category.image}
               onChange={handleChange}
             />
           </div>

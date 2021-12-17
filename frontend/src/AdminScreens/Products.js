@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import AddProductModal from '../AdminComponents/AddProductModal'
 import Navbar from '../AdminComponents/Navbar'
@@ -10,8 +10,14 @@ const Products = () => {
   const pContext = useContext(productContext)
   const { getProducts, products } = pContext
 
+  const limit = 40
+  const [skip, setSkip] = useState(0)
+  const [keyWord, setKeyWord] = useState('')
+  const [category, setCategory] = useState('')
+  // const [totalResults, setTotalResults] = useState(0)
+
   useEffect(() => {
-    getProducts()
+    getProducts(limit, skip, keyWord, category)
     // eslint-disable-next-line
   }, [])
 
@@ -101,7 +107,7 @@ const Products = () => {
                 </table>
 
                 {/* PAGINATION */}
-                <nav className="ml-4">
+                {/* <nav className="ml-4">
                   <ul className="pagination">
                     <li className="page-item disabled">
                       <a href="/" className="page-link">
@@ -129,7 +135,7 @@ const Products = () => {
                       </a>
                     </li>
                   </ul>
-                </nav>
+                </nav> */}
               </div>
             </div>
           </div>

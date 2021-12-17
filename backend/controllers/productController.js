@@ -8,25 +8,31 @@ import mongoose from 'mongoose'
 // @route POST '/api/products/add'
 // @access Private : Admin
 export const addProduct = async (req, res) => {
+  const date = new Date()
   try {
     if (!req.file) throw new Error('please upload an image')
-    const { filename: image } = req.file
 
-    await sharp(req.file.path)
+    fs.access('uploads', err => {
+      if (err) {
+        fs.mkdirSync('/uploads')
+      }
+    })
+
+    await sharp(req.file.buffer)
       .resize({ width: 400, height: 400 })
-      .toFile(path.resolve(req.file.destination, '', `resized-${image}`))
-    fs.unlinkSync(req.file.path)
+      .toFile(`uploads/${date.getTime()}${req.file.originalname}`)
 
     const product = new Product({
       ...req.body,
-      image: `${req.file.destination}resized-${req.file.filename}`,
+      image: `uploads/${date.getTime()}${req.file.originalname}`,
     })
     await product.save()
     res.status(201).json({ success: true, message: 'product added', product })
   } catch (err) {
     if (req.file) {
-      const { filename: image } = req.file
-      fs.unlinkSync(path.resolve(req.file.destination, '', `resized-${image}`))
+      fs.unlinkSync(
+        path.resolve(`uploads/${date.getTime()}${req.file.originalname}`)
+      )
     }
     res.status(400).json({ success: false, error: err.message })
   }
@@ -35,20 +41,56 @@ export const addProduct = async (req, res) => {
 // @desc Get All products
 // @route GET '/api/products/getAll'
 // @access Public
+// Allowed queryparams : category, keyword, limit, skip
 export const getAllProducts = async (req, res) => {
   try {
+    let searchQuery = ''
+
+    if (req.query.keyword) {
+      searchQuery = String(req.query.keyword)
+    }
+
+    // for category filter
     if (req.query.category) {
-      const products = await Product.find({
-        category: req.query.category,
-      })
+      let categoryQuery = req.query.category
+      const findQuery = {
+        $and: [
+          { category: categoryQuery },
+          {
+            $or: [
+              { name: { $regex: searchQuery, $options: 'i' } },
+              { description: { $regex: searchQuery, $options: 'i' } },
+            ],
+          },
+        ],
+      }
+      const results = await Product.find(findQuery)
+
+      const products = await Product.find(findQuery)
         .sort('-createdAt')
         .populate('category', 'title')
-      return res.json({ success: true, products })
+        .limit(parseInt(req.query.limit))
+        .skip(parseInt(req.query.skip))
+
+      return res.json({ success: true, totalResults: results.length, products })
     }
-    const products = await Product.find({})
+
+    const findQuery = {
+      $or: [
+        { name: { $regex: searchQuery, $options: 'i' } },
+        { description: { $regex: searchQuery, $options: 'i' } },
+      ],
+    }
+
+    const results = await Product.find(findQuery)
+
+    const products = await Product.find(findQuery)
       .sort('-createdAt')
       .populate('category', 'title')
-    res.json({ success: true, products })
+      .limit(parseInt(req.query.limit))
+      .skip(parseInt(req.query.skip))
+
+    return res.json({ success: true, totalResults: results.length, products })
   } catch (err) {
     console.log(err)
     res.status(400).json({ success: false, error: err.message })

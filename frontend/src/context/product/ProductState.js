@@ -51,15 +51,18 @@ const ProductState = props => {
   }
 
   // get all Products
-  const getProducts = async () => {
+  const getProducts = async (limit, skip, keyword, category) => {
     try {
       setProductsLoading(true)
-      const { data } = await axios.get(`/api/products/getAll`)
+      const { data } = await axios.get(`/api/products/getAll`, {
+        params: { limit, skip, keyword, category },
+      })
       setProducts(data.products)
       setProductsLoading(false)
       setProductsError(null)
+      return data.totalResults
     } catch (err) {
-      errorHandler(err)
+      errorHandler(err, 'could not get products')
     }
   }
 
@@ -88,19 +91,6 @@ const ProductState = props => {
     }
   }
 
-  // get category wise products
-  const getCategoryWiseProducts = async cid => {
-    try {
-      setProductsLoading(true)
-      const { data } = await axios.get(`api/products/getAll?category=${cid}`)
-      setProducts(data.products)
-      setProductsLoading(false)
-      setProductsError(null)
-    } catch (err) {
-      errorHandler(err)
-    }
-  }
-
   // get one product
   const getOneProduct = async id => {
     try {
@@ -125,10 +115,11 @@ const ProductState = props => {
     const productBody = clean({
       name,
       sku,
-      category,
+      category: category._id,
       price,
       description,
     })
+    console.log(productBody)
     try {
       setProductsLoading(true)
       const userToken = JSON.parse(localStorage.getItem('userToken'))
@@ -158,7 +149,6 @@ const ProductState = props => {
         productsMessage,
         addProduct,
         getProducts,
-        getCategoryWiseProducts,
         getOneProduct,
         updateProductDetails,
 
