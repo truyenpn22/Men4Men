@@ -26,38 +26,11 @@ const AddProductModal = () => {
 
   const [image, setImage] = useState(null)
 
-  // console.log(product)
-
   const handleChange = e => {
     setProduct({ ...product, [e.target.name]: e.target.value })
   }
 
-  /* const uploadFileHandler = async e => {
-    const file = e.target.files[0]
-    const formData = new FormData()
-    formData.append('image', file)
-    setUploading(true)
-
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }
-      const { data } = await axios.post('/api/upload', formData, config)
-      setImage(data)
-      setUploading(false)
-    } catch (err) {
-      errorHandler(err, 'Could not upload file')
-      setUploading(false)
-    }
-  }
-
-  */
-
   const handleAddproduct = () => {
-    // const file = e.target.files[0]
-    // console.log(file)
     const { name, sku, category, price, description } = product
     const formData = new FormData()
     formData.append('image', image)
@@ -67,7 +40,6 @@ const AddProductModal = () => {
     formData.append('price', price)
     formData.append('description', description)
     console.log('Add product to run')
-    console.log(formData)
     addProduct(formData)
     console.log('Add product ran')
     setProduct({

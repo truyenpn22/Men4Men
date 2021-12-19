@@ -2,7 +2,6 @@ import Product from '../models/Product.js'
 import sharp from 'sharp'
 import fs from 'fs'
 import path from 'path'
-import mongoose from 'mongoose'
 
 // @desc Add new product
 // @route POST '/api/products/add'
@@ -18,14 +17,15 @@ export const addProduct = async (req, res) => {
       }
     })
 
-    await sharp(req.file.buffer)
-      .resize({ width: 400, height: 400 })
-      .toFile(`uploads/${date.getTime()}${req.file.originalname}`)
-
     const product = new Product({
       ...req.body,
       image: `uploads/${date.getTime()}${req.file.originalname}`,
     })
+
+    await sharp(req.file.buffer)
+      .resize({ width: 400, height: 400 })
+      .toFile(`uploads/${date.getTime()}${req.file.originalname}`)
+
     await product.save()
     res.status(201).json({ success: true, message: 'product added', product })
   } catch (err) {

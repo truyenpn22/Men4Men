@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import AddProductModal from '../AdminComponents/AddProductModal'
 import Navbar from '../AdminComponents/Navbar'
@@ -10,16 +11,42 @@ const Products = () => {
   const pContext = useContext(productContext)
   const { getProducts, products } = pContext
 
-  const limit = 40
+  const limit = 8
   const [skip, setSkip] = useState(0)
   const [keyWord, setKeyWord] = useState('')
-  const [category, setCategory] = useState('')
-  // const [totalResults, setTotalResults] = useState(0)
+  // const [category, setCategory] = useState('')
+  const [totalResults, setTotalResults] = useState(0)
 
   useEffect(() => {
-    getProducts(limit, skip, keyWord, category)
+    const populateProducts = async () => {
+      setTotalResults(await getProducts(limit, skip, keyWord))
+    }
+    populateProducts()
     // eslint-disable-next-line
-  }, [])
+  }, [skip, limit])
+
+  const handlePreviousClick = async () => {
+    if (skip > 0) {
+      setSkip(skip - limit)
+    }
+  }
+
+  const handleNextClick = async () => {
+    setSkip(skip + limit)
+  }
+
+  const handleChange = e => {
+    setKeyWord(e.target.value)
+  }
+
+  const handleSearchSubmit = e => {
+    e.preventDefault()
+    const populateProducts = async () => {
+      setTotalResults(await getProducts(limit, skip, keyWord))
+    }
+    setSkip(0)
+    populateProducts()
+  }
 
   return (
     <>
@@ -51,16 +78,22 @@ const Products = () => {
               <AddProductModal />
             </div>
             <div className="col-md-6 ml-auto">
-              <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search Products..."
-                />
-                <div className="input-group-append">
-                  <button className="btn btn-primary">Search</button>
+              <form onSubmit={handleSearchSubmit}>
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Search Products..."
+                    value={keyWord}
+                    onChange={handleChange}
+                  />
+                  <div className="input-group-append">
+                    <button className="btn btn-primary" type="submit">
+                      Search
+                    </button>
+                  </div>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>
@@ -106,36 +139,36 @@ const Products = () => {
                   </tbody>
                 </table>
 
-                {/* PAGINATION */}
-                {/* <nav className="ml-4">
-                  <ul className="pagination">
-                    <li className="page-item disabled">
-                      <a href="/" className="page-link">
-                        Previous
-                      </a>
-                    </li>
-                    <li className="page-item active">
-                      <a href="/" className="page-link">
-                        1
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a href="/" className="page-link">
-                        2
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a href="/" className="page-link">
-                        3
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a href="/" className="page-link">
-                        Next
-                      </a>
-                    </li>
-                  </ul>
-                </nav> */}
+                <div className="row mx-3">
+                  <div className="col-md-12 text-center">
+                    <div className="d-flex justify-content-between align-items-center my-3">
+                      <Button
+                        variant="success"
+                        size="sm"
+                        onClick={handlePreviousClick}
+                        disabled={skip < 1}>
+                        &larr; Previous
+                      </Button>
+
+                      <div className="text-center mx-2">
+                        Page-{skip / limit + 1},
+                        <span className="text-muted">
+                          {' '}
+                          Showing {products.length} out of {totalResults}{' '}
+                          products.
+                        </span>
+                      </div>
+
+                      <Button
+                        variant="success"
+                        size="sm"
+                        onClick={handleNextClick}
+                        disabled={totalResults - skip <= limit}>
+                        Next &rarr;
+                      </Button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

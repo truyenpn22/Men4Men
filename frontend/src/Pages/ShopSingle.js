@@ -46,43 +46,7 @@ const ShopSingle = () => {
               <p>
                 <strong className="text-primary h4">${product.price}</strong>
               </p>
-              <div className="mb-1 d-flex">
-                <label htmlFor="option-sm" className="d-flex mr-3 mb-3">
-                  <span
-                    className="d-inline-block mr-2"
-                    style={{ top: '-2px', position: 'relative' }}>
-                    <input type="radio" id="option-sm" name="shop-sizes" />
-                  </span>{' '}
-                  <span className="d-inline-block text-black">Small</span>
-                </label>
-                <label htmlFor="option-md" className="d-flex mr-3 mb-3">
-                  <span
-                    className="d-inline-block mr-2"
-                    style={{ top: '-2px', position: 'relative' }}>
-                    <input type="radio" id="option-md" name="shop-sizes" />
-                  </span>{' '}
-                  <span className="d-inline-block text-black">Medium</span>
-                </label>
-                <label htmlFor="option-lg" className="d-flex mr-3 mb-3">
-                  <span
-                    className="d-inline-block mr-2"
-                    style={{ top: '-2px', position: 'relative' }}>
-                    <input type="radio" id="option-lg" name="shop-sizes" />
-                  </span>{' '}
-                  <span className="d-inline-block text-black">Large</span>
-                </label>
-                <label htmlFor="option-xl" className="d-flex mr-3 mb-3">
-                  <span
-                    className="d-inline-block mr-2"
-                    style={{ top: '-2px', position: 'relative' }}>
-                    <input type="radio" id="option-xl" name="shop-sizes" />
-                  </span>{' '}
-                  <span className="d-inline-block text-black">
-                    {' '}
-                    Extra Large
-                  </span>
-                </label>
-              </div>
+
               <div className="mb-5">
                 <div className="input-group mb-3" style={{ maxWidth: '120px' }}>
                   <div className="input-group-prepend">

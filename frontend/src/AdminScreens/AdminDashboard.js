@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Navbar from '../AdminComponents/Navbar'
 import AddProductModal from '../AdminComponents/AddProductModal'
 import AddCategoryModal from '../AdminComponents/AddCategoryModal'
@@ -11,13 +11,14 @@ const AdminDashboard = () => {
   const { getProducts, products } = pContext
 
   const limit = 5
-  const [skip, setSkip] = useState(0)
-  const [keyWord, setKeyWord] = useState('')
-  const [category, setCategory] = useState('')
+  const skip = 0
+  // const [skip, setSkip] = useState(0)
+  // const [keyWord, setKeyWord] = useState('')
+  // const [category, setCategory] = useState('')
   // const [totalResults, setTotalResults] = useState(0)
 
   useEffect(() => {
-    getProducts(limit, skip, keyWord, category)
+    getProducts(limit, skip, '', '')
     // eslint-disable-next-line
   }, [])
 
@@ -110,9 +111,11 @@ const AdminDashboard = () => {
                       ))}
                     </tbody>
                   </table>
-                  <Link to="/products">
-                    <button>See all products</button>
-                  </Link>
+                  <div className="text-center my-3">
+                    <Link to="/products">
+                      <button className="btn btn-info">See all products</button>
+                    </Link>
+                  </div>
                 </div>
               </div>
               <div className="col-md-3">

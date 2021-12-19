@@ -25,14 +25,9 @@ const Shop = () => {
       setTotalResults(await getProducts(limit, skip, keyWord, category))
     }
     populateProducts()
-    // eslint-disable-next-line
-  }, [skip, limit, category])
-
-  useEffect(() => {
-    getProducts(limit, skip, keyWord, category)
     getCategories()
     // eslint-disable-next-line
-  }, [])
+  }, [skip, limit, category])
 
   const handleChange = e => {
     setKeyWord(e.target.value)
@@ -81,7 +76,7 @@ const Shop = () => {
                         value={keyWord}
                         onChange={handleChange}
                       />
-                      <button type="submit" className="btn btn-secondary">
+                      <button type="submit" className="btn btn-secondary mx-3">
                         Search
                       </button>
                     </Form>
@@ -151,31 +146,6 @@ const Shop = () => {
                       Next &rarr;
                     </Button>
                   </div>
-                  {/* <div className="site-block-27">
-                    <ul>
-                      <li>
-                        <a href="/">&lt;</a>
-                      </li>
-                      <li className="active">
-                        <span>1</span>
-                      </li>
-                      <li>
-                        <a href="/">2</a>
-                      </li>
-                      <li>
-                        <a href="/">3</a>
-                      </li>
-                      <li>
-                        <a href="/">4</a>
-                      </li>
-                      <li>
-                        <a href="/">5</a>
-                      </li>
-                      <li>
-                        <a href="/">&gt;</a>
-                      </li>
-                    </ul>
-                  </div> */}
                 </div>
               </div>
             </div>
@@ -191,7 +161,9 @@ const Shop = () => {
                       className="d-flex btn btn-secondary"
                       onClick={() => setCategory('')}>
                       <span>All</span>
-                      <span className="text-black ml-auto">(2,220)</span>
+                      <span className="text-black ml-auto">
+                        ({totalResults})
+                      </span>
                     </button>
                   </li>
                   {categories.map(cate => (
@@ -200,7 +172,7 @@ const Shop = () => {
                         className="d-flex btn btn-secondary"
                         onClick={() => setCategory(cate._id)}>
                         <span>{cate.title}</span>
-                        <span className="text-black ml-auto">(2,220)</span>
+                        {/* <span className="text-black ml-auto">(2,220)</span> */}
                       </button>
                     </li>
                   ))}

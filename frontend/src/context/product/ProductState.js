@@ -104,6 +104,9 @@ const ProductState = props => {
     }
   }
 
+  // -----------------------------------------------------------------
+  // Update prdouct details
+  // -----------------------------------------------------------------
   const updateProductDetails = async (
     id,
     name,
@@ -112,21 +115,19 @@ const ProductState = props => {
     price,
     description
   ) => {
-    const productBody = clean({
-      name,
-      sku,
-      category: category._id,
-      price,
-      description,
-    })
-    console.log(productBody)
     try {
       setProductsLoading(true)
       const userToken = JSON.parse(localStorage.getItem('userToken'))
       const headers = {
         Authorization: `Bearer ${userToken && userToken}`,
-        'Content-Type': 'multipart/form-data',
       }
+      const productBody = clean({
+        name,
+        sku,
+        category,
+        price,
+        description,
+      })
       await axios.patch(`/api/products/${id}`, productBody, { headers })
       setProductsMessage({
         variant: 'success',

@@ -43,8 +43,6 @@ const ProductDetails = () => {
   const handleSaveChanges = () => {
     // console.log(product)
     const { name, sku, category, price, description } = product
-    console.log(name)
-
     updateProductDetails(id, name, sku, category, price, description)
   }
 
