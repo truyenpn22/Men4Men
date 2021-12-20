@@ -60,3 +60,23 @@ export const getOneOrder = async (req, res) => {
     res.status(400).json({ success: false, error: err.message })
   }
 }
+
+// @desc Get One order by id admin
+// @route GET '/api/orders/:id'
+// @access Private : Admin
+export const getOneOrderAdmin = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id).populate(
+      'user',
+      'name email'
+    )
+    if (!order) {
+      return res
+        .status(404)
+        .json({ success: false, error: 'Could not find order!' })
+    }
+    res.json({ success: true, order })
+  } catch (err) {
+    res.status(400).json({ success: false, error: err.message })
+  }
+}

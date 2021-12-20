@@ -144,6 +144,44 @@ export const updateProductDetails = async (req, res) => {
   }
 }
 
+// @desc Update prouduct image
+// @route PATCH  '/api/products/:id/updateImage'
+// @access Private : Admin
+export const updateProductImage = async (req, res) => {
+  const date = new Date()
+  try {
+    const product = await Product.findById(req.params.id)
+    if (!product) {
+      return res
+        .status(404)
+        .json({ success: false, error: 'Product not found' })
+    }
+
+    if (!req.file) throw new Error('please upload an image')
+    fs.access('uploads', err => {
+      if (err) {
+        fs.mkdirSync('/uploads')
+      }
+    })
+    fs.unlinkSync(path.resolve(product.image))
+
+    await sharp(req.file.buffer)
+      .resize({ width: 400, height: 400 })
+      .toFile(`uploads/${date.getTime()}${req.file.originalname}`)
+
+    product.image = `uploads/${date.getTime()}${req.file.originalname}`
+    await product.save()
+    res.json({ success: true, message: 'Image updated', image: product.image })
+  } catch (err) {
+    if (req.file) {
+      fs.unlinkSync(
+        path.resolve(`uploads/${date.getTime()}${req.file.originalname}`)
+      )
+    }
+    res.status(400).json({ success: false, error: err.message })
+  }
+}
+
 // @desc Delete a product
 // @route DELETE  '/api/products/:id'
 // @access Private : Admin

@@ -22,6 +22,7 @@ import ProfileScreen from './Pages/ProfileScreen'
 import Orders from './AdminScreens/Orders'
 import MyOrderDetails from './Pages/MyOrderDetails'
 import ProductDetails from './AdminScreens/ProductDetails'
+import OrderDetails from './AdminScreens/OrderDetails'
 
 function App() {
   return (
@@ -64,6 +65,8 @@ function App() {
         <Route path="/orders" element={<Orders />} />
 
         <Route path="/productDetailsAdmin/:id" element={<ProductDetails />} />
+
+        <Route path="/orderDetailsAdmin/:id" element={<OrderDetails />} />
       </Routes>
       <Footer />
     </main>

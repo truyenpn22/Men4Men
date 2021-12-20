@@ -35,10 +35,11 @@ const Shop = () => {
 
   const handleSearchSubmit = e => {
     e.preventDefault()
+    setSkip(0)
+    setCategory('')
     const populateProducts = async () => {
       setTotalResults(await getProducts(limit, skip, keyWord, category))
     }
-    setSkip(0)
     populateProducts()
   }
 
@@ -159,18 +160,24 @@ const Shop = () => {
                   <li className="mb-1">
                     <button
                       className="d-flex btn btn-secondary"
-                      onClick={() => setCategory('')}>
+                      onClick={() => {
+                        setCategory('')
+                        setSkip(0)
+                      }}>
                       <span>All</span>
-                      <span className="text-black ml-auto">
+                      {/* <span className="text-black ml-auto">
                         ({totalResults})
-                      </span>
+                      </span> */}
                     </button>
                   </li>
                   {categories.map(cate => (
                     <li className="mb-1" key={cate._id}>
                       <button
                         className="d-flex btn btn-secondary"
-                        onClick={() => setCategory(cate._id)}>
+                        onClick={() => {
+                          setCategory(cate._id)
+                          setSkip(0)
+                        }}>
                         <span>{cate.title}</span>
                         {/* <span className="text-black ml-auto">(2,220)</span> */}
                       </button>

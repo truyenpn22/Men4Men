@@ -59,19 +59,24 @@ const Header = () => {
                 <ul>
                   {user && user.role === 'admin' && (
                     <li>
-                      <Link to="/adminDashboard">Admin Dashboard</Link>
+                      <Link to="/adminDashboard">
+                        <i className="fas fa-user-cog text-info"></i> Admin
+                        Dashboard
+                      </Link>
                     </li>
                   )}
                   {user ? (
                     <>
                       <li>
                         <Link to="/profile">
-                          <span className="icon icon-user"></span> {user.name}
+                          <i className="fas fa-user text-success"></i>{' '}
+                          {user.name}
                         </Link>
                       </li>
                       <li>
                         <Link to="/" onClick={logoutHandler}>
-                          <span className="icon icon-user"></span> Logout
+                          <i className="fas fa-sign-out-alt text-warning"></i>{' '}
+                          Logout
                         </Link>
                       </li>
                     </>
@@ -79,12 +84,14 @@ const Header = () => {
                     <>
                       <li>
                         <Link to="/login">
-                          Login<span className="icon icon-person"></span>
+                          Login{' '}
+                          <i className="fas fa-sign-in-alt text-primary"></i>
                         </Link>
                       </li>
                       <li>
                         <Link to="/signup">
-                          Signup<span className="icon icon-user-plus"></span>
+                          Signup{' '}
+                          <i className="fas fa-user-plus text-primary"></i>
                         </Link>
                       </li>
                     </>
@@ -118,45 +125,9 @@ const Header = () => {
           <ul className="site-menu js-clone-nav d-none d-md-block">
             <li className="active">
               <Link to="/">Home</Link>
-              {/* <ul className="dropdown">
-                <li>
-                  <a href="/">Menu One</a>
-                </li>
-                <li>
-                  <a href="/">Menu Two</a>
-                </li>
-                <li>
-                  <a href="/">Menu Three</a>
-                </li>
-                <li className="has-children">
-                  <a href="/">Sub Menu</a>
-                  <ul className="dropdown">
-                    <li>
-                      <a href="/">Menu One</a>
-                    </li>
-                    <li>
-                      <a href="/">Menu Two</a>
-                    </li>
-                    <li>
-                      <a href="/">Menu Three</a>
-                    </li>
-                  </ul>
-                </li>
-              </ul> */}
             </li>
             <li className="">
               <Link to="/about">About</Link>
-              {/* <ul className="dropdown">
-                <li>
-                  <a href="/">Menu One</a>
-                </li>
-                <li>
-                  <a href="/">Menu Two</a>
-                </li>
-                <li>
-                  <a href="/">Menu Three</a>
-                </li>
-              </ul> */}
             </li>
             <li>
               <Link to="/shop">Shop</Link>

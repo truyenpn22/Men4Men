@@ -104,9 +104,7 @@ const ProductState = props => {
     }
   }
 
-  // -----------------------------------------------------------------
   // Update prdouct details
-  // -----------------------------------------------------------------
   const updateProductDetails = async (
     id,
     name,
@@ -141,6 +139,32 @@ const ProductState = props => {
     }
   }
 
+  // Update prdouct Image
+  const updateProductImage = async (id, formData) => {
+    try {
+      setProductsLoading(true)
+      const userToken = JSON.parse(localStorage.getItem('userToken'))
+      const headers = {
+        Authorization: `Bearer ${userToken && userToken}`,
+        'Content-Type': 'multipart/form-data',
+      }
+      const { data } = await axios.patch(
+        `api/products/${id}/updateImage`,
+        formData,
+        { headers }
+      )
+      setProductsMessage({
+        variant: 'success',
+        message: 'Product Image updated!',
+      })
+      setProductsLoading(false)
+      setProductsError(null)
+      return data.image
+    } catch (err) {
+      errorHandler(err, 'Could not update image')
+    }
+  }
+
   return (
     <ProductContext.Provider
       value={{
@@ -152,6 +176,7 @@ const ProductState = props => {
         getProducts,
         getOneProduct,
         updateProductDetails,
+        updateProductImage,
 
         errorHandler,
       }}>

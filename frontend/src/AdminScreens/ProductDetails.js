@@ -6,12 +6,14 @@ import productContext from '../context/product/productContext'
 const ProductDetails = () => {
   // for product context
   const pContext = useContext(productContext)
-  const { getOneProduct, updateProductDetails } = pContext
+  const { getOneProduct, updateProductDetails, updateProductImage } = pContext
   // for category context
   const cContext = useContext(CategoryContext)
   const { categories, getCategories } = cContext
 
   const { id } = useParams()
+
+  const [imageFile, setImageFile] = useState('')
 
   const [product, setProduct] = useState({
     name: '',
@@ -44,6 +46,19 @@ const ProductDetails = () => {
     // console.log(product)
     const { name, sku, category, price, description } = product
     updateProductDetails(id, name, sku, category, price, description)
+  }
+
+  const handleUpdateImage = async () => {
+    const formData = new FormData()
+    formData.append('image', imageFile)
+
+    console.log('Add product to run')
+    const imagePath = await updateProductImage(id, formData)
+    setImage(imagePath)
+
+    console.log('update  product image  ran')
+
+    setImageFile(null)
   }
 
   return (
@@ -168,7 +183,30 @@ const ProductDetails = () => {
             <div className="col-md-4">
               <h3 className="text-center">Image</h3>
               <img src={image} alt="" className="d-block img-fluid mb-3" />
-              {/* <button className="btn btn-primary btn-block">Edit Image</button> */}
+              <div className="form-group">
+                <label htmlFor="image">Upload Image</label>
+                <div className="custom-file">
+                  <input
+                    type="file"
+                    className="custom-file-input"
+                    id="image"
+                    // onChange={uploadFileHandler}
+                    name="image"
+                    onChange={e => setImageFile(e.target.files[0])}
+                    // value={product.description}
+                  />
+                  <label htmlFor="image" className="custom-file-label">
+                    Choose File
+                  </label>
+                </div>
+                <small className="form-text text-muted">Max Size 3mb</small>
+              </div>
+              <button
+                className="btn btn-primary btn-block"
+                disabled={!imageFile}
+                onClick={handleUpdateImage}>
+                Update Image
+              </button>
               {/* <button className="btn btn-danger btn-block">Delete Image</button> */}
             </div>
           </div>

@@ -155,6 +155,27 @@ const OdersState = props => {
     }
   }
 
+  // -----------------------------------------
+  //  Get One order admin
+  //   ---------------------------------------
+  const getOneOrderAdmin = async id => {
+    try {
+      setOrdersLoading(true)
+      const userToken = JSON.parse(localStorage.getItem('userToken'))
+      const headers = {
+        Authorization: `Bearer ${userToken && userToken}`,
+      }
+      const { data } = await axios.get(`/api/orders/${id}`, {
+        headers,
+      })
+      setOrdersLoading(false)
+      setOrdersError(null)
+      return data.order
+    } catch (err) {
+      errorHandler(err)
+    }
+  }
+
   return (
     <OrderContext.Provider
       value={{
@@ -167,6 +188,7 @@ const OdersState = props => {
         getAllOrders,
         getMyOrders,
         getOneOrder,
+        getOneOrderAdmin,
       }}>
       {props.children}
     </OrderContext.Provider>

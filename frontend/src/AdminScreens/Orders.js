@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import Navbar from '../AdminComponents/Navbar'
 import OrderContext from '../context/orders/orderContext'
 
@@ -76,9 +77,11 @@ const Orders = () => {
                         </td>
                         <td>{order.totalPrice}</td>
                         <td>
-                          <a href="details.html" className="btn btn-secondary">
+                          <Link
+                            to={`/orderDetailsAdmin/${order._id}`}
+                            className="btn btn-secondary">
                             <i className="fas fa-angle-double-right" /> Details
-                          </a>
+                          </Link>
                         </td>
                       </tr>
                     ))}
