@@ -6,6 +6,7 @@ To open the project in your computer
 - Add .env file and add PORT, MONGODB_URI, JWT_SECRET, PAYPAL_CLIENT_ID
 - In the root directory - npm i
 - In the front end directory - cd frontend, npm i
+- npm run dev to open the development server
 
 ## This website is a mern web ecommerce application whitch includes
 
