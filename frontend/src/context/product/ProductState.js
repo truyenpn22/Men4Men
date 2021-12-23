@@ -79,7 +79,6 @@ const ProductState = props => {
       setProductsLoading(true)
       await axios.post('api/products/add', productBody, { headers })
       // setProducts([productBody, ...products])
-      getProducts()
       setProductsMessage({
         variant: 'success',
         message: 'Product added successfully!',
