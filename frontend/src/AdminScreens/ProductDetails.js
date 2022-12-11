@@ -1,24 +1,29 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import CategoryContext from '../context/category/categoryContext'
+import BrandContext from '../context/brand/brandContext'
 import productContext from '../context/product/productContext'
+
 
 const ProductDetails = () => {
   // for product context
   const pContext = useContext(productContext)
-  const { getOneProduct, updateProductDetails, updateProductImage } = pContext
+  const { getOneProduct, updateProductDetails, updateProductImage, deleteProduct } = pContext
   // for category context
   const cContext = useContext(CategoryContext)
   const { categories, getCategories } = cContext
 
-  const { id } = useParams()
+  const bContext = useContext(BrandContext)
+  const { brands, getBrands } = bContext
 
+  const { id } = useParams()
   const [imageFile, setImageFile] = useState('')
 
   const [product, setProduct] = useState({
     name: '',
     sku: '',
     category: '',
+    brand: '',
     price: '',
     description: '',
   })
@@ -34,6 +39,7 @@ const ProductDetails = () => {
     }
     fetchProduct()
     getCategories()
+    getBrands()
     // eslint-disable-next-line
   }, [])
 
@@ -44,8 +50,12 @@ const ProductDetails = () => {
   // console.log(product)
   const handleSaveChanges = () => {
     // console.log(product)
-    const { name, sku, category, price, description } = product
-    updateProductDetails(id, name, sku, category, price, description)
+    const { name, sku, category, brand, price, description } = product
+    updateProductDetails(id, name, sku, category, brand, price, description)
+  }
+  const deleteSaveChanges = (id) => {
+    // console.log(product)
+    deleteProduct(id)
   }
 
   const handleUpdateImage = async () => {
@@ -60,6 +70,8 @@ const ProductDetails = () => {
 
     setImageFile(null)
   }
+  
+
 
   return (
     <>
@@ -82,7 +94,8 @@ const ProductDetails = () => {
               </button>
             </div>
             <div className="col-md-4">
-              <button className="btn btn-danger btn-block" disabled>
+              <button className="btn btn-danger btn-block"
+              onClick={() => deleteSaveChanges(id)}>
                 <i className="fas fa-trash" /> Delete Product
               </button>
             </div>
@@ -133,6 +146,23 @@ const ProductDetails = () => {
                       {categories.map(item => (
                         <option key={item._id} value={item._id}>
                           {item.title}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="brand">Brand</label>
+                    <select
+                      className="form-control"
+                      name="brand"
+                      onChange={handleChange}>
+                      <option value={product.brand._id}>
+                        {product.brand.local}
+                      </option>
+                      {brands.map(item => (
+                        <option key={item._id} value={item._id}>
+                          {item.local}
                         </option>
                       ))}
                     </select>

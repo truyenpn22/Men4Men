@@ -15,6 +15,7 @@ import AdminDashboard from './AdminScreens/AdminDashboard'
 import LoginScreen from './Pages/LoginScreen'
 import Products from './AdminScreens/Products'
 import Categories from './AdminScreens/Categories'
+import Brands from './AdminScreens/Brands'
 import Users from './AdminScreens/Users'
 import Misc from './components/Misc'
 import SignupScreen from './Pages/SignupScreen'
@@ -59,6 +60,8 @@ function App() {
         <Route path="/products" element={<Products />} />
 
         <Route path="/categories" element={<Categories />} />
+
+        <Route path="/brands" element={<Brands />} />
 
         <Route path="/users" element={<Users />} />
 

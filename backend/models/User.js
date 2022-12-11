@@ -7,31 +7,31 @@ const userSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, 'Please enter your name'],
-      minLength: [3, 'Please enter a name with atleast 3 characters'],
+      required: [true, 'Xin hãy nhập tên của bạn'],
+      minLength: [3, 'Vui lòng nhập tên có ít nhất 3 ký tự'],
       trim: true,
     },
     email: {
       type: String,
-      required: [true, 'Please enter your email'],
+      required: [true, 'Vui lòng nhập email của bạn'],
       unique: true,
       trim: true,
       lowercase: true,
       validate(value) {
         if (!validator.isEmail(value)) {
-          throw new Error('Please enter a valid email')
+          throw new Error('Vui lòng nhập email hợp lệ')
         }
       },
     },
     password: {
       type: String,
-      required: [true, 'Please enter your password'],
-      minLength: [6, 'Password must be at least 6 characters long!'],
+      required: [true, 'Vui lòng nhập mật khẩu của bạn'],
+      minLength: [6, 'Mật khẩu phải có độ dài ít nhất 6 ký tự!'],
       trim: true,
       validate(pass) {
         if (pass.toLowerCase().includes('password')) {
           throw new Error(
-            'The password should not includes the word password itself!'
+            'Mật khẩu không được bao gồm từ mật khẩu!'
           )
         }
       },
@@ -70,11 +70,11 @@ userSchema.methods.generateAuthToken = async function () {
 userSchema.statics.findByCredentials = async (email, password) => {
   const user = await User.findOne({ email })
   if (!user) {
-    throw new Error('Invalid Email or Password!')
+    throw new Error('Email hoặc mật khẩu không hợp lệ!')
   }
   const isMatch = await bcrypt.compare(password, user.password)
   if (!isMatch) {
-    throw new Error('Invalid Email or Password!')
+    throw new Error('Email hoặc mật khẩu không hợp lệ!')
   }
   return user
 }
@@ -92,7 +92,7 @@ userSchema.pre('save', async function (next) {
 // Middleware function for unique email error
 userSchema.post('save', function (error, doc, next) {
   if (error.name === 'MongoServerError' && error.code === 11000) {
-    next(new Error('Email already taken!'))
+    next(new Error('Email đã tồn tại!'))
   } else {
     next()
   }

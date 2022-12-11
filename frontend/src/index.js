@@ -4,6 +4,7 @@ import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import CategoryState from './context/category/CategoryState'
+import BrandState from './context/brand/BrandState'
 import ProductState from './context/product/ProductState'
 import UserState from './context/user/UserState'
 import OrderState from './context/orders/OrderState'
@@ -16,11 +17,13 @@ ReactDOM.render(
       <Router>
         <UserState>
           <OrderState>
+          <BrandState>
             <CategoryState>
               <ProductState>
                 <App />
               </ProductState>
             </CategoryState>
+            </BrandState>
           </OrderState>
         </UserState>
       </Router>

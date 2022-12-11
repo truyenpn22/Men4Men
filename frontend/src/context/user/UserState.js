@@ -79,7 +79,7 @@ const UserState = props => {
       setUser(data.user)
       setUserError(null)
       setUserLoading(false)
-      setUserMessage({ variant: 'success', message: 'Logged In successfully' })
+      setUserMessage({ variant: 'success', message: 'Đăng nhập thành công' })
       navigate('/')
       //   history.push('/')
     } catch (err) {
@@ -100,7 +100,7 @@ const UserState = props => {
       setUser(data.user)
       setUserError(null)
       setUserLoading(false)
-      setUserMessage({ variant: 'success', message: 'Signed up successfully' })
+      setUserMessage({ variant: 'success', message: 'Đăng ký thành công' })
       navigate('/')
     } catch (err) {
       errorHandler(err)
@@ -122,7 +122,7 @@ const UserState = props => {
       setUser(null)
       setUserError(null)
       setUserLoading(false)
-      setUserMessage({ variant: 'dark', message: 'You have logged out!' })
+      setUserMessage({ variant: 'dark', message: 'Đăng xuất thành công!' })
       navigate('/login')
     } catch (err) {
       errorHandler(err)
@@ -158,11 +158,11 @@ const UserState = props => {
       setUserLoading(false)
       setUserMessage({
         variant: 'success',
-        message: 'Your profile was updated successfully',
+        message: 'Hồ sơ của bạn đã được cập nhật thành công',
       })
       return data
     } catch (err) {
-      errorHandler(err, 'Could not update your profile!')
+      errorHandler(err, 'Không thể cập nhật hồ sơ của bạn!')
     }
   }
 

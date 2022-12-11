@@ -4,34 +4,39 @@ const productSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, 'name is a required field'],
-      minLength: [3, 'Please enter a name with atleast 3 characters'],
+      required: [true, 'Vui lòng nhập tên sản phẩm'],
+      minLength: [3, 'Vui lòng nhập tên có ít nhất 3 ký tự'],
       trim: true,
     },
     sku: {
       type: String,
-      required: [true, 'sku is a required field'],
+      required: [true, 'Vui lòng nhập mã hàng hóa'],
       trim: true,
     },
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Category',
-      required: [true, 'category is a required field'],
+      required: [true, 'Vui lòng nhập danh mục'],
+    },
+    brand: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Brand',
+      required: [true, 'Vui lòng nhập thương hiệu'],
     },
     price: {
       type: Number,
-      required: [true, 'price is a required field'],
-      min: [0, 'Price must be a positive number!'],
+      required: [true, 'Vui lòng nhập giá sản phẩm'],
+      min: [0, 'Giá phải là một số dương!'],
     },
     description: {
       type: String,
-      required: [true, 'description is a required field'],
-      minLength: [10, 'Please enter a description with atleast 10 characters'],
+      required: [true, 'Vui lòng nhập nhập mô tả'],
+      minLength: [10, 'Vui lòng nhập mô tả với ít nhất 10 ký tự'],
       trim: true,
     },
     image: {
       type: String,
-      required: [true, 'image is required'],
+      required: [true, 'Vui lòng nhập hình ảnh'],
     },
   },
   { timestamps: true }

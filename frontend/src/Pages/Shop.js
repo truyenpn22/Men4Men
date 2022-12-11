@@ -14,7 +14,7 @@ const Shop = () => {
   const cContext = useContext(CategoryContext)
   const { categories, getCategories } = cContext
 
-  const limit = 5
+  const limit = 6
   const [skip, setSkip] = useState(0)
   const [keyWord, setKeyWord] = useState('')
   const [category, setCategory] = useState('')

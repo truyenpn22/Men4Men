@@ -51,11 +51,11 @@ const ProductState = props => {
   }
 
   // get all Products
-  const getProducts = async (limit, skip, keyword, category) => {
+  const getProducts = async (limit, skip, keyword, category, brand) => {
     try {
       setProductsLoading(true)
       const { data } = await axios.get(`/api/products/getAll`, {
-        params: { limit, skip, keyword, category },
+        params: { limit, skip, keyword, category, brand },
       })
       setProducts(data.products)
       setProductsLoading(false)
@@ -109,6 +109,7 @@ const ProductState = props => {
     name,
     sku,
     category,
+    brand,
     price,
     description
   ) => {
@@ -122,6 +123,7 @@ const ProductState = props => {
         name,
         sku,
         category,
+        brand,
         price,
         description,
       })
@@ -135,6 +137,27 @@ const ProductState = props => {
       // getCategories()
     } catch (err) {
       errorHandler(err, 'could not update product details')
+    }
+  }
+// Delete prdouct 
+  const deleteProduct = async id  => {
+    try {
+      setProductsLoading(true)
+      const userToken = JSON.parse(localStorage.getItem('userToken'))
+      const headers = {
+        Authorization: `Bearer ${userToken && userToken}`,
+        'Content-Type': 'multipart/form-data',
+      }
+      const { data } = await axios.delete(`/api/products/${id}`, { headers })
+      setProductsMessage({
+        variant: 'success',
+        message: 'Xóa thành công!',
+      })
+      setProductsLoading(false)
+      setProductsError(null)
+      return data.product
+    } catch (err) {
+      errorHandler(err, 'Không tìm thấy sản phẩm')
     }
   }
 
@@ -176,7 +199,7 @@ const ProductState = props => {
         getOneProduct,
         updateProductDetails,
         updateProductImage,
-
+        deleteProduct,
         errorHandler,
       }}>
       {props.children}

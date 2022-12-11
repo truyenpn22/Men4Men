@@ -72,11 +72,11 @@ const MyOrderDetails = () => {
                               <b>{orderItem.name}</b>
                             </p>
                           </div>
-                          <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
+                          {/* <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
                             <p className="text-muted mb-0 small">
                               {orderItem.description}
                             </p>
-                          </div>
+                          </div> */}
                           <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
                             <p className="text-muted mb-0 small">
                               Qty: {orderItem.quantity}

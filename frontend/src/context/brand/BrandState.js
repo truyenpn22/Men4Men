@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import CategoryContext from './categoryContext'
+import BrandContext from './brandContext'
 import axios from 'axios'
+
 
 // Function for cleaning null, undefined and empty strings values in objects
 function clean(obj) {
@@ -19,88 +20,88 @@ function clean(obj) {
 // ------------------------------------------
 // Category State
 // ------------------------------------------
-const CategoryState = props => {
-  const [categories, setCategories] = useState([])
-  const [categoriesError, setCategoriesError] = useState(null)
-  const [categoriesLoading, setCategoriesLoading] = useState(false)
-  const [categoriesMessage, setCategoriesMessage] = useState(null)
+const BrandState = props => {
+  const [brands, setBrands] = useState([])
+  const [brandsError, setBrandsError] = useState(null)
+  const [brandsLoading, setBrandsLoading] = useState(false)
+  const [brandsMessage, setBrandsMessage] = useState(null)
 
   useEffect(() => {
     setTimeout(() => {
-      setCategoriesError(null)
-      setCategoriesMessage(null)
+        setBrandsError(null)
+        setBrandsMessage(null)
     }, 3000)
-  }, [categoriesError, categoriesMessage])
+  }, [brandsError, brandsMessage])
 
   // Error Handler function
   const errorHandler = (err, info) => {
     if (err.response) {
-      setCategoriesError({
+        setBrandsError({
         variant: 'danger',
         message: `${info}, ${err.response.data.error}`,
       })
     } else if (err.request) {
-      setCategoriesError({
+        setBrandsError({
         variant: 'danger',
         message: `${info},  No response from server!`,
       })
     } else {
-      setCategoriesError({ variant: 'danger', message: err.message })
+        setBrandsError({ variant: 'danger', message: err.message })
     }
-    setCategoriesLoading(false)
+    setBrandsLoading(false)
   }
 
   // Add new category
-  const addCategory = async title => {
-    const categoryBody = clean({ title })
+  const addBrand = async local => {
+    const brandBody = clean({ local })
     try {
       const userToken = JSON.parse(localStorage.getItem('userToken'))
       const headers = {
         Authorization: `Bearer ${userToken && userToken}`,
       }
-      setCategoriesLoading(true)
-      await axios.post('api/category/add', categoryBody, { headers })
-      setCategories([...categories, categoryBody])
-      setCategoriesMessage({
+      setBrandsLoading(true)
+      await axios.post('api/brand/add', brandBody, { headers })
+      setBrands([...brands, brandBody])
+      setBrandsMessage({
         variant: 'success',
         message: 'Danh mục được thêm thành công!',
       })
       window.location.reload();
-      setCategoriesLoading(false)
-      setCategoriesError(null)
+      setBrandsLoading(false)
+      setBrandsError(null)
     } catch (err) {
       errorHandler(err)
     }
   }
 
   // get all categories
-  const getCategories = async (limit, skip, keyword) => {
+  const getBrands = async (limit, skip, keyword) => {
     try {
-      setCategoriesLoading(true)
-      const { data } = await axios.get('api/category/getAll', {
+        setBrandsLoading(true)
+      const { data } = await axios.get('api/brand/getAll', {
         params: { limit, skip, keyword},
       })
-      setCategories(data.categories)
-      setCategoriesLoading(false)
-      setCategoriesError(null)
+      setBrands(data.brands)
+      setBrandsLoading(false)
+      setBrandsError(null)
     } catch (err) {
       errorHandler(err)
     }
   }
 
 // Delete Category
-const deleteCategory = async id  => {
+const deleteBrand = async id  => {
   try {
-    setCategoriesLoading(true)
+    setBrandsLoading(true)
     const userToken = JSON.parse(localStorage.getItem('userToken'))
     const headers = {
       Authorization: `Bearer ${userToken && userToken}`,
       'Content-Type': 'multipart/form-data',
     }
-    const { data } = await axios.delete(`/api/category/${id}`, { headers })
-    setCategoriesLoading(false)
-    setCategoriesError(null)
-    setCategoriesMessage({
+    const { data } = await axios.delete(`/api/brand/${id}`, { headers })
+    setBrandsLoading(false)
+    setBrandsError(null)
+    setBrandsMessage({
       variant: 'success',
       message: 'Xóa thành công!',
     })
@@ -112,51 +113,51 @@ const deleteCategory = async id  => {
 }
 
   // get one category
-  const getOneCategory = async id => {
+  const getOneBrand = async id => {
     try {
-      const { data } = await axios.get(`/api/category/${id}`)
+      const { data } = await axios.get(`/api/brand/${id}`)
       return data.categories
     } catch (err) {
       errorHandler(err)
     }
   }
 
-  const updateCategory = async (id, title) => {
+  const updateBrand = async (id, local) => {
     try {
       const userToken = JSON.parse(localStorage.getItem('userToken'))
       const headers = {
         Authorization: `Bearer ${userToken && userToken}`,
       }
-      setCategoriesLoading(true)
-      await axios.patch(`api/category/${id}`, { title }, { headers })
-      getCategories()
-      setCategoriesMessage({
+      setBrandsLoading(true)
+      await axios.patch(`api/brand/${id}`, { local }, { headers })
+      getBrands()
+      setBrandsMessage({
         variant: 'info',
-        message: 'Danh mục được cập nhật',
+        message: 'Thương hiệu được cập nhật',
       })
-      setCategoriesLoading(false)
-      setCategoriesError(null)
+      setBrandsLoading(false)
+      setBrandsError(null)
     } catch (err) {
       errorHandler(err)
     }
   }
 
   return (
-    <CategoryContext.Provider
+    <BrandContext.Provider
       value={{
-        categories,
-        categoriesError,
-        categoriesLoading,
-        categoriesMessage,
-        getCategories,
-        addCategory,
-        deleteCategory,
-        getOneCategory,
-        updateCategory,
+        brands,
+        brandsError,
+        brandsLoading,
+        brandsMessage,
+        getBrands,
+        addBrand,
+        deleteBrand,
+        getOneBrand,
+        updateBrand,
       }}>
       {props.children}
-    </CategoryContext.Provider>
+    </BrandContext.Provider>
   )
 }
 
-export default CategoryState
+export default BrandState

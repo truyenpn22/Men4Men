@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import CategoryContext from '../context/category/categoryContext'
+import BrandContext from '../context/brand/brandContext'
 import productContext from '../context/product/productContext'
+
+
 
 const AddProductModal = () => {
   // for product context
@@ -11,8 +14,13 @@ const AddProductModal = () => {
   const cContext = useContext(CategoryContext)
   const { categories, getCategories } = cContext
 
+  // for category context
+  const bContext = useContext(BrandContext)
+  const { brands, getBrands } = bContext
+
   useEffect(() => {
     getCategories()
+    getBrands()
     // eslint-disable-next-line
   }, [])
 
@@ -20,6 +28,7 @@ const AddProductModal = () => {
     name: '',
     sku: '',
     category: '',
+    brand: '',
     price: '',
     description: '',
   })
@@ -31,12 +40,13 @@ const AddProductModal = () => {
   }
 
   const handleAddproduct = () => {
-    const { name, sku, category, price, description } = product
+    const { name, sku, category, brand, price, description } = product
     const formData = new FormData()
     formData.append('image', image)
     formData.append('name', name)
     formData.append('sku', sku)
     formData.append('category', category)
+    formData.append('brand', brand)
     formData.append('price', price)
     formData.append('description', description)
     console.log('Add product to run')
@@ -46,6 +56,7 @@ const AddProductModal = () => {
       name: '',
       sku: '',
       category: '',
+      brand: '',
       price: '',
       description: '',
     })
@@ -101,6 +112,21 @@ const AddProductModal = () => {
                   {categories.map(item => (
                     <option key={item._id} value={item._id}>
                       {item.title}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="brand">Brand</label>
+                <select
+                  className="form-control"
+                  name="brand"
+                  onChange={handleChange}>
+                  <option value>Select Brand</option>
+                  {brands.map(item => (
+                    <option key={item._id} value={item._id}>
+                      {item.local}
                     </option>
                   ))}
                 </select>

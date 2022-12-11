@@ -1,10 +1,10 @@
 import mongoose from 'mongoose'
 
-const categorySchema = mongoose.Schema(
+const brandSchema = mongoose.Schema(
   {
-    title: {
+    local: {
       type: String,
-      required: [true, 'Vui lòng nhập danh mục!'],
+      required: [true, 'Vui lòng nhập thương hiệu!'],
       minLength: [3, 'Vui lòng nhập phải dài ít nhất 3 ký tự'],
       trim: true,
     },
@@ -16,6 +16,6 @@ const categorySchema = mongoose.Schema(
   { timestamps: true }
 )
 
-const Category = mongoose.model('Category', categorySchema)
+const Brand = mongoose.model('Brand', brandSchema)
 
-export default Category
+export default Brand

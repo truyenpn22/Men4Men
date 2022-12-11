@@ -106,8 +106,8 @@ const Users = () => {
                     <tbody>
                       <tr>
                         <td>1</td>
-                        <td>John Doe</td>
-                        <td>jdoe@gmail.com</td>
+                        <td>Admin</td>
+                        <td>admin@gmail.com</td>
                         <td>
                           <a href="details.html" className="btn btn-secondary">
                             <i className="fas fa-angle-double-right" /> Details
